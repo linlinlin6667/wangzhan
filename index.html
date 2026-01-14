@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网站</title>
+    
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 引入Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 引入自定义CSS -->
+    <link rel="stylesheet" href="css/personal-style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="title-name">张三</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">关于我</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">我的作品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experiences">经历</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">技能</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">联系我</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tools.html">工具</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="hero" class="hero-section">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content fade-in">
+                        <h1 class="hero-title">
+                            你好，我是 <span class="title-name">张三</span>
+                        </h1>
+                        <div class="hero-bio">
+                            <p>你好，我是张三，一名前端开发者</p>
+                        </div>
+                        <div class="hero-buttons">
+                            <a href="#projects" class="btn btn-primary btn-lg">查看我的作品</a>
+                            <a href="#contact" class="btn btn-outline-light btn-lg ms-3">联系我</a>
+                        </div>
+                        <div class="hero-social">
+                            <a href="https://github.com" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                            <a href="https://weibo.com" target="_blank" class="social-icon"><i class="fab fa-weibo"></i></a>
+                            <a href="mailto:zhangsan@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+                            <a href="tel:13800138000" class="social-icon"><i class="fas fa-phone"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="hero-avatar fade-in">
+                        <img src="https://picsum.photos/seed/avatar/300/300" alt="个人头像" class="img-fluid rounded-circle shadow-avatar">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 装饰元素 -->
+        <div class="hero-decor">
+            <div class="decor-circle decor-1"></div>
+            <div class="decor-circle decor-2"></div>
+            <div class="decor-circle decor-3"></div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header text-center mb-5 fade-in">
+                <h2 class="section-title">关于我</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-content fade-in">
+                        <h3>我的故事</h3>
+                        <p>我是一名热爱技术的前端开发者，专注于创建美观、易用的Web应用。我拥有扎实的HTML、CSS和JavaScript基础，熟悉现代前端框架如React和Vue。</p>
+                        <p>我喜欢学习新技术，不断提升自己的技能。在工作中，我注重代码质量和用户体验，努力创造出既美观又实用的产品。</p>
+                        <div class="about-info">
+                            <div class="info-item">
+                                <i class="fas fa-user"></i>
+                                <span class="info-label">姓名：</span>
+                                <span class="info-value">张三</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <span class="info-label">邮箱：</span>
+                                <span class="info-value">zhangsan@example.com</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <span class="info-label">电话：</span>
+                                <span class="info-value">13800138000</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="info-label">所在地：</span>
+                                <span class="info-value">北京</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-skills fade-in">
+                        <h3>我的技能</h3>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">HTML5</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">CSS3</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">React</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Vue</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                            <div class="progress progress-custom">
+                                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 我的作品 -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header text-center mb-5 fade-in">
+                <h2 class="section-title">我的作品</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row" id="projects-container">
+                <!-- 作品将通过JavaScript动态加载 -->
+                <div class="col-lg-4 col-md-6 mb-4 fade-in">
+                    <div class="project-card project-card-hover">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/seed/project1/600/400" alt="作品1" class="img-fluid project-img">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary btn-sm">查看详情</a>
+                                    <a href="#" class="btn btn-outline-primary btn-sm ms-2">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>项目名称1</h3>
+                            <p>这是一个项目描述，介绍项目的功能和特点。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 fade-in">
+                    <div class="project-card project-card-hover">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/seed/project2/600/400" alt="作品2" class="img-fluid project-img">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary btn-sm">查看详情</a>
+                                    <a href="#" class="btn btn-outline-primary btn-sm ms-2">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>项目名称2</h3>
+                            <p>这是一个项目描述，介绍项目的功能和特点。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 fade-in">
+                    <div class="project-card project-card-hover">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/seed/project3/600/400" alt="作品3" class="img-fluid project-img">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="btn btn-primary btn-sm">查看详情</a>
+                                    <a href="#" class="btn btn-outline-primary btn-sm ms-2">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>项目名称3</h3>
+                            <p>这是一个项目描述，介绍项目的功能和特点。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 经历 -->
+    <section id="experiences" class="experiences-section">
+        <div class="container">
+            <div class="section-header text-center mb-5 fade-in">
+                <h2 class="section-title">经历</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon timeline-icon-primary"><i class="fas fa-briefcase"></i></div>
+                    <div class="timeline-content timeline-content-primary">
+                        <h3>前端开发者</h3>
+                        <p class="timeline-period">2020年至今</p>
+                        <p>在公司负责前端开发工作，参与了多个大型项目的开发，包括电商平台、企业管理系统等。</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon timeline-icon-secondary"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="timeline-content timeline-content-secondary">
+                        <h3>计算机科学与技术专业</h3>
+                        <p class="timeline-period">2016年-2020年</p>
+                        <p>在大学期间学习了计算机相关课程，包括数据结构、算法、操作系统、计算机网络等。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能 -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header text-center mb-5 fade-in">
+                <h2 class="section-title">技能</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row" id="skills-container">
+                <!-- 技能将通过JavaScript动态加载 -->
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in">
+                    <div class="skill-card skill-card-hover">
+                        <div class="skill-icon skill-icon-large"><i class="fab fa-html5"></i></div>
+                        <h3>HTML5</h3>
+                        <div class="skill-level">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in">
+                    <div class="skill-card skill-card-hover">
+                        <div class="skill-icon skill-icon-large"><i class="fab fa-css3-alt"></i></div>
+                        <h3>CSS3</h3>
+                        <div class="skill-level">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in">
+                    <div class="skill-card skill-card-hover">
+                        <div class="skill-icon skill-icon-large"><i class="fab fa-js"></i></div>
+                        <h3>JavaScript</h3>
+                        <div class="skill-level">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in">
+                    <div class="skill-card skill-card-hover">
+                        <div class="skill-icon skill-icon-large"><i class="fab fa-react"></i></div>
+                        <h3>React</h3>
+                        <div class="skill-level">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header text-center mb-5 fade-in">
+                <h2 class="section-title">联系我</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="contact-info fade-in">
+                        <h3>联系方式</h3>
+                        <div class="contact-item contact-item-hover">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <h4>地址</h4>
+                                <p>北京市朝阳区</p>
+                            </div>
+                        </div>
+                        <div class="contact-item contact-item-hover">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <h4>邮箱</h4>
+                                <p>zhangsan@example.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item contact-item-hover">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-text">
+                                <h4>电话</h4>
+                                <p>13800138000</p>
+                            </div>
+                        </div>
+                        <div class="contact-social">
+                            <a href="https://github.com" target="_blank" class="social-icon social-icon-hover"><i class="fab fa-github"></i></a>
+                            <a href="https://weibo.com" target="_blank" class="social-icon social-icon-hover"><i class="fab fa-weibo"></i></a>
+                            <a href="mailto:zhangsan@example.com" class="social-icon social-icon-hover"><i class="fas fa-envelope"></i></a>
+                            <a href="tel:13800138000" class="social-icon social-icon-hover"><i class="fas fa-phone"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-form fade-in">
+                        <h3>发送消息</h3>
+                        <form id="contactForm">
+                            <div class="form-group mb-3">
+                                <label for="name">姓名</label>
+                                <input type="text" class="form-control form-control-custom" id="name" placeholder="请输入您的姓名">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email">邮箱</label>
+                                <input type="email" class="form-control form-control-custom" id="email" placeholder="请输入您的邮箱">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="subject">主题</label>
+                                <input type="text" class="form-control form-control-custom" id="subject" placeholder="请输入消息主题">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="message">消息内容</label>
+                                <textarea class="form-control form-control-custom" id="message" rows="5" placeholder="请输入您的消息内容"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-submit">发送消息</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="back-to-top" title="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- 页脚 -->
+    <footer class="footer footer-custom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 张三. 保留所有权利.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="footer-link footer-link-hover">隐私政策</a>
+                    <a href="#" class="footer-link footer-link-hover ms-3">使用条款</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 引入模拟数据 -->
+    <script src="js/mock-data.js"></script>
+    
+    <!-- 引入自定义JS -->
+    <script src="js/personal-main.js"></script>
+    
+    <!-- 动态加载数据 -->
+    <script>
+        // 页面加载完成后获取所有数据
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从模拟数据获取所有数据
+            const allData = mockData;
+            
+            // 更新个人信息
+            updatePersonalInfo(allData.personal);
+            
+            // 更新作品列表
+            updateProjects(allData.projects);
+            
+            // 更新经历列表
+            updateExperiences(allData.experiences);
+            
+            // 更新技能列表
+            updateSkills(allData.skills);
+            
+            // 更新个人信息
+            function updatePersonalInfo(personalInfo) {
+                if (!personalInfo) return;
+                
+                // 更新标题
+                document.title = personalInfo.name + '的个人网站';
+                
+                // 更新导航栏
+                const navbarBrand = document.querySelector('.navbar-brand .title-name');
+                if (navbarBrand) {
+                    navbarBrand.textContent = personalInfo.name;
+                }
+                
+                // 更新英雄区域
+                const titleName = document.querySelector('.title-name');
+                if (titleName) {
+                    titleName.textContent = personalInfo.name;
+                }
+                
+                const heroBio = document.querySelector('.hero-bio p');
+                if (heroBio) {
+                    heroBio.textContent = personalInfo.introduction;
+                }
+                
+                // 更新头像
+                const avatar = document.querySelector('.hero-avatar img');
+                if (avatar) {
+                    avatar.src = personalInfo.avatar;
+                }
+                
+                // 更新关于我信息
+                const aboutInfo = document.querySelector('.about-info');
+                if (aboutInfo) {
+                    // 更新姓名
+                    const nameInfo = aboutInfo.querySelector('.info-item:nth-child(1) .info-value');
+                    if (nameInfo) {
+                        nameInfo.textContent = personalInfo.name;
+                    }
+                    
+                    // 更新邮箱
+                    const emailInfo = aboutInfo.querySelector('.info-item:nth-child(2) .info-value');
+                    if (emailInfo) {
+                        emailInfo.textContent = personalInfo.email;
+                    }
+                    
+                    // 更新电话
+                    const phoneInfo = aboutInfo.querySelector('.info-item:nth-child(3) .info-value');
+                    if (phoneInfo) {
+                        phoneInfo.textContent = personalInfo.phone;
+                    }
+                }
+                
+                // 更新联系我信息
+                const contactItems = document.querySelectorAll('.contact-item');
+                contactItems.forEach(item => {
+                    const icon = item.querySelector('i');
+                    const text = item.querySelector('.contact-text p');
+                    
+                    if (icon && text) {
+                        if (icon.classList.contains('fa-envelope')) {
+                            text.textContent = personalInfo.email;
+                        } else if (icon.classList.contains('fa-phone')) {
+                            text.textContent = personalInfo.phone;
+                        }
+                    }
+                });
+            }
+            
+            // 更新作品列表
+            function updateProjects(projects) {
+                if (!projects || projects.length === 0) return;
+                
+                const projectsContainer = document.getElementById('projects-container');
+                if (!projectsContainer) return;
+                
+                let projectsHTML = '';
+                projects.forEach(project => {
+                    projectsHTML += `
+                        <div class="col-lg-4 col-md-6 mb-4 fade-in">
+                            <div class="project-card project-card-hover">
+                                <div class="project-image">
+                                    <img src="${project.image || 'https://picsum.photos/seed/project' + project.id + '/600/400'}" alt="${project.name}" class="img-fluid project-img">
+                                    <div class="project-overlay">
+                                        <div class="project-links">
+                                            <a href="#" class="btn btn-primary btn-sm">查看详情</a>
+                                            <a href="#" class="btn btn-outline-primary btn-sm ms-2">GitHub</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="project-info">
+                                    <h3>${project.name}</h3>
+                                    <p>${project.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                projectsContainer.innerHTML = projectsHTML;
+            }
+            
+            // 更新经历列表
+            function updateExperiences(experiences) {
+                if (!experiences || experiences.length === 0) return;
+                
+                const timeline = document.querySelector('.timeline');
+                if (!timeline) return;
+                
+                let experiencesHTML = '';
+                experiences.forEach((experience, index) => {
+                    const isOdd = index % 2 === 0;
+                    experiencesHTML += `
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-icon timeline-icon-primary"><i class="fas fa-briefcase"></i></div>
+                            <div class="timeline-content timeline-content-primary">
+                                <h3>${experience.title}</h3>
+                                <p class="timeline-period">${experience.start_date} - ${experience.end_date || '至今'}</p>
+                                <p>${experience.description}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                timeline.innerHTML = experiencesHTML;
+            }
+            
+            // 更新技能列表
+            function updateSkills(skills) {
+                if (!skills || skills.length === 0) return;
+                
+                const skillsContainer = document.getElementById('skills-container');
+                if (!skillsContainer) return;
+                
+                let skillsHTML = '';
+                skills.forEach(skill => {
+                    // 生成星级评分
+                    const fullStars = Math.floor(skill.proficiency / 20);
+                    const hasHalfStar = skill.proficiency % 20 >= 10;
+                    let starsHTML = '';
+                    
+                    for (let i = 0; i < fullStars; i++) {
+                        starsHTML += '<i class="fas fa-star"></i>';
+                    }
+                    if (hasHalfStar) {
+                        starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                    }
+                    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                    for (let i = 0; i < emptyStars; i++) {
+                        starsHTML += '<i class="far fa-star"></i>';
+                    }
+                    
+                    skillsHTML += `
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in">
+                            <div class="skill-card skill-card-hover">
+                                <div class="skill-icon skill-icon-large"><i class="fab fa-${skill.icon || 'code'}"></i></div>
+                                <h3>${skill.name}</h3>
+                                <div class="skill-level">
+                                    ${starsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                skillsContainer.innerHTML = skillsHTML;
+            }
+        });
+        
+        // 滚动动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // 回到顶部按钮
+            const backToTop = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
