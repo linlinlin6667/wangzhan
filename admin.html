@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网站后台管理</title>
+    
+    <!-- 引入Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 引入自定义样式 -->
+    <link rel="stylesheet" href="css/admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 顶部导航栏 -->
+        <nav class="admin-header">
+            <div class="container-fluid">
+                <h1 class="admin-title">
+                    <i class="fas fa-cogs"></i>
+                    后台管理系统
+                </h1>
+                <div class="admin-user">
+                    <span>管理员</span>
+                    <i class="fas fa-user-circle ms-2"></i>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主体内容区 -->
+        <div class="admin-main">
+            <!-- 左侧侧边栏 -->
+            <aside class="admin-sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="nav-list">
+                        <li class="nav-item active" data-module="profile">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user"></i>
+                                <span>个人资料</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-module="projects">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-folder-open"></i>
+                                <span>作品管理</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-module="experiences">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-history"></i>
+                                <span>经历管理</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-module="skills">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-star"></i>
+                                <span>技能管理</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" data-module="tools">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-tools"></i>
+                                <span>工具管理</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <!-- 右侧内容区 -->
+            <main class="admin-content">
+                <!-- 个人资料模块 -->
+                <section id="profile" class="module active">
+                    <div class="module-header">
+                        <h2>个人资料管理</h2>
+                        <p>编辑您的个人信息</p>
+                    </div>
+                    
+                    <div class="module-body">
+                        <form id="profile-form" class="admin-form">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profile-name" class="form-label">姓名</label>
+                                        <input type="text" class="form-control" id="profile-name" name="name" placeholder="请输入姓名">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profile-email" class="form-label">邮箱</label>
+                                        <input type="email" class="form-control" id="profile-email" name="email" placeholder="请输入邮箱">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profile-phone" class="form-label">电话</label>
+                                        <input type="tel" class="form-control" id="profile-phone" name="phone" placeholder="请输入电话">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profile-avatar" class="form-label">头像</label>
+                                        <input type="file" class="form-control" id="profile-avatar" name="avatar" accept="image/*">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="profile-introduction" class="form-label">个人简介</label>
+                                        <textarea class="form-control" id="profile-introduction" name="introduction" rows="4" placeholder="请输入个人简介"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">保存修改</button>
+                                        <button type="button" class="btn btn-secondary" id="profile-reset">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                
+                <!-- 作品管理模块 -->
+                <section id="projects" class="module">
+                    <div class="module-header">
+                        <h2>作品管理</h2>
+                        <button class="btn btn-primary" id="add-project">
+                            <i class="fas fa-plus"></i>
+                            新增作品
+                        </button>
+                    </div>
+                    
+                    <div class="module-body">
+                        <div class="projects-list" id="projects-list">
+                            <!-- 作品列表将通过JavaScript动态加载 -->
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 经历管理模块 -->
+                <section id="experiences" class="module">
+                    <div class="module-header">
+                        <h2>经历管理</h2>
+                        <button class="btn btn-primary" id="add-experience">
+                            <i class="fas fa-plus"></i>
+                            新增经历
+                        </button>
+                    </div>
+                    
+                    <div class="module-body">
+                        <div class="experiences-list" id="experiences-list">
+                            <!-- 经历列表将通过JavaScript动态加载 -->
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 技能管理模块 -->
+                <section id="skills" class="module">
+                    <div class="module-header">
+                        <h2>技能管理</h2>
+                        <button class="btn btn-primary" id="add-skill">
+                            <i class="fas fa-plus"></i>
+                            新增技能
+                        </button>
+                    </div>
+                    
+                    <div class="module-body">
+                        <div class="skills-list" id="skills-list">
+                            <!-- 技能列表将通过JavaScript动态加载 -->
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 工具管理模块 -->
+                <section id="tools" class="module">
+                    <div class="module-header">
+                        <h2>工具管理</h2>
+                        <button class="btn btn-primary" id="add-tool">
+                            <i class="fas fa-plus"></i>
+                            新增工具
+                        </button>
+                    </div>
+                    
+                    <div class="module-body">
+                        <div class="tools-list" id="tools-list">
+                            <!-- 工具列表将通过JavaScript动态加载 -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- 作品编辑模态框 -->
+    <div class="modal fade" id="project-modal" tabindex="-1" aria-labelledby="project-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="project-modal-label">新增作品</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="project-form" class="admin-form">
+                        <input type="hidden" id="project-id" name="id">
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="project-name" class="form-label">作品名称</label>
+                                    <input type="text" class="form-control" id="project-name" name="name" placeholder="请输入作品名称" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="project-category" class="form-label">分类</label>
+                                    <input type="text" class="form-control" id="project-category" name="category" placeholder="请输入分类" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="project-description" class="form-label">作品描述</label>
+                                    <textarea class="form-control" id="project-description" name="description" rows="3" placeholder="请输入作品描述"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="project-image" class="form-label">作品图片</label>
+                                    <input type="file" class="form-control" id="project-image" name="image" accept="image/*">
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="project-link" class="form-label">作品链接</label>
+                                    <input type="url" class="form-control" id="project-link" name="link" placeholder="请输入作品链接">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="project-form" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 经历编辑模态框 -->
+    <div class="modal fade" id="experience-modal" tabindex="-1" aria-labelledby="experience-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="experience-modal-label">新增经历</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="experience-form" class="admin-form">
+                        <input type="hidden" id="experience-id" name="id">
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="experience-title" class="form-label">职位/专业</label>
+                                    <input type="text" class="form-control" id="experience-title" name="title" placeholder="请输入职位或专业" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="experience-company" class="form-label">公司/学校</label>
+                                    <input type="text" class="form-control" id="experience-company" name="company" placeholder="请输入公司或学校" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="experience-start" class="form-label">开始时间</label>
+                                    <input type="text" class="form-control" id="experience-start" name="start_date" placeholder="如：2020年" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="experience-end" class="form-label">结束时间</label>
+                                    <input type="text" class="form-control" id="experience-end" name="end_date" placeholder="如：至今或2023年">
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="experience-description" class="form-label">描述</label>
+                                    <textarea class="form-control" id="experience-description" name="description" rows="3" placeholder="请输入经历描述"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="experience-form" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 技能编辑模态框 -->
+    <div class="modal fade" id="skill-modal" tabindex="-1" aria-labelledby="skill-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="skill-modal-label">新增技能</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="skill-form" class="admin-form">
+                        <input type="hidden" id="skill-id" name="id">
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="skill-name" class="form-label">技能名称</label>
+                                    <input type="text" class="form-control" id="skill-name" name="name" placeholder="请输入技能名称" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="skill-proficiency" class="form-label">熟练度</label>
+                                    <input type="number" class="form-control" id="skill-proficiency" name="proficiency" min="0" max="100" placeholder="0-100" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="skill-icon" class="form-label">图标类名</label>
+                                    <input type="text" class="form-control" id="skill-icon" name="icon" placeholder="如：html5, css3-alt">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="skill-sort" class="form-label">排序</label>
+                                    <input type="number" class="form-control" id="skill-sort" name="sort_order" placeholder="排序号">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="skill-form" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 工具编辑模态框 -->
+    <div class="modal fade" id="tool-modal" tabindex="-1" aria-labelledby="tool-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tool-modal-label">新增工具</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="tool-form" class="admin-form">
+                        <input type="hidden" id="tool-id" name="id">
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tool-name" class="form-label">工具名称</label>
+                                    <input type="text" class="form-control" id="tool-name" name="name" placeholder="请输入工具名称" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tool-type" class="form-label">工具类型</label>
+                                    <select class="form-select" id="tool-type" name="type" required>
+                                        <option value="file">文件</option>
+                                        <option value="folder">文件夹</option>
+                                        <option value="archive">压缩包</option>
+                                        <option value="link">链接</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tool-category" class="form-label">分类</label>
+                                    <select class="form-select" id="tool-category" name="category" required>
+                                        <option value="software">软件</option>
+                                        <option value="document">文档</option>
+                                        <option value="website">网站</option>
+                                        <option value="other">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group" id="tool-file-group">
+                                    <label for="tool-file" class="form-label">上传文件</label>
+                                    <input type="file" class="form-control" id="tool-file" name="file">
+                                </div>
+                                <div class="form-group" id="tool-url-group" style="display: none;">
+                                    <label for="tool-url" class="form-label">链接地址</label>
+                                    <input type="url" class="form-control" id="tool-url" name="url" placeholder="请输入链接地址">
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="tool-description" class="form-label">工具描述</label>
+                                    <textarea class="form-control" id="tool-description" name="description" rows="3" placeholder="请输入工具描述"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="tool-form" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 引入自定义JS -->
+    <script src="js/admin-main.js"></script>
+    
+    <!-- API兼容性测试 -->
+    <script>
+        // 页面加载完成后测试API兼容性
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('开始测试API兼容性...');
+            
+            // 测试1: 获取所有数据
+            fetch('https://personal-website-api.1950837615.workers.dev/?action=all')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('测试1 - 获取所有数据成功:', data);
+                    
+                    // 测试2: 获取个人资料
+                    return fetch('https://personal-website-api.1950837615.workers.dev/?action=personal');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('测试2 - 获取个人资料成功:', data);
+                    
+                    // 测试3: 获取项目列表
+                    return fetch('https://personal-website-api.1950837615.workers.dev/?action=projects');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('测试3 - 获取项目列表成功:', data);
+                    
+                    // 测试4: 获取技能列表
+                    return fetch('https://personal-website-api.1950837615.workers.dev/?action=skills');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('测试4 - 获取技能列表成功:', data);
+                    
+                    // 测试5: 获取工具列表
+                    return fetch('https://personal-website-api.1950837615.workers.dev/?action=tools');
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('测试5 - 获取工具列表成功:', data);
+                    console.log('所有API兼容性测试通过！');
+                    
+                    // 显示测试结果
+                    const testResult = document.createElement('div');
+                    testResult.className = 'alert alert-success';
+                    testResult.innerHTML = 
+                        '<h4>API兼容性测试通过！</h4>' +
+                        '<p>后台管理系统已成功连接到现有API，可以正常获取数据。</p>' +
+                        '<p>所有功能模块已准备就绪，可以开始使用。</p>';
+                    
+                    // 添加到页面顶部
+                    const adminContent = document.querySelector('.admin-content');
+                    adminContent.insertBefore(testResult, adminContent.firstChild);
+                })
+                .catch(error => {
+                    console.error('API兼容性测试失败:', error);
+                    
+                    // 显示测试结果
+                    const testResult = document.createElement('div');
+                    testResult.className = 'alert alert-danger';
+                    testResult.innerHTML = 
+                        '<h4>API兼容性测试失败！</h4>' +
+                        '<p>后台管理系统无法连接到现有API，请检查API地址是否正确。</p>' +
+                        '<p>错误信息: ' + error.message + '</p>';
+                    
+                    // 添加到页面顶部
+                    const adminContent = document.querySelector('.admin-content');
+                    adminContent.insertBefore(testResult, adminContent.firstChild);
+                });
+        });
+    </script>
+</body>
+</html>

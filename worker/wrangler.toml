@@ -1,0 +1,13 @@
+name = "personal-website-api"
+main = "index.js"
+compatibility_date = "2023-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# D1数据库绑定
+[[d1_databases]]
+binding = "DB"  # Worker中使用的变量名
+database_name = "personal-website-db"  # 数据库名称
+database_id = ""  # 部署时会自动填充，或在控制台中手动添加
+
+[[vars]]
+# 这里可以添加环境变量
