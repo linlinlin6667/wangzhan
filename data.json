@@ -1,0 +1,123 @@
+{
+  "personal": {
+    "name": "张三",
+    "title": "前端开发者 & 创意设计师",
+    "introduction": "热爱创造令人惊叹的数字体验",
+    "description": "我是一名充满激情的前端开发者，专注于创造美观、易用的Web应用。我相信好的设计不仅仅是视觉上的享受，更是功能与美学的完美结合。每一个项目都是一次新的挑战，每一行代码都是对完美的追求。",
+    "avatar": "https://picsum.photos/seed/avatar/300/300",
+    "email": "hello@example.com",
+    "phone": "+86 138 0013 8000",
+    "location": "中国 · 北京"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "电商平台",
+      "description": "全栈开发",
+      "image": "https://picsum.photos/seed/project1/600/400",
+      "tags": ["React", "Node.js", "MongoDB"]
+    },
+    {
+      "id": 2,
+      "name": "管理系统",
+      "description": "企业级应用",
+      "image": "https://picsum.photos/seed/project2/600/400",
+      "tags": ["Vue", "TypeScript", "MySQL"]
+    },
+    {
+      "id": 3,
+      "name": "移动应用",
+      "description": "跨平台开发",
+      "image": "https://picsum.photos/seed/project3/600/400",
+      "tags": ["React Native", "Firebase"]
+    }
+  ],
+  "tools": [
+    {
+      "id": 1,
+      "name": "开发工具",
+      "icon": "fa-download",
+      "description": "VS Code · WebStorm · Git",
+      "link": "#"
+    },
+    {
+      "id": 2,
+      "name": "学习资源",
+      "icon": "fa-book",
+      "description": "MDN · W3School · FreeCodeCamp",
+      "link": "#"
+    },
+    {
+      "id": 3,
+      "name": "设计资源",
+      "icon": "fa-palette",
+      "description": "Figma · Sketch · Dribbble",
+      "link": "#"
+    },
+    {
+      "id": 4,
+      "name": "云服务",
+      "icon": "fa-cloud",
+      "description": "GitHub · Vercel · Netlify",
+      "link": "#"
+    },
+    {
+      "id": 5,
+      "name": "API文档",
+      "icon": "fa-code-branch",
+      "description": "MDN · RapidAPI · OpenAI",
+      "link": "#"
+    },
+    {
+      "id": 6,
+      "name": "数据库",
+      "icon": "fa-database",
+      "description": "MongoDB · PostgreSQL · Redis",
+      "link": "#"
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "name": "HTML5",
+      "proficiency": 95,
+      "icon": "fa-html5"
+    },
+    {
+      "id": 2,
+      "name": "CSS3",
+      "proficiency": 90,
+      "icon": "fa-css3-alt"
+    },
+    {
+      "id": 3,
+      "name": "JavaScript",
+      "proficiency": 85,
+      "icon": "fa-js"
+    },
+    {
+      "id": 4,
+      "name": "React",
+      "proficiency": 80,
+      "icon": "fa-react"
+    },
+    {
+      "id": 5,
+      "name": "Vue",
+      "proficiency": 75,
+      "icon": "fa-vuejs"
+    },
+    {
+      "id": 6,
+      "name": "Node.js",
+      "proficiency": 70,
+      "icon": "fa-node-js"
+    }
+  ],
+  "stats": {
+    "experience": 5,
+    "projects": 50,
+    "clients": 30,
+    "commits": 100
+  }
+}

@@ -3,511 +3,833 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后台管理系统</title>
+    <title>后台管理 - My World</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --primary-dark: #00B8C4;
+            --secondary: #FF00E6;
+            --accent: #7B61FF;
+            --success: #00FF94;
+            --warning: #FFD600;
+            
+            --bg-dark: #0A0A0F;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #FFFFFF;
+            --text-muted: #B8B8C8;
+            
+            --glow-primary: 0 0 30px rgba(0, 240, 255, 0.6);
+            --glow-secondary: 0 0 30px rgba(255, 0, 230, 0.6);
+            
+            --gradient-1: linear-gradient(135deg, #00F0FF, #00B8C4);
+            --gradient-2: linear-gradient(135deg, #FF00E6, #FF0066);
+            --gradient-3: linear-gradient(135deg, #7B61FF, #4F46E5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: var(--bg-dark);
+            min-height: 100vh;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-nav-item {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-nav-item:hover,
+        .admin-nav-item.active {
+            background: var(--gradient-1);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .admin-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .admin-sidebar {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1rem;
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background: var(--gradient-2);
+            color: white;
+            transform: translateX(5px);
+            border-color: var(--secondary);
+        }
+        
+        .sidebar-item i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .admin-main {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: var(--glow-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #FF0055, #FF0033);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.6);
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .card-actions .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+        
+        .notification.error {
+            border-left: 4px solid #FF0055;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="gradient-bg"></div>
-    <div class="particles" id="particles"></div>
+    <div id="notification" class="notification hidden"></div>
     
     <div class="admin-container">
-        <nav class="admin-header">
-            <div class="container-fluid">
-                <h1 class="admin-title">
-                    <i class="fas fa-cogs"></i>
-                    后台管理系统
-                </h1>
-                <div class="admin-user">
-                    <span>管理员</span>
-                    <i class="fas fa-user-circle ms-2"></i>
-                </div>
+        <div class="admin-header">
+            <h1 class="admin-title">后台管理系统</h1>
+            <div class="admin-nav">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <a href="https://github.com/linlinlin6667/wangzhan" target="_blank" class="admin-nav-item">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
             </div>
-        </nav>
+        </div>
         
-        <div class="admin-main">
-            <aside class="admin-sidebar">
-                <nav class="sidebar-nav">
-                    <ul class="nav-list">
-                        <li class="nav-item active" data-module="profile">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-user"></i>
-                                <span>个人资料</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" data-module="projects">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-folder-open"></i>
-                                <span>作品管理</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" data-module="experiences">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-history"></i>
-                                <span>经历管理</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" data-module="skills">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-star"></i>
-                                <span>技能管理</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" data-module="tools">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-tools"></i>
-                                <span>工具管理</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+        <div class="admin-content">
+            <div class="admin-sidebar">
+                <div class="sidebar-menu">
+                    <div class="sidebar-item active" data-section="personal">
+                        <i class="fas fa-user"></i> 个人信息
+                    </div>
+                    <div class="sidebar-item" data-section="projects">
+                        <i class="fas fa-project-diagram"></i> 作品管理
+                    </div>
+                    <div class="sidebar-item" data-section="tools">
+                        <i class="fas fa-tools"></i> 工具管理
+                    </div>
+                    <div class="sidebar-item" data-section="skills">
+                        <i class="fas fa-code"></i> 技能管理
+                    </div>
+                    <div class="sidebar-item" data-section="stats">
+                        <i class="fas fa-chart-bar"></i> 统计数据
+                    </div>
+                </div>
+            </div>
             
-            <main class="admin-content">
-                <section id="profile" class="module active">
-                    <div class="module-header">
-                        <h2>个人资料管理</h2>
-                        <p>编辑您的个人信息</p>
-                    </div>
-                    
-                    <div class="module-body">
-                        <form id="profile-form" class="admin-form">
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="profile-name" class="form-label">姓名</label>
-                                        <input type="text" class="form-control" id="profile-name" name="name" placeholder="请输入姓名">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="profile-email" class="form-label">邮箱</label>
-                                        <input type="email" class="form-control" id="profile-email" name="email" placeholder="请输入邮箱">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="profile-phone" class="form-label">电话</label>
-                                        <input type="tel" class="form-control" id="profile-phone" name="phone" placeholder="请输入电话">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="profile-avatar" class="form-label">头像</label>
-                                        <input type="file" class="form-control" id="profile-avatar" name="avatar" accept="image/*">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="profile-introduction" class="form-label">个人简介</label>
-                                        <textarea class="form-control" id="profile-introduction" name="introduction" rows="4" placeholder="请输入个人简介"></textarea>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-actions">
-                                        <button type="submit" class="btn btn-glow">
-                                            <i class="fas fa-save"></i>
-                                            <span>保存修改</span>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-glow" id="profile-reset">
-                                            <i class="fas fa-undo"></i>
-                                            <span>重置</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </section>
-                
-                <section id="projects" class="module">
-                    <div class="module-header">
-                        <h2>作品管理</h2>
-                        <button class="btn btn-glow" id="add-project">
-                            <i class="fas fa-plus"></i>
-                            <span>新增作品</span>
-                        </button>
-                    </div>
-                    
-                    <div class="module-body">
-                        <div class="projects-list" id="projects-list">
-                        </div>
-                    </div>
-                </section>
-                
-                <section id="experiences" class="module">
-                    <div class="module-header">
-                        <h2>经历管理</h2>
-                        <button class="btn btn-glow" id="add-experience">
-                            <i class="fas fa-plus"></i>
-                            <span>新增经历</span>
-                        </button>
-                    </div>
-                    
-                    <div class="module-body">
-                        <div class="experiences-list" id="experiences-list">
-                        </div>
-                    </div>
-                </section>
-                
-                <section id="skills" class="module">
-                    <div class="module-header">
-                        <h2>技能管理</h2>
-                        <button class="btn btn-glow" id="add-skill">
-                            <i class="fas fa-plus"></i>
-                            <span>新增技能</span>
-                        </button>
-                    </div>
-                    
-                    <div class="module-body">
-                        <div class="skills-list" id="skills-list">
-                        </div>
-                    </div>
-                </section>
-                
-                <section id="tools" class="module">
-                    <div class="module-header">
-                        <h2>工具管理</h2>
-                        <button class="btn btn-glow" id="add-tool">
-                            <i class="fas fa-plus"></i>
-                            <span>新增工具</span>
-                        </button>
-                    </div>
-                    
-                    <div class="module-body">
-                        <div class="tools-list" id="tools-list">
-                        </div>
-                    </div>
-                </section>
-            </main>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="project-modal" tabindex="-1" aria-labelledby="project-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content glass-card">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="project-modal-label">新增作品</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="admin-main">
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
                 </div>
-                <div class="modal-body">
-                    <form id="project-form" class="admin-form">
-                        <input type="hidden" id="project-id" name="id">
-                        
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="project-name" class="form-label">作品名称</label>
-                                    <input type="text" class="form-control" id="project-name" name="name" placeholder="请输入作品名称" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="project-category" class="form-label">分类</label>
-                                    <input type="text" class="form-control" id="project-category" name="category" placeholder="请输入分类" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="project-description" class="form-label">作品描述</label>
-                                    <textarea class="form-control" id="project-description" name="description" rows="3" placeholder="请输入作品描述"></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="project-image" class="form-label">作品图片</label>
-                                    <input type="file" class="form-control" id="project-image" name="image" accept="image/*">
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="project-link" class="form-label">作品链接</label>
-                                    <input type="url" class="form-control" id="project-link" name="link" placeholder="请输入作品链接">
-                                </div>
-                            </div>
+                
+                <div id="personal-section">
+                    <h2 class="section-title">个人信息</h2>
+                    <form id="personal-form">
+                        <div class="form-group">
+                            <label class="form-label">姓名</label>
+                            <input type="text" class="form-input" name="name" required>
                         </div>
+                        <div class="form-group">
+                            <label class="form-label">职位/头衔</label>
+                            <input type="text" class="form-input" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">个人介绍</label>
+                            <input type="text" class="form-input" name="introduction" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">详细简介</label>
+                            <textarea class="form-input form-textarea" name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">头像URL</label>
+                            <input type="url" class="form-input" name="avatar" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">邮箱</label>
+                            <input type="email" class="form-input" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">电话</label>
+                            <input type="tel" class="form-input" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">位置</label>
+                            <input type="text" class="form-input" name="location" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> 保存个人信息
+                        </button>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="project-form" class="btn btn-glow">保存</button>
+                
+                <div id="projects-section" class="hidden">
+                    <h2 class="section-title">作品管理</h2>
+                    <div id="projects-list"></div>
+                    <button id="add-project-btn" class="btn btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> 添加作品
+                    </button>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="experience-modal" tabindex="-1" aria-labelledby="experience-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content glass-card">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="experience-modal-label">新增经历</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+                <div id="tools-section" class="hidden">
+                    <h2 class="section-title">工具管理</h2>
+                    <div id="tools-list"></div>
+                    <button id="add-tool-btn" class="btn btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> 添加工具
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <form id="experience-form" class="admin-form">
-                        <input type="hidden" id="experience-id" name="id">
-                        
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="experience-title" class="form-label">职位/专业</label>
-                                    <input type="text" class="form-control" id="experience-title" name="title" placeholder="请输入职位或专业" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="experience-company" class="form-label">公司/学校</label>
-                                    <input type="text" class="form-control" id="experience-company" name="company" placeholder="请输入公司或学校" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="experience-start" class="form-label">开始时间</label>
-                                    <input type="text" class="form-control" id="experience-start" name="start_date" placeholder="如：2020年" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="experience-end" class="form-label">结束时间</label>
-                                    <input type="text" class="form-control" id="experience-end" name="end_date" placeholder="如：至今或2023年">
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="experience-description" class="form-label">描述</label>
-                                    <textarea class="form-control" id="experience-description" name="description" rows="3" placeholder="请输入经历描述"></textarea>
-                                </div>
-                            </div>
+                
+                <div id="skills-section" class="hidden">
+                    <h2 class="section-title">技能管理</h2>
+                    <div id="skills-list"></div>
+                    <button id="add-skill-btn" class="btn btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> 添加技能
+                    </button>
+                </div>
+                
+                <div id="stats-section" class="hidden">
+                    <h2 class="section-title">统计数据</h2>
+                    <form id="stats-form">
+                        <div class="form-group">
+                            <label class="form-label">年经验</label>
+                            <input type="number" class="form-input" name="experience" required>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="experience-form" class="btn btn-glow">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="skill-modal" tabindex="-1" aria-labelledby="skill-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content glass-card">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="skill-modal-label">新增技能</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="skill-form" class="admin-form">
-                        <input type="hidden" id="skill-id" name="id">
-                        
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="skill-name" class="form-label">技能名称</label>
-                                    <input type="text" class="form-control" id="skill-name" name="name" placeholder="请输入技能名称" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="skill-proficiency" class="form-label">熟练度</label>
-                                    <input type="number" class="form-control" id="skill-proficiency" name="proficiency" min="0" max="100" placeholder="0-100" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="skill-icon" class="form-label">图标类名</label>
-                                    <input type="text" class="form-control" id="skill-icon" name="icon" placeholder="如：html5, css3-alt">
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="skill-sort" class="form-label">排序</label>
-                                    <input type="number" class="form-control" id="skill-sort" name="sort_order" placeholder="排序号">
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-label">项目完成</label>
+                            <input type="number" class="form-input" name="projects" required>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="skill-form" class="btn btn-glow">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="tool-modal" tabindex="-1" aria-labelledby="tool-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content glass-card">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tool-modal-label">新增工具</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="tool-form" class="admin-form">
-                        <input type="hidden" id="tool-id" name="id">
-                        
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tool-name" class="form-label">工具名称</label>
-                                    <input type="text" class="form-control" id="tool-name" name="name" placeholder="请输入工具名称" required>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tool-type" class="form-label">工具类型</label>
-                                    <select class="form-select" id="tool-type" name="type" required>
-                                        <option value="file">文件</option>
-                                        <option value="folder">文件夹</option>
-                                        <option value="archive">压缩包</option>
-                                        <option value="link">链接</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="tool-category" class="form-label">分类</label>
-                                    <select class="form-select" id="tool-category" name="category" required>
-                                        <option value="software">软件</option>
-                                        <option value="document">文档</option>
-                                        <option value="website">网站</option>
-                                        <option value="other">其他</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group" id="tool-file-group">
-                                    <label for="tool-file" class="form-label">上传文件</label>
-                                    <input type="file" class="form-control" id="tool-file" name="file">
-                                </div>
-                                <div class="form-group" id="tool-url-group" style="display: none;">
-                                    <label for="tool-url" class="form-label">链接地址</label>
-                                    <input type="url" class="form-control" id="tool-url" name="url" placeholder="请输入链接地址">
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tool-description" class="form-label">工具描述</label>
-                                    <textarea class="form-control" id="tool-description" name="description" rows="3" placeholder="请输入工具描述"></textarea>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-label">满意客户</label>
+                            <input type="number" class="form-input" name="clients" required>
                         </div>
+                        <div class="form-group">
+                            <label class="form-label">代码提交</label>
+                            <input type="number" class="form-input" name="commits" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> 保存统计数据
+                        </button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="tool-form" class="btn btn-glow">保存</button>
                 </div>
             </div>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/admin-main.js"></script>
-    
     <script>
-        const API_URL = 'https://personal-website-api.1950837615.workers.dev/';
+        const API_URL = 'https://raw.githubusercontent.com/linlinlin6667/wangzhan/main/data.json';
+        const WORKER_URL = 'https://wangzhan.linlinlin6667.workers.dev';
+        
+        let currentData = {
+            personal: {},
+            projects: [],
+            tools: [],
+            skills: [],
+            stats: {}
+        };
         
         document.addEventListener('DOMContentLoaded', function() {
-            initParticles();
-            console.log('开始测试API兼容性...');
-            
-            fetch(`${API_URL}?action=all`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('获取所有数据成功:', data);
-                    
-                    return fetch(`${API_URL}?action=personal`);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('获取个人资料成功:', data);
-                    
-                    return fetch(`${API_URL}?action=projects`);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('获取项目列表成功:', data);
-                    
-                    return fetch(`${API_URL}?action=skills`);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('获取技能列表成功:', data);
-                    
-                    return fetch(`${API_URL}?action=tools`);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('获取工具列表成功:', data);
-                    console.log('所有API兼容性测试通过！');
-                    
-                    const testResult = document.createElement('div');
-                    testResult.className = 'alert alert-success glass-card';
-                    testResult.innerHTML = 
-                        '<h4>API兼容性测试通过！</h4>' +
-                        '<p>后台管理系统已成功连接到现有API，可以正常获取数据。</p>' +
-                        '<p>所有功能模块已准备就绪，可以开始使用。</p>';
-                    
-                    const adminContent = document.querySelector('.admin-content');
-                    adminContent.insertBefore(testResult, adminContent.firstChild);
-                })
-                .catch(error => {
-                    console.error('API兼容性测试失败:', error);
-                    
-                    const testResult = document.createElement('div');
-                    testResult.className = 'alert alert-danger glass-card';
-                    testResult.innerHTML = 
-                        '<h4>API兼容性测试失败！</h4>' +
-                        '<p>后台管理系统无法连接到现有API，请检查API地址是否正确。</p>' +
-                        '<p>错误信息: ' + error.message + '</p>';
-                    
-                    const adminContent = document.querySelector('.admin-content');
-                    adminContent.insertBefore(testResult, adminContent.firstChild);
-                });
+            loadData();
+            setupEventListeners();
         });
         
-        function initParticles() {
-            const particlesContainer = document.getElementById('particles');
-            if (!particlesContainer) return;
-            
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particle.style.width = (Math.random() * 4 + 2) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.opacity = Math.random() * 0.5 + 0.3;
-                particlesContainer.appendChild(particle);
+        async function loadData() {
+            showLoading(true);
+            try {
+                const response = await fetch(API_URL);
+                currentData = await response.json();
+                displayPersonal();
+                displayProjects();
+                displayTools();
+                displaySkills();
+                displayStats();
+                showNotification('数据加载成功', 'success');
+            } catch (error) {
+                showNotification('数据加载失败', 'error');
+            } finally {
+                showLoading(false);
             }
+        }
+        
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('hidden', !show);
+        }
+        
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+        
+        function setupEventListeners() {
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.dataset.section;
+                    switchSection(section);
+                });
+            });
+            
+            document.getElementById('personal-form').addEventListener('submit', handlePersonalSubmit);
+            document.getElementById('add-project-btn').addEventListener('click', showProjectForm);
+            document.getElementById('add-tool-btn').addEventListener('click', showToolForm);
+            document.getElementById('add-skill-btn').addEventListener('click', showSkillForm);
+            document.getElementById('stats-form').addEventListener('submit', handleStatsSubmit);
+        }
+        
+        function switchSection(section) {
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            document.querySelectorAll('[id$="-section"]').forEach(sec => {
+                sec.classList.add('hidden');
+            });
+            document.getElementById(`${section}-section`).classList.remove('hidden');
+        }
+        
+        function displayPersonal() {
+            const form = document.getElementById('personal-form');
+            const data = currentData.personal || {};
+            
+            form.querySelector('[name="name"]').value = data.name || '';
+            form.querySelector('[name="title"]').value = data.title || '';
+            form.querySelector('[name="introduction"]').value = data.introduction || '';
+            form.querySelector('[name="description"]').value = data.description || '';
+            form.querySelector('[name="avatar"]').value = data.avatar || '';
+            form.querySelector('[name="email"]').value = data.email || '';
+            form.querySelector('[name="phone"]').value = data.phone || '';
+            form.querySelector('[name="location"]').value = data.location || '';
+        }
+        
+        function displayProjects() {
+            const container = document.getElementById('projects-list');
+            container.innerHTML = '';
+            
+            currentData.projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">${project.name}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="editProject(${project.id})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteProject(${project.id})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p>${project.description}</p>
+                    <div>
+                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function displayTools() {
+            const container = document.getElementById('tools-list');
+            container.innerHTML = '';
+            
+            currentData.tools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">${tool.name}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="editTool(${tool.id})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteTool(${tool.id})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p>${tool.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function displaySkills() {
+            const container = document.getElementById('skills-list');
+            container.innerHTML = '';
+            
+            currentData.skills.forEach(skill => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">${skill.name}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="editSkill(${skill.id})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteSkill(${skill.id})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p>熟练度: ${skill.proficiency}%</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function displayStats() {
+            const form = document.getElementById('stats-form');
+            const data = currentData.stats || {};
+            
+            form.querySelector('[name="experience"]').value = data.experience || 0;
+            form.querySelector('[name="projects"]').value = data.projects || 0;
+            form.querySelector('[name="clients"]').value = data.clients || 0;
+            form.querySelector('[name="commits"]').value = data.commits || 0;
+        }
+        
+        async function handlePersonalSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            showLoading(true);
+            try {
+                await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'personal',
+                        ...data
+                    })
+                });
+                
+                currentData.personal = { ...currentData.personal, ...data };
+                showNotification('个人信息保存成功', 'success');
+            } catch (error) {
+                showNotification('保存失败', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        async function handleStatsSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            showLoading(true);
+            try {
+                await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'stats',
+                        ...data
+                    })
+                });
+                
+                currentData.stats = { ...currentData.stats, ...data };
+                showNotification('统计数据保存成功', 'success');
+            } catch (error) {
+                showNotification('保存失败', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        function showProjectForm(project = null) {
+            const name = prompt('作品名称:', project?.name || '');
+            const description = prompt('作品描述:', project?.description || '');
+            const tags = prompt('标签（用逗号分隔）:', project?.tags?.join(', ') || '');
+            
+            if (name && description) {
+                const data = {
+                    id: project?.id,
+                    name,
+                    description,
+                    tags: tags.split(',').map(t => t.trim()),
+                    image: 'https://picsum.photos/seed/' + Date.now() + '/600/400'
+                };
+                
+                if (project?.id) {
+                    const index = currentData.projects.findIndex(p => p.id === project.id);
+                    currentData.projects[index] = { ...currentData.projects[index], ...data };
+                } else {
+                    currentData.projects.push({ ...data, id: Date.now() });
+                }
+                
+                displayProjects();
+                showNotification('作品保存成功', 'success');
+            }
+        }
+        
+        function showToolForm(tool = null) {
+            const name = prompt('工具名称:', tool?.name || '');
+            const description = prompt('工具描述:', tool?.description || '');
+            
+            if (name && description) {
+                const data = {
+                    id: tool?.id,
+                    name,
+                    description,
+                    icon: 'fa-download',
+                    link: '#'
+                };
+                
+                if (tool?.id) {
+                    const index = currentData.tools.findIndex(t => t.id === tool.id);
+                    currentData.tools[index] = { ...currentData.tools[index], ...data };
+                } else {
+                    currentData.tools.push({ ...data, id: Date.now() });
+                }
+                
+                displayTools();
+                showNotification('工具保存成功', 'success');
+            }
+        }
+        
+        function showSkillForm(skill = null) {
+            const name = prompt('技能名称:', skill?.name || '');
+            const proficiency = prompt('熟练度 (0-100):', skill?.proficiency || 85);
+            
+            if (name && proficiency) {
+                const data = {
+                    id: skill?.id,
+                    name,
+                    proficiency: parseInt(proficiency),
+                    icon: 'fa-code'
+                };
+                
+                if (skill?.id) {
+                    const index = currentData.skills.findIndex(s => s.id === skill.id);
+                    currentData.skills[index] = { ...currentData.skills[index], ...data };
+                } else {
+                    currentData.skills.push({ ...data, id: Date.now() });
+                }
+                
+                displaySkills();
+                showNotification('技能保存成功', 'success');
+            }
+        }
+        
+        async function deleteProject(id) {
+            if (confirm('确定要删除这个作品吗？')) {
+                currentData.projects = currentData.projects.filter(p => p.id !== id);
+                displayProjects();
+                showNotification('作品删除成功', 'success');
+            }
+        }
+        
+        async function deleteTool(id) {
+            if (confirm('确定要删除这个工具吗？')) {
+                currentData.tools = currentData.tools.filter(t => t.id !== id);
+                displayTools();
+                showNotification('工具删除成功', 'success');
+            }
+        }
+        
+        async function deleteSkill(id) {
+            if (confirm('确定要删除这个技能吗？')) {
+                currentData.skills = currentData.skills.filter(s => s.id !== id);
+                displaySkills();
+                showNotification('技能删除成功', 'success');
+            }
+        }
+        
+        function editProject(id) {
+            const project = currentData.projects.find(p => p.id === id);
+            showProjectForm(project);
+        }
+        
+        function editTool(id) {
+            const tool = currentData.tools.find(t => t.id === id);
+            showToolForm(tool);
+        }
+        
+        function editSkill(id) {
+            const skill = currentData.skills.find(s => s.id === id);
+            showSkillForm(skill);
         }
     </script>
 </body>
