@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人网站后台管理</title>
+    <title>后台管理系统</title>
     
-    <!-- 引入Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- 引入Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- 引入优化后的自定义样式 -->
-    <link rel="stylesheet" href="css/admin-style-optimized.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin-style.css">
 </head>
 <body>
+    <div class="gradient-bg"></div>
+    <div class="particles" id="particles"></div>
+    
     <div class="admin-container">
-        <!-- 顶部导航栏 -->
         <nav class="admin-header">
             <div class="container-fluid">
                 <h1 class="admin-title">
@@ -30,9 +28,7 @@
             </div>
         </nav>
         
-        <!-- 主体内容区 -->
         <div class="admin-main">
-            <!-- 左侧侧边栏 -->
             <aside class="admin-sidebar">
                 <nav class="sidebar-nav">
                     <ul class="nav-list">
@@ -70,9 +66,7 @@
                 </nav>
             </aside>
             
-            <!-- 右侧内容区 -->
             <main class="admin-content">
-                <!-- 个人资料模块 -->
                 <section id="profile" class="module active">
                     <div class="module-header">
                         <h2>个人资料管理</h2>
@@ -119,8 +113,14 @@
                                 
                                 <div class="col-12">
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">保存修改</button>
-                                        <button type="button" class="btn btn-secondary" id="profile-reset">重置</button>
+                                        <button type="submit" class="btn btn-glow">
+                                            <i class="fas fa-save"></i>
+                                            <span>保存修改</span>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-glow" id="profile-reset">
+                                            <i class="fas fa-undo"></i>
+                                            <span>重置</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -128,70 +128,62 @@
                     </div>
                 </section>
                 
-                <!-- 作品管理模块 -->
                 <section id="projects" class="module">
                     <div class="module-header">
                         <h2>作品管理</h2>
-                        <button class="btn btn-primary" id="add-project">
+                        <button class="btn btn-glow" id="add-project">
                             <i class="fas fa-plus"></i>
-                            新增作品
+                            <span>新增作品</span>
                         </button>
                     </div>
                     
                     <div class="module-body">
                         <div class="projects-list" id="projects-list">
-                            <!-- 作品列表将通过JavaScript动态加载 -->
                         </div>
                     </div>
                 </section>
                 
-                <!-- 经历管理模块 -->
                 <section id="experiences" class="module">
                     <div class="module-header">
                         <h2>经历管理</h2>
-                        <button class="btn btn-primary" id="add-experience">
+                        <button class="btn btn-glow" id="add-experience">
                             <i class="fas fa-plus"></i>
-                            新增经历
+                            <span>新增经历</span>
                         </button>
                     </div>
                     
                     <div class="module-body">
                         <div class="experiences-list" id="experiences-list">
-                            <!-- 经历列表将通过JavaScript动态加载 -->
                         </div>
                     </div>
                 </section>
                 
-                <!-- 技能管理模块 -->
                 <section id="skills" class="module">
                     <div class="module-header">
                         <h2>技能管理</h2>
-                        <button class="btn btn-primary" id="add-skill">
+                        <button class="btn btn-glow" id="add-skill">
                             <i class="fas fa-plus"></i>
-                            新增技能
+                            <span>新增技能</span>
                         </button>
                     </div>
                     
                     <div class="module-body">
                         <div class="skills-list" id="skills-list">
-                            <!-- 技能列表将通过JavaScript动态加载 -->
                         </div>
                     </div>
                 </section>
                 
-                <!-- 工具管理模块 -->
                 <section id="tools" class="module">
                     <div class="module-header">
                         <h2>工具管理</h2>
-                        <button class="btn btn-primary" id="add-tool">
+                        <button class="btn btn-glow" id="add-tool">
                             <i class="fas fa-plus"></i>
-                            新增工具
+                            <span>新增工具</span>
                         </button>
                     </div>
                     
                     <div class="module-body">
                         <div class="tools-list" id="tools-list">
-                            <!-- 工具列表将通过JavaScript动态加载 -->
                         </div>
                     </div>
                 </section>
@@ -199,10 +191,9 @@
         </div>
     </div>
     
-    <!-- 作品编辑模态框 -->
     <div class="modal fade" id="project-modal" tabindex="-1" aria-labelledby="project-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content glass-card">
                 <div class="modal-header">
                     <h5 class="modal-title" id="project-modal-label">新增作品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,17 +241,16 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="project-form" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="project-form" class="btn btn-glow">保存</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 经历编辑模态框 -->
     <div class="modal fade" id="experience-modal" tabindex="-1" aria-labelledby="experience-modal-label" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content glass-card">
                 <div class="modal-header">
                     <h5 class="modal-title" id="experience-modal-label">新增经历</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -308,17 +298,16 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="experience-form" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="experience-form" class="btn btn-glow">保存</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 技能编辑模态框 -->
     <div class="modal fade" id="skill-modal" tabindex="-1" aria-labelledby="skill-modal-label" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content glass-card">
                 <div class="modal-header">
                     <h5 class="modal-title" id="skill-modal-label">新增技能</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -359,17 +348,16 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="skill-form" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="skill-form" class="btn btn-glow">保存</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 工具编辑模态框 -->
     <div class="modal fade" id="tool-modal" tabindex="-1" aria-labelledby="tool-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content glass-card">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tool-modal-label">新增工具</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -431,96 +419,96 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" form="tool-form" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-outline-glow" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" form="tool-form" class="btn btn-glow">保存</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 引入Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- 引入优化后的自定义JS -->
     <script src="js/admin-main.js"></script>
-    <!-- 引入 PocketBase API 适配器 -->
-    <script src="js/pocketbase-adapter.js"></script>
     
-    <!-- API兼容性测试 -->
     <script>
-        // API Configuration
-        const USE_POCKETBASE = true;
-        const POCKETBASE_URL = 'http://localhost:8090';
-        const WORKER_URL = 'https://personal-website-api.1950837615.workers.dev/';
-        const API_URL = USE_POCKETBASE ? POCKETBASE_URL : WORKER_URL;
+        const API_URL = 'https://personal-website-api.1950837615.workers.dev/';
         
-        // 页面加载完成后测试API兼容性
         document.addEventListener('DOMContentLoaded', function() {
+            initParticles();
             console.log('开始测试API兼容性...');
             
-            // 测试1: 获取所有数据
             fetch(`${API_URL}?action=all`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('测试1 - 获取所有数据成功:', data);
+                    console.log('获取所有数据成功:', data);
                     
-                    // 测试2: 获取个人资料
                     return fetch(`${API_URL}?action=personal`);
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('测试2 - 获取个人资料成功:', data);
+                    console.log('获取个人资料成功:', data);
                     
-                    // 测试3: 获取项目列表
                     return fetch(`${API_URL}?action=projects`);
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('测试3 - 获取项目列表成功:', data);
+                    console.log('获取项目列表成功:', data);
                     
-                    // 测试4: 获取技能列表
                     return fetch(`${API_URL}?action=skills`);
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('测试4 - 获取技能列表成功:', data);
+                    console.log('获取技能列表成功:', data);
                     
-                    // 测试5: 获取工具列表
                     return fetch(`${API_URL}?action=tools`);
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('测试5 - 获取工具列表成功:', data);
+                    console.log('获取工具列表成功:', data);
                     console.log('所有API兼容性测试通过！');
                     
-                    // 显示测试结果
                     const testResult = document.createElement('div');
-                    testResult.className = 'alert alert-success';
+                    testResult.className = 'alert alert-success glass-card';
                     testResult.innerHTML = 
                         '<h4>API兼容性测试通过！</h4>' +
                         '<p>后台管理系统已成功连接到现有API，可以正常获取数据。</p>' +
                         '<p>所有功能模块已准备就绪，可以开始使用。</p>';
                     
-                    // 添加到页面顶部
                     const adminContent = document.querySelector('.admin-content');
                     adminContent.insertBefore(testResult, adminContent.firstChild);
                 })
                 .catch(error => {
                     console.error('API兼容性测试失败:', error);
                     
-                    // 显示测试结果
                     const testResult = document.createElement('div');
-                    testResult.className = 'alert alert-danger';
+                    testResult.className = 'alert alert-danger glass-card';
                     testResult.innerHTML = 
                         '<h4>API兼容性测试失败！</h4>' +
                         '<p>后台管理系统无法连接到现有API，请检查API地址是否正确。</p>' +
                         '<p>错误信息: ' + error.message + '</p>';
                     
-                    // 添加到页面顶部
                     const adminContent = document.querySelector('.admin-content');
                     adminContent.insertBefore(testResult, adminContent.firstChild);
                 });
         });
+        
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                particlesContainer.appendChild(particle);
+            }
+        }
     </script>
 </body>
 </html>
