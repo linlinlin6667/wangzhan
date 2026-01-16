@@ -1,13 +1,11 @@
 export default {
   async fetch(request, env) {
-    // 设置CORS头
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
 
-    // 处理OPTIONS请求
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         headers: corsHeaders,
@@ -18,10 +16,8 @@ export default {
       const url = new URL(request.url);
       const action = url.searchParams.get('action') || 'all';
       
-      // 检查是否配置了D1数据库
       const hasD1 = !!env.DB;
       
-      // 处理POST请求（数据更新）
       if (request.method === 'POST') {
         if (!hasD1) {
           return new Response(JSON.stringify({
@@ -36,13 +32,9 @@ export default {
           });
         }
         
-        // 解析请求体
         const requestBody = await request.json();
-        
-        // 执行数据更新
         const result = await handlePostRequest(env.DB, action, requestBody);
         
-        // 返回响应
         return new Response(JSON.stringify({
           success: true,
           data: result
@@ -53,8 +45,7 @@ export default {
           }
         });
       }
-
-      // 模拟数据（作为回退）
+      
       const mockData = {
         personal: {
           id: 1,
@@ -226,22 +217,17 @@ export default {
           }
         ]
       };
-
-      // 初始化数据对象
+      
       let data = mockData;
 
-      // 使用D1数据库获取数据（如果可用）
       if (hasD1) {
         try {
-          // 使用D1数据库获取数据
           data = await getDataFromD1(env.DB, action);
         } catch (dbError) {
-          // 数据库错误时回退到模拟数据
           console.error('D1数据库错误:', dbError);
         }
       }
 
-      // 根据action参数返回不同数据
       let responseData;
       switch (action) {
         case 'personal':
@@ -265,7 +251,6 @@ export default {
           break;
       }
 
-      // 返回JSON响应
       return new Response(JSON.stringify({
         success: true,
         data: responseData
@@ -276,7 +261,6 @@ export default {
         }
       });
     } catch (error) {
-      // 返回错误响应
       return new Response(JSON.stringify({
         success: false,
         message: error.message
@@ -291,15 +275,11 @@ export default {
   }
 };
 
-// 从D1数据库获取数据
 async function getDataFromD1(db, action) {
-  // 初始化结果对象
   const result = {};
   
-  // 检查数据库表是否存在，不存在则创建
   await initDatabase(db);
   
-  // 根据action获取数据
   switch (action) {
     case 'personal':
       result.personal = await getPersonalData(db);
@@ -318,7 +298,6 @@ async function getDataFromD1(db, action) {
       break;
     case 'all':
     default:
-      // 获取所有数据
       result.personal = await getPersonalData(db);
       result.projects = await getProjectsData(db);
       result.experiences = await getExperiencesData(db);
@@ -330,9 +309,7 @@ async function getDataFromD1(db, action) {
   return result;
 }
 
-// 初始化数据库（创建表和初始数据）
 async function initDatabase(db) {
-  // 创建personal表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS personal (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -346,7 +323,6 @@ async function initDatabase(db) {
     );
   `);
   
-  // 创建projects表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS projects (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -360,7 +336,6 @@ async function initDatabase(db) {
     );
   `);
   
-  // 创建experiences表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS experiences (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -371,7 +346,6 @@ async function initDatabase(db) {
     );
   `);
   
-  // 创建skills表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS skills (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -382,7 +356,6 @@ async function initDatabase(db) {
     );
   `);
   
-  // 创建tools表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS tools (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -398,12 +371,11 @@ async function initDatabase(db) {
     );
   `);
   
-  // 检查personal表是否有数据，没有则插入初始数据
   const personalCount = await db.prepare('SELECT COUNT(*) as count FROM personal').first();
   if (!personalCount || personalCount.count === 0) {
     await db.prepare(`
       INSERT INTO personal (name, introduction, avatar, email, phone, github, weibo)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?)
     `).bind(
       '张三',
       '你好，我是张三，一名前端开发者',
@@ -416,45 +388,37 @@ async function initDatabase(db) {
   }
 }
 
-// 获取个人资料数据
 async function getPersonalData(db) {
   const personal = await db.prepare('SELECT * FROM personal ORDER BY id DESC LIMIT 1').first();
   return personal || null;
 }
 
-// 获取作品数据
 async function getProjectsData(db) {
   const projects = await db.prepare('SELECT * FROM projects ORDER BY sort_order ASC').all();
-  // 解析tags字符串为数组
   return projects.results.map(project => ({
     ...project,
     tags: project.tags ? JSON.parse(project.tags) : []
   }));
 }
 
-// 获取经历数据
 async function getExperiencesData(db) {
   const experiences = await db.prepare('SELECT * FROM experiences ORDER BY id ASC').all();
   return experiences.results;
 }
 
-// 获取技能数据
 async function getSkillsData(db) {
   const skills = await db.prepare('SELECT * FROM skills ORDER BY sort_order ASC').all();
   return skills.results;
 }
 
-// 获取工具数据
 async function getToolsData(db) {
   const tools = await db.prepare('SELECT * FROM tools ORDER BY id ASC').all();
-  // 解析tags字符串为数组
   return tools.results.map(tool => ({
     ...tool,
     tags: tool.tags ? JSON.parse(tool.tags) : []
   }));
 }
 
-// 处理POST请求（数据更新）
 async function handlePostRequest(db, action, data) {
   let result;
   
@@ -481,11 +445,8 @@ async function handlePostRequest(db, action, data) {
   return result;
 }
 
-// 更新个人资料数据
 async function updatePersonalData(db, data) {
-  // 如果有id则更新，否则插入
   if (data.id) {
-    // 更新现有数据
     await db.prepare(`
       UPDATE personal SET 
         name = ?, 
@@ -509,10 +470,8 @@ async function updatePersonalData(db, data) {
     
     return await getPersonalData(db);
   } else {
-    // 删除现有数据（只保留最新的一条）
     await db.exec('DELETE FROM personal');
     
-    // 插入新数据
     await db.prepare(`
       INSERT INTO personal (name, introduction, avatar, email, phone, github, weibo)
       VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -530,13 +489,10 @@ async function updatePersonalData(db, data) {
   }
 }
 
-// 更新作品数据
 async function updateProjectData(db, data) {
-  // 处理tags数组，转换为JSON字符串
   const tagsJson = JSON.stringify(data.tags || []);
   
   if (data.id) {
-    // 更新现有作品
     await db.prepare(`
       UPDATE projects SET 
         name = ?, 
@@ -560,7 +516,6 @@ async function updateProjectData(db, data) {
     
     return await getProjectsData(db);
   } else {
-    // 插入新作品
     await db.prepare(`
       INSERT INTO projects (name, description, image, category_id, category_name, sort_order, tags)
       VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -578,10 +533,8 @@ async function updateProjectData(db, data) {
   }
 }
 
-// 更新经历数据
 async function updateExperienceData(db, data) {
   if (data.id) {
-    // 更新现有经历
     await db.prepare(`
       UPDATE experiences SET 
         title = ?, 
@@ -599,7 +552,6 @@ async function updateExperienceData(db, data) {
     
     return await getExperiencesData(db);
   } else {
-    // 插入新经历
     await db.prepare(`
       INSERT INTO experiences (title, start_date, end_date, description)
       VALUES (?, ?, ?, ?)
@@ -614,10 +566,8 @@ async function updateExperienceData(db, data) {
   }
 }
 
-// 更新技能数据
 async function updateSkillData(db, data) {
   if (data.id) {
-    // 更新现有技能
     await db.prepare(`
       UPDATE skills SET 
         name = ?, 
@@ -635,7 +585,6 @@ async function updateSkillData(db, data) {
     
     return await getSkillsData(db);
   } else {
-    // 插入新技能
     await db.prepare(`
       INSERT INTO skills (name, icon, proficiency, sort_order)
       VALUES (?, ?, ?, ?)
@@ -650,13 +599,10 @@ async function updateSkillData(db, data) {
   }
 }
 
-// 更新工具数据
 async function updateToolData(db, data) {
-  // 处理tags数组，转换为JSON字符串
   const tagsJson = JSON.stringify(data.tags || []);
   
   if (data.id) {
-    // 更新现有工具
     await db.prepare(`
       UPDATE tools SET 
         name = ?, 
@@ -684,7 +630,6 @@ async function updateToolData(db, data) {
     
     return await getToolsData(db);
   } else {
-    // 插入新工具
     await db.prepare(`
       INSERT INTO tools (name, description, category, type, url, size, downloads, created_at, tags)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
