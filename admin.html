@@ -686,6 +686,7 @@
                 
                 currentData.personal = { ...currentData.personal, ...data };
                 showNotification('个人信息保存成功', 'success');
+                showDataToCopy();
             } catch (error) {
                 showNotification('保存失败', 'error');
             } finally {
@@ -711,10 +712,66 @@
                 
                 currentData.stats = { ...currentData.stats, ...data };
                 showNotification('统计数据保存成功', 'success');
+                showDataToCopy();
             } catch (error) {
                 showNotification('保存失败', 'error');
             } finally {
                 showLoading(false);
+            }
+        }
+        
+        function showDataToCopy() {
+            const dataToCopy = JSON.stringify(currentData, null, 2);
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: var(--bg-dark); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%;">
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">复制数据到data.json</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">请复制以下JSON数据，然后粘贴到 E:\\wangzhan\\data.json 文件中：</p>
+                    <textarea id="data-to-copy" style="width: 100%; height: 300px; background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; color: var(--text-main); font-family: monospace; font-size: 0.875rem; resize: vertical;">${dataToCopy}</textarea>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button onclick="copyData()" style="padding: 0.75rem 2rem; background: var(--gradient-1); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">
+                            <i class="fas fa-copy"></i> 复制数据
+                        </button>
+                        <button onclick="closeModal()" style="padding: 0.75rem 2rem; background: transparent; border: 2px solid var(--secondary); color: var(--secondary); border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">
+                            <i class="fas fa-times"></i> 关闭
+                        </button>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">
+                        <i class="fas fa-info-circle"></i> 步骤：
+                        <br>1. 点击"复制数据"按钮
+                        <br>2. 打开 E:\\wangzhan\\data.json 文件
+                        <br>3. 粘贴数据并保存
+                    </p>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function copyData() {
+            const textarea = document.getElementById('data-to-copy');
+            textarea.select();
+            document.execCommand('copy');
+            showNotification('数据已复制到剪贴板', 'success');
+        }
+        
+        function closeModal() {
+            const modal = document.querySelector('div[style*="position: fixed"]');
+            if (modal) {
+                modal.remove();
             }
         }
         
