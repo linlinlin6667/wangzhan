@@ -435,11 +435,26 @@
     
     <!-- 引入优化后的自定义JS -->
     <script src="js/personal-main-optimized.js"></script>
+    <!-- 引入 PocketBase API 适配器 -->
+    <script src="js/pocketbase-adapter.js"></script>
     
     <!-- 动态加载数据 -->
     <script>
-        // 配置API地址（已替换为实际Worker域名）
-        const API_URL = 'https://personal-website-api.1950837615.workers.dev/'; // 实际Worker域名
+        // API Configuration
+        // Set USE_POCKETBASE to true to use PocketBase, false to use Cloudflare Worker
+        const USE_POCKETBASE = true;
+        
+        // PocketBase Configuration
+        // For local development: 'http://localhost:8090'
+        // For production: Replace with your PocketBase instance URL
+        const POCKETBASE_URL = 'http://localhost:8090';
+        
+        // Cloudflare Worker Configuration
+        // Replace with your Cloudflare Worker URL when using Worker backend
+        const WORKER_URL = 'https://personal-website-api.1950837615.workers.dev/';
+        
+        // Final API URL based on configuration
+        const API_URL = USE_POCKETBASE ? POCKETBASE_URL : WORKER_URL;
         
         // 页面加载完成后获取所有数据
         document.addEventListener('DOMContentLoaded', function() {
