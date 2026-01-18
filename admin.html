@@ -19,45 +19,116 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+        }
+        
+        .input-field:focus {
+            border-color: #00F0FF;
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+        }
+        
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        
+        .item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .item-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        
+        .action-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #B8B8C8;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state p {
+            color: #B8B8C8;
+            font-size: 18px;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+    </style>
 </head>
 <body class="bg-[#0A0A0F] text-white min-h-screen">
-    <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#00F0FF] text-black px-4 py-2 rounded-lg z-50">
-        跳转到主要内容
-    </a>
-
     <!-- Navigation -->
-    <nav class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300" role="navigation" aria-label="主导航">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-b border-white/10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
+            <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
-                <a href="index.html" class="logo flex items-center gap-2 group" aria-label="返回首页">
-                    <span class="logo-text font-['Space_Grotesk'] text-xl lg:text-2xl font-bold tracking-wider">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <span class="font-['Space_Grotesk'] text-xl font-bold tracking-wider group-hover:text-[#00F0FF] transition-colors">
                         MY WORLD
                     </span>
-                    <div class="logo-dot w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
+                    <div class="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
                 </a>
 
-                <!-- Desktop Navigation -->
-                <ul class="nav-menu hidden md:flex items-center gap-1 lg:gap-2">
-                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">返回首页</a></li>
-                </ul>
-
-                <!-- Mobile Menu Button -->
-                <a href="index.html" class="md:hidden inline-flex items-center gap-2 px-4 py-2 bg-[#00F0FF] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                <!-- Back Button -->
+                <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-[#00F0FF] hover:text-black hover:border-[#00F0FF] transition-all duration-300">
                     <i class="fas fa-arrow-left"></i>
-                    <span>返回</span>
+                    <span>返回首页</span>
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main id="main-content" class="pt-24 pb-12">
+    <main class="pt-24 pb-12">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Page Header -->
-            <div class="page-header mb-12">
-                <h1 class="font-['Space_Grotesk'] text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            <div class="text-center mb-12">
+                <h1 class="font-['Space_Grotesk'] text-4xl sm:text-5xl font-bold mb-4">
                     后台管理
                 </h1>
                 <p class="text-[#B8B8C8] text-lg">
@@ -66,7 +137,7 @@
             </div>
 
             <!-- Admin Tabs -->
-            <div class="admin-tabs flex flex-wrap gap-2 mb-8 border-b border-white/10 pb-4">
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
                 <button class="tab-btn active px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="personal">
                     <i class="fas fa-user mr-2"></i>个人信息
                 </button>
@@ -91,42 +162,48 @@
             <div class="tab-content">
                 <!-- Personal Info Tab -->
                 <div id="personal-tab" class="tab-pane active">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6">编辑个人信息</h2>
+                    <div class="max-w-4xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">编辑个人信息</h2>
+                            <div class="flex items-center gap-2 text-[#B8B8C8]">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="text-sm">修改后点击保存即可更新</span>
+                            </div>
+                        </div>
                         <form id="personal-form" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label for="name" class="block text-sm font-medium mb-2">姓名</label>
-                                    <input type="text" id="name" name="name" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">姓名</label>
+                                    <input type="text" id="name" name="name" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
-                                <div class="form-group">
-                                    <label for="title" class="block text-sm font-medium mb-2">职位</label>
-                                    <input type="text" id="title" name="title" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">职位</label>
+                                    <input type="text" id="title" name="title" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="description" class="block text-sm font-medium mb-2">简介</label>
-                                <textarea id="description" name="description" rows="4" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none"></textarea>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">简介</label>
+                                <textarea id="description" name="description" rows="4" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none"></textarea>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label for="email" class="block text-sm font-medium mb-2">邮箱</label>
-                                    <input type="email" id="email" name="email" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">邮箱</label>
+                                    <input type="email" id="email" name="email" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
-                                <div class="form-group">
-                                    <label for="phone" class="block text-sm font-medium mb-2">电话</label>
-                                    <input type="tel" id="phone" name="phone" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">电话</label>
+                                    <input type="tel" id="phone" name="phone" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="location" class="block text-sm font-medium mb-2">位置</label>
-                                <input type="text" id="location" name="location" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">位置</label>
+                                <input type="text" id="location" name="location" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                             </div>
-                            <div class="form-group">
-                                <label for="avatar" class="block text-sm font-medium mb-2">头像URL</label>
-                                <input type="url" id="avatar" name="avatar" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">头像URL</label>
+                                <input type="url" id="avatar" name="avatar" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                             </div>
-                            <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                            <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                                 <i class="fas fa-save"></i>
                                 <span>保存个人信息</span>
                             </button>
@@ -136,15 +213,15 @@
 
                 <!-- Projects Tab -->
                 <div id="projects-tab" class="tab-pane hidden">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <div class="flex items-center justify-between mb-6">
+                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
                             <h2 class="font-['Space_Grotesk'] text-2xl font-bold">项目管理</h2>
-                            <button id="add-project-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                            <button id="add-project-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
                                 <i class="fas fa-plus"></i>
                                 <span>添加项目</span>
                             </button>
                         </div>
-                        <div id="projects-list" class="space-y-4">
+                        <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Projects will be loaded here -->
                         </div>
                     </div>
@@ -152,15 +229,15 @@
 
                 <!-- Skills Tab -->
                 <div id="skills-tab" class="tab-pane hidden">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <div class="flex items-center justify-between mb-6">
+                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
                             <h2 class="font-['Space_Grotesk'] text-2xl font-bold">技能管理</h2>
-                            <button id="add-skill-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                            <button id="add-skill-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
                                 <i class="fas fa-plus"></i>
                                 <span>添加技能</span>
                             </button>
                         </div>
-                        <div id="skills-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div id="skills-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Skills will be loaded here -->
                         </div>
                     </div>
@@ -168,15 +245,15 @@
 
                 <!-- Tools Tab -->
                 <div id="tools-tab" class="tab-pane hidden">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <div class="flex items-center justify-between mb-6">
+                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
                             <h2 class="font-['Space_Grotesk'] text-2xl font-bold">工具管理</h2>
-                            <button id="add-tool-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                            <button id="add-tool-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
                                 <i class="fas fa-plus"></i>
                                 <span>添加工具</span>
                             </button>
                         </div>
-                        <div id="tools-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div id="tools-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Tools will be loaded here -->
                         </div>
                     </div>
@@ -184,15 +261,15 @@
 
                 <!-- Websites Tab -->
                 <div id="websites-tab" class="tab-pane hidden">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <div class="flex items-center justify-between mb-6">
+                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
                             <h2 class="font-['Space_Grotesk'] text-2xl font-bold">网站管理</h2>
-                            <button id="add-website-btn" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+                            <button id="add-website-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
                                 <i class="fas fa-plus"></i>
                                 <span>添加网站</span>
                             </button>
                         </div>
-                        <div id="websites-list" class="space-y-4">
+                        <div id="websites-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Websites will be loaded here -->
                         </div>
                     </div>
@@ -200,30 +277,36 @@
 
                 <!-- Stats Tab -->
                 <div id="stats-tab" class="tab-pane hidden">
-                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
-                        <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6">统计数据</h2>
+                    <div class="max-w-4xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">统计数据</h2>
+                            <div class="flex items-center gap-2 text-[#B8B8C8]">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="text-sm">修改后点击保存即可更新</span>
+                            </div>
+                        </div>
                         <form id="stats-form" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label for="experience" class="block text-sm font-medium mb-2">年经验</label>
-                                    <input type="number" id="experience" name="experience" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">年经验</label>
+                                    <input type="number" id="experience" name="experience" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
-                                <div class="form-group">
-                                    <label for="projects-count" class="block text-sm font-medium mb-2">项目完成</label>
-                                    <input type="number" id="projects-count" name="projects" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目完成</label>
+                                    <input type="number" id="projects-count" name="projects" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label for="clients" class="block text-sm font-medium mb-2">满意客户</label>
-                                    <input type="number" id="clients" name="clients" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">满意客户</label>
+                                    <input type="number" id="clients" name="clients" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
-                                <div class="form-group">
-                                    <label for="commits" class="block text-sm font-medium mb-2">代码提交</label>
-                                    <input type="number" id="commits" name="commits" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">代码提交</label>
+                                    <input type="number" id="commits" name="commits" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                            <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                                 <i class="fas fa-save"></i>
                                 <span>保存统计数据</span>
                             </button>
@@ -236,9 +319,9 @@
 
     <!-- Modal -->
     <div id="modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="modal-backdrop"></div>
+        <div class="modal-overlay absolute inset-0" id="modal-backdrop"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="modal-content bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                 <div class="flex items-center justify-between mb-6">
                     <h3 id="modal-title" class="font-['Space_Grotesk'] text-2xl font-bold">添加项目</h3>
                     <button id="modal-close" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#FF00E6] hover:text-white hover:border-[#FF00E6] transition-all duration-300" aria-label="关闭">
@@ -255,9 +338,30 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script>
-        // Admin Panel JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            // Tab switching
+            console.log('Admin panel loaded');
+            
+            // Wait for main.js to initialize
+            setTimeout(() => {
+                if (!window.MyWorldAPI) {
+                    console.error('MyWorldAPI not found');
+                    return;
+                }
+                
+                console.log('MyWorldAPI loaded:', window.MyWorldAPI);
+                
+                // Initialize tabs
+                initTabs();
+                
+                // Load all data
+                loadAllData();
+                
+                // Initialize event listeners
+                initEventListeners();
+            }, 100);
+        });
+
+        function initTabs() {
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -279,118 +383,67 @@
                     activePane.classList.add('active');
                 });
             });
+        }
 
-            // Load data from main.js
-            if (window.MyWorldAPI) {
-                loadPersonalInfo();
-                loadProjects();
-                loadSkills();
-                loadTools();
-                loadWebsites();
-                loadStats();
-            }
+        function loadAllData() {
+            console.log('Loading all data...');
+            loadPersonalInfo();
+            loadProjects();
+            loadSkills();
+            loadTools();
+            loadWebsites();
+            loadStats();
+        }
 
+        function initEventListeners() {
             // Personal form
             const personalForm = document.getElementById('personal-form');
             if (personalForm) {
-                personalForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const formData = new FormData(personalForm);
-                    const data = Object.fromEntries(formData);
-                    
-                    if (window.MyWorldAPI) {
-                        window.MyWorldAPI.state.personal = {
-                            ...window.MyWorldAPI.state.personal,
-                            ...data
-                        };
-                        localStorage.setItem('myWorldData', JSON.stringify({
-                            personal: window.MyWorldAPI.state.personal,
-                            projects: window.MyWorldAPI.state.projects,
-                            skills: window.MyWorldAPI.state.skills,
-                            tools: window.MyWorldAPI.state.tools,
-                            websites: window.MyWorldAPI.state.websites,
-                            stats: window.MyWorldAPI.state.stats
-                        }));
-                        window.MyWorldAPI.showNotification('个人信息保存成功！', 'success');
-                    }
-                });
+                personalForm.addEventListener('submit', handlePersonalSubmit);
             }
 
             // Stats form
             const statsForm = document.getElementById('stats-form');
             if (statsForm) {
-                statsForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const formData = new FormData(statsForm);
-                    const data = Object.fromEntries(formData);
-                    
-                    if (window.MyWorldAPI) {
-                        window.MyWorldAPI.state.stats = {
-                            experience: parseInt(data.experience),
-                            projects: parseInt(data.projects),
-                            clients: parseInt(data.clients),
-                            commits: parseInt(data.commits)
-                        };
-                        localStorage.setItem('myWorldData', JSON.stringify({
-                            personal: window.MyWorldAPI.state.personal,
-                            projects: window.MyWorldAPI.state.projects,
-                            skills: window.MyWorldAPI.state.skills,
-                            tools: window.MyWorldAPI.state.tools,
-                            websites: window.MyWorldAPI.state.websites,
-                            stats: window.MyWorldAPI.state.stats
-                        }));
-                        window.MyWorldAPI.showNotification('统计数据保存成功！', 'success');
-                    }
-                });
+                statsForm.addEventListener('submit', handleStatsSubmit);
             }
 
-            // Add project button
+            // Add buttons
             const addProjectBtn = document.getElementById('add-project-btn');
             if (addProjectBtn) {
-                addProjectBtn.addEventListener('click', () => {
-                    openModal('project');
-                });
+                addProjectBtn.addEventListener('click', () => openModal('project'));
             }
 
-            // Add skill button
             const addSkillBtn = document.getElementById('add-skill-btn');
             if (addSkillBtn) {
-                addSkillBtn.addEventListener('click', () => {
-                    openModal('skill');
-                });
+                addSkillBtn.addEventListener('click', () => openModal('skill'));
             }
 
-            // Add tool button
             const addToolBtn = document.getElementById('add-tool-btn');
             if (addToolBtn) {
-                addToolBtn.addEventListener('click', () => {
-                    openModal('tool');
-                });
+                addToolBtn.addEventListener('click', () => openModal('tool'));
             }
 
-            // Add website button
             const addWebsiteBtn = document.getElementById('add-website-btn');
             if (addWebsiteBtn) {
-                addWebsiteBtn.addEventListener('click', () => {
-                    openModal('website');
-                });
+                addWebsiteBtn.addEventListener('click', () => openModal('website'));
             }
 
             // Modal close
             const modalClose = document.getElementById('modal-close');
             const modalBackdrop = document.getElementById('modal-backdrop');
-            const modal = document.getElementById('modal');
+            
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+            if (modalBackdrop) {
+                modalBackdrop.addEventListener('click', closeModal);
+            }
 
-            const closeModal = () => {
-                modal.classList.add('hidden');
-                document.getElementById('modal-body').innerHTML = '';
-            };
+            // Form submissions
+            document.addEventListener('submit', handleFormSubmit);
+        }
 
-            modalClose.addEventListener('click', closeModal);
-            modalBackdrop.addEventListener('click', closeModal);
-        });
-
-        // Load personal info
         function loadPersonalInfo() {
             const personal = window.MyWorldAPI.state.personal;
             if (personal) {
@@ -404,120 +457,232 @@
             }
         }
 
-        // Load projects
         function loadProjects() {
             const projectsList = document.getElementById('projects-list');
-            const projects = window.MyWorldAPI.state.projects;
+            const projects = window.MyWorldAPI.state.projects || [];
+            
+            if (projects.length === 0) {
+                projectsList.innerHTML = `
+                    <div class="col-span-full empty-state">
+                        <i class="fas fa-project-diagram"></i>
+                        <p>暂无项目，点击上方按钮添加第一个项目</p>
+                    </div>
+                `;
+                return;
+            }
             
             projectsList.innerHTML = projects.map(project => `
-                <div class="project-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${project.id}">
-                    <img src="${project.image}" alt="${project.name}" class="w-20 h-20 rounded-lg object-cover">
-                    <div class="flex-1">
-                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${project.name}</h3>
-                        <p class="text-[#B8B8C8] text-sm">${project.description}</p>
+                <div class="item-card rounded-2xl p-6">
+                    <div class="aspect-video rounded-xl overflow-hidden mb-4">
+                        <img src="${project.image}" alt="${project.name}" class="w-full h-full object-cover">
                     </div>
+                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${project.name}</h3>
+                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${project.description}</p>
                     <div class="flex gap-2">
-                        <button onclick="editProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
-                            <i class="fas fa-edit"></i>
+                        <button onclick="editProject('${project.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
+                            <i class="fas fa-edit mr-2"></i>编辑
                         </button>
-                        <button onclick="deleteProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
-                            <i class="fas fa-trash"></i>
+                        <button onclick="deleteProject('${project.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
+                            <i class="fas fa-trash mr-2"></i>删除
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Load skills
         function loadSkills() {
             const skillsList = document.getElementById('skills-list');
-            const skills = window.MyWorldAPI.state.skills;
+            const skills = window.MyWorldAPI.state.skills || [];
+            
+            if (skills.length === 0) {
+                skillsList.innerHTML = `
+                    <div class="col-span-full empty-state">
+                        <i class="fas fa-code"></i>
+                        <p>暂无技能，点击上方按钮添加第一个技能</p>
+                    </div>
+                `;
+                return;
+            }
             
             skillsList.innerHTML = skills.map(skill => `
-                <div class="skill-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${skill.id}">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${skill.color}]/20 to-[${skill.color}]/5 flex items-center justify-center">
-                        <i class="fab ${skill.icon} text-[${skill.color}] text-xl"></i>
+                <div class="item-card rounded-2xl p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${skill.color}]/20 to-[${skill.color}]/5 flex items-center justify-center mb-4">
+                        <i class="fab ${skill.icon} text-[${skill.color}] text-3xl"></i>
                     </div>
-                    <div class="flex-1">
-                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${skill.name}</h3>
-                        <p class="text-[${skill.color}] text-sm">${skill.proficiency}%</p>
+                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${skill.name}</h3>
+                    <div class="skill-bar mb-4">
+                        <div class="skill-progress bg-[${skill.color}]" style="width: ${skill.proficiency}%"></div>
                     </div>
+                    <p class="text-[${skill.color}] text-sm mb-4">${skill.proficiency}%</p>
                     <div class="flex gap-2">
-                        <button onclick="editSkill('${skill.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
-                            <i class="fas fa-edit"></i>
+                        <button onclick="editSkill('${skill.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
+                            <i class="fas fa-edit mr-2"></i>编辑
                         </button>
-                        <button onclick="deleteSkill('${skill.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
-                            <i class="fas fa-trash"></i>
+                        <button onclick="deleteSkill('${skill.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
+                            <i class="fas fa-trash mr-2"></i>删除
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Load tools
         function loadTools() {
             const toolsList = document.getElementById('tools-list');
-            const tools = window.MyWorldAPI.state.tools;
+            const tools = window.MyWorldAPI.state.tools || [];
+            
+            if (tools.length === 0) {
+                toolsList.innerHTML = `
+                    <div class="col-span-full empty-state">
+                        <i class="fas fa-tools"></i>
+                        <p>暂无工具，点击上方按钮添加第一个工具</p>
+                    </div>
+                `;
+                return;
+            }
             
             toolsList.innerHTML = tools.map(tool => `
-                <div class="tool-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${tool.id}">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center">
-                        <i class="fas ${tool.icon} text-[${tool.color}] text-xl"></i>
+                <div class="item-card rounded-2xl p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center mb-4">
+                        <i class="fas ${tool.icon} text-[${tool.color}] text-3xl"></i>
                     </div>
-                    <div class="flex-1">
-                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${tool.name}</h3>
-                        <p class="text-[#B8B8C8] text-sm">${tool.description}</p>
-                    </div>
+                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${tool.name}</h3>
+                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${tool.description}</p>
                     <div class="flex gap-2">
-                        <button onclick="editTool('${tool.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
-                            <i class="fas fa-edit"></i>
+                        <button onclick="editTool('${tool.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
+                            <i class="fas fa-edit mr-2"></i>编辑
                         </button>
-                        <button onclick="deleteTool('${tool.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
-                            <i class="fas fa-trash"></i>
+                        <button onclick="deleteTool('${tool.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
+                            <i class="fas fa-trash mr-2"></i>删除
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Load stats
+        function loadWebsites() {
+            const websitesList = document.getElementById('websites-list');
+            const websites = window.MyWorldAPI.state.websites || [];
+            
+            if (websites.length === 0) {
+                websitesList.innerHTML = `
+                    <div class="col-span-full empty-state">
+                        <i class="fas fa-globe"></i>
+                        <p>暂无网站，点击上方按钮添加第一个网站</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            websitesList.innerHTML = websites.map(website => `
+                <div class="item-card rounded-2xl p-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${website.color}]/20 to-[${website.color}]/5 flex items-center justify-center mb-4">
+                        <i class="fab ${website.icon} text-[${website.color}] text-3xl"></i>
+                    </div>
+                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${website.name}</h3>
+                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${website.description}</p>
+                    <div class="flex gap-2">
+                        <button onclick="editWebsite('${website.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
+                            <i class="fas fa-edit mr-2"></i>编辑
+                        </button>
+                        <button onclick="deleteWebsite('${website.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
+                            <i class="fas fa-trash mr-2"></i>删除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function loadStats() {
-            const stats = window.MyWorldAPI.state.stats;
-            if (stats) {
-                document.getElementById('experience').value = stats.experience || 0;
-                document.getElementById('projects-count').value = stats.projects || 0;
-                document.getElementById('clients').value = stats.clients || 0;
-                document.getElementById('commits').value = stats.commits || 0;
+            const stats = window.MyWorldAPI.state.stats || {};
+            document.getElementById('experience').value = stats.experience || 0;
+            document.getElementById('projects-count').value = stats.projects || 0;
+            document.getElementById('clients').value = stats.clients || 0;
+            document.getElementById('commits').value = stats.commits || 0;
+        }
+
+        function handlePersonalSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            window.MyWorldAPI.state.personal = {
+                ...window.MyWorldAPI.state.personal,
+                ...data
+            };
+            
+            saveData();
+            window.MyWorldAPI.showNotification('个人信息保存成功！', 'success');
+        }
+
+        function handleStatsSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            window.MyWorldAPI.state.stats = {
+                experience: parseInt(data.experience),
+                projects: parseInt(data.projects),
+                clients: parseInt(data.clients),
+                commits: parseInt(data.commits)
+            };
+            
+            saveData();
+            window.MyWorldAPI.showNotification('统计数据保存成功！', 'success');
+        }
+
+        function handleFormSubmit(e) {
+            if (e.target.id === 'project-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                data.tags = data.tags ? data.tags.split(',').map(tag => tag.trim()) : [];
+                
+                window.MyWorldAPI.createProject(data);
+                loadProjects();
+                closeModal();
+                window.MyWorldAPI.showNotification('项目添加成功！', 'success');
+            } else if (e.target.id === 'skill-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                data.proficiency = parseInt(data.proficiency);
+                
+                window.MyWorldAPI.createSkill(data);
+                loadSkills();
+                closeModal();
+                window.MyWorldAPI.showNotification('技能添加成功！', 'success');
+            } else if (e.target.id === 'tool-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                
+                window.MyWorldAPI.createTool(data);
+                loadTools();
+                closeModal();
+                window.MyWorldAPI.showNotification('工具添加成功！', 'success');
+            } else if (e.target.id === 'website-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                
+                window.MyWorldAPI.createWebsite(data);
+                loadWebsites();
+                closeModal();
+                window.MyWorldAPI.showNotification('网站添加成功！', 'success');
             }
         }
 
-        // Load websites
-        function loadWebsites() {
-            const websitesList = document.getElementById('websites-list');
-            const websites = window.MyWorldAPI.state.websites;
-            
-            websitesList.innerHTML = websites.map(website => `
-                <div class="website-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${website.id}">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${website.color}]/20 to-[${website.color}]/5 flex items-center justify-center">
-                        <i class="fab ${website.icon} text-[${website.color}] text-xl"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${website.name}</h3>
-                        <p class="text-[#B8B8C8] text-sm">${website.description}</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="editWebsite('${website.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteWebsite('${website.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+        function saveData() {
+            localStorage.setItem('myWorldData', JSON.stringify({
+                personal: window.MyWorldAPI.state.personal,
+                projects: window.MyWorldAPI.state.projects,
+                skills: window.MyWorldAPI.state.skills,
+                tools: window.MyWorldAPI.state.tools,
+                websites: window.MyWorldAPI.state.websites,
+                stats: window.MyWorldAPI.state.stats
+            }));
         }
 
-        // Open modal
         function openModal(type, id = null) {
             const modal = document.getElementById('modal');
             const modalTitle = document.getElementById('modal-title');
@@ -540,32 +705,39 @@
             }
         }
 
-        // Get project form
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            modal.classList.add('hidden');
+            modalBody.innerHTML = '';
+        }
+
         function getProjectForm(id = null) {
             const project = id ? window.MyWorldAPI.state.projects.find(p => p.id === id) : null;
             return `
                 <form id="project-form" class="space-y-4">
-                    <div class="form-group">
-                        <label for="project-name" class="block text-sm font-medium mb-2">项目名称</label>
-                        <input type="text" id="project-name" name="name" value="${project ? project.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目名称</label>
+                        <input type="text" id="project-name" name="name" value="${project ? project.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="project-description" class="block text-sm font-medium mb-2">项目描述</label>
-                        <textarea id="project-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${project ? project.description : ''}</textarea>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目描述</label>
+                        <textarea id="project-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${project ? project.description : ''}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="project-image" class="block text-sm font-medium mb-2">图片URL</label>
-                        <input type="url" id="project-image" name="image" value="${project ? project.image : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图片URL</label>
+                        <input type="url" id="project-image" name="image" value="${project ? project.image : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="project-tags" class="block text-sm font-medium mb-2">标签（用逗号分隔）</label>
-                        <input type="text" id="project-tags" name="tags" value="${project ? project.tags.join(', ') : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">标签（用逗号分隔）</label>
+                        <input type="text" id="project-tags" name="tags" value="${project ? project.tags.join(', ') : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="project-link" class="block text-sm font-medium mb-2">项目链接</label>
-                        <input type="url" id="project-link" name="link" value="${project ? project.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目链接</label>
+                        <input type="url" id="project-link" name="link" value="${project ? project.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                         <i class="fas fa-save"></i>
                         <span>${id ? '更新项目' : '添加项目'}</span>
                     </button>
@@ -573,28 +745,27 @@
             `;
         }
 
-        // Get skill form
         function getSkillForm(id = null) {
             const skill = id ? window.MyWorldAPI.state.skills.find(s => s.id === id) : null;
             return `
                 <form id="skill-form" class="space-y-4">
-                    <div class="form-group">
-                        <label for="skill-name" class="block text-sm font-medium mb-2">技能名称</label>
-                        <input type="text" id="skill-name" name="name" value="${skill ? skill.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">技能名称</label>
+                        <input type="text" id="skill-name" name="name" value="${skill ? skill.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="skill-proficiency" class="block text-sm font-medium mb-2">熟练度 (%)</label>
-                        <input type="number" id="skill-proficiency" name="proficiency" min="0" max="100" value="${skill ? skill.proficiency : 50}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">熟练度 (%)</label>
+                        <input type="number" id="skill-proficiency" name="proficiency" min="0" max="100" value="${skill ? skill.proficiency : 50}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="skill-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
-                        <input type="text" id="skill-icon" name="icon" value="${skill ? skill.icon : 'fa-code'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
+                        <input type="text" id="skill-icon" name="icon" value="${skill ? skill.icon : 'fa-code'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="skill-color" class="block text-sm font-medium mb-2">颜色</label>
-                        <input type="color" id="skill-color" name="color" value="${skill ? skill.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
+                        <input type="color" id="skill-color" name="color" value="${skill ? skill.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
                     </div>
-                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                         <i class="fas fa-save"></i>
                         <span>${id ? '更新技能' : '添加技能'}</span>
                     </button>
@@ -602,32 +773,31 @@
             `;
         }
 
-        // Get tool form
         function getToolForm(id = null) {
             const tool = id ? window.MyWorldAPI.state.tools.find(t => t.id === id) : null;
             return `
                 <form id="tool-form" class="space-y-4">
-                    <div class="form-group">
-                        <label for="tool-name" class="block text-sm font-medium mb-2">工具名称</label>
-                        <input type="text" id="tool-name" name="name" value="${tool ? tool.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具名称</label>
+                        <input type="text" id="tool-name" name="name" value="${tool ? tool.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="tool-description" class="block text-sm font-medium mb-2">工具描述</label>
-                        <textarea id="tool-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${tool ? tool.description : ''}</textarea>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具描述</label>
+                        <textarea id="tool-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${tool ? tool.description : ''}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="tool-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
-                        <input type="text" id="tool-icon" name="icon" value="${tool ? tool.icon : 'fa-tools'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
+                        <input type="text" id="tool-icon" name="icon" value="${tool ? tool.icon : 'fa-tools'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="tool-link" class="block text-sm font-medium mb-2">工具链接</label>
-                        <input type="url" id="tool-link" name="link" value="${tool ? tool.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具链接</label>
+                        <input type="url" id="tool-link" name="link" value="${tool ? tool.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="tool-color" class="block text-sm font-medium mb-2">颜色</label>
-                        <input type="color" id="tool-color" name="color" value="${tool ? tool.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
+                        <input type="color" id="tool-color" name="color" value="${tool ? tool.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
                     </div>
-                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                         <i class="fas fa-save"></i>
                         <span>${id ? '更新工具' : '添加工具'}</span>
                     </button>
@@ -635,32 +805,31 @@
             `;
         }
 
-        // Get website form
         function getWebsiteForm(id = null) {
             const website = id ? window.MyWorldAPI.state.websites.find(w => w.id === id) : null;
             return `
                 <form id="website-form" class="space-y-4">
-                    <div class="form-group">
-                        <label for="website-name" class="block text-sm font-medium mb-2">网站名称</label>
-                        <input type="text" id="website-name" name="name" value="${website ? website.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站名称</label>
+                        <input type="text" id="website-name" name="name" value="${website ? website.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="website-description" class="block text-sm font-medium mb-2">网站描述</label>
-                        <textarea id="website-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${website ? website.description : ''}</textarea>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站描述</label>
+                        <textarea id="website-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${website ? website.description : ''}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="website-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
-                        <input type="text" id="website-icon" name="icon" value="${website ? website.icon : 'fa-globe'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
+                        <input type="text" id="website-icon" name="icon" value="${website ? website.icon : 'fa-globe'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="website-link" class="block text-sm font-medium mb-2">网站链接</label>
-                        <input type="url" id="website-link" name="link" value="${website ? website.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站链接</label>
+                        <input type="url" id="website-link" name="link" value="${website ? website.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
                     </div>
-                    <div class="form-group">
-                        <label for="website-color" class="block text-sm font-medium mb-2">颜色</label>
-                        <input type="color" id="website-color" name="color" value="${website ? website.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
+                        <input type="color" id="website-color" name="color" value="${website ? website.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
                     </div>
-                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
                         <i class="fas fa-save"></i>
                         <span>${id ? '更新网站' : '添加网站'}</span>
                     </button>
@@ -668,7 +837,6 @@
             `;
         }
 
-        // Edit functions
         function editProject(id) {
             openModal('project', id);
         }
@@ -685,7 +853,6 @@
             openModal('website', id);
         }
 
-        // Delete functions
         function deleteProject(id) {
             if (confirm('确定要删除这个项目吗？')) {
                 window.MyWorldAPI.deleteProject(id);
@@ -717,40 +884,6 @@
                 window.MyWorldAPI.showNotification('网站删除成功！', 'success');
             }
         }
-
-        // Form submissions
-        document.addEventListener('submit', function(e) {
-            if (e.target.id === 'project-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                data.tags = data.tags.split(',').map(tag => tag.trim());
-                
-                window.MyWorldAPI.createProject(data);
-                loadProjects();
-                document.getElementById('modal').classList.add('hidden');
-                window.MyWorldAPI.showNotification('项目添加成功！', 'success');
-            } else if (e.target.id === 'skill-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                data.proficiency = parseInt(data.proficiency);
-                
-                window.MyWorldAPI.createSkill(data);
-                loadSkills();
-                document.getElementById('modal').classList.add('hidden');
-                window.MyWorldAPI.showNotification('技能添加成功！', 'success');
-            } else if (e.target.id === 'tool-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                
-                window.MyWorldAPI.createTool(data);
-                loadTools();
-                document.getElementById('modal').classList.add('hidden');
-                window.MyWorldAPI.showNotification('工具添加成功！', 'success');
-            }
-        });
     </script>
 </body>
 </html>
