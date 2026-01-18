@@ -31,6 +31,7 @@ const state = {
     projects: [],
     skills: [],
     tools: [],
+    websites: [],
     stats: {},
     isLoading: false,
     error: null
@@ -266,6 +267,7 @@ const loadDataFromStorage = () => {
             state.projects = data.projects || [];
             state.skills = data.skills || [];
             state.tools = data.tools || [];
+            state.websites = data.websites || [];
             state.stats = data.stats || {};
             return data;
         }
@@ -352,6 +354,11 @@ const getDefaultData = () => ({
         { id: generateId(), name: '云服务', icon: 'fa-cloud', description: 'GitHub · Vercel · Netlify', link: '#', color: '#00F0FF' },
         { id: generateId(), name: 'API文档', icon: 'fa-code-branch', description: 'MDN · RapidAPI · OpenAI', link: '#', color: '#FF00E6' },
         { id: generateId(), name: '数据库', icon: 'fa-database', description: 'MongoDB · PostgreSQL · Redis', link: '#', color: '#7B61FF' }
+    ],
+    websites: [
+        { id: generateId(), name: 'GitHub', icon: 'fa-github', description: '代码托管平台', link: 'https://github.com', color: '#00F0FF' },
+        { id: generateId(), name: 'Vercel', icon: 'fa-cloud', description: '部署平台', link: 'https://vercel.com', color: '#7B61FF' },
+        { id: generateId(), name: 'Netlify', icon: 'fa-cloud-upload-alt', description: '静态网站托管', link: 'https://netlify.com', color: '#FF00E6' }
     ],
     stats: {
         experience: 5,
@@ -697,6 +704,101 @@ const updateStats = () => {
 };
 
 /**
+ * Update websites on page
+ */
+const updateWebsites = () => {
+    const websitesList = document.querySelector('.websites-list');
+    if (!websitesList) return;
+
+    if (state.websites.length === 0) {
+        websitesList.innerHTML = `
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-globe text-6xl text-[#B8B8C8] mb-4"></i>
+                <p class="text-[#B8B8C8] text-lg">暂无网站链接</p>
+                <p class="text-[#B8B8C8] text-sm mt-2">添加您的第一个网站链接吧！</p>
+            </div>
+        `;
+        return;
+    }
+
+    websitesList.innerHTML = state.websites.map(website => `
+        <a href="${website.link}" target="_blank" class="website-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 transition-all duration-500 hover:border-[${website.color || '#00F0FF'}]/50 hover:shadow-[0_0_40px_rgba(${hexToRgb(website.color || '#00F0FF')},0.2)] hover:-translate-y-2 flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${website.color || '#00F0FF'}]/20 to-[${website.color || '#00F0FF'}]/5 flex items-center justify-center flex-shrink-0">
+                <i class="fab ${website.icon} text-[${website.color || '#00F0FF'}] text-2xl"></i>
+            </div>
+            <div class="flex-1">
+                <h3 class="font-['Space_Grotesk'] text-xl font-bold mb-2 group-hover:text-[${website.color || '#00F0FF'}] transition-colors duration-300">
+                    ${website.name}
+                </h3>
+                <p class="text-[#B8B8C8] text-sm">
+                    ${website.description}
+                </p>
+            </div>
+            <i class="fas fa-arrow-right text-[#B8B8C8] group-hover:text-[${website.color || '#00F0FF'}] group-hover:translate-x-1 transition-all duration-300"></i>
+        </a>
+    `).join('');
+};
+
+/**
+ * Create website
+ * @param {Object} website - Website object
+ * @returns {boolean} Success status
+ */
+const createWebsite = (website) => {
+    try {
+        state.websites.push(website);
+        updateWebsites();
+        showNotification('网站添加成功！', 'success');
+        return true;
+    } catch (error) {
+        console.error('Error creating website:', error);
+        showNotification('添加网站失败', 'error');
+        return false;
+    }
+};
+
+/**
+ * Update website
+ * @param {string} id - Website ID
+ * @param {Object} updates - Updates to apply
+ * @returns {boolean} Success status
+ */
+const updateWebsite = (id, updates) => {
+    try {
+        const index = state.websites.findIndex(w => w.id === id);
+        if (index !== -1) {
+            state.websites[index] = { ...state.websites[index], ...updates };
+            updateWebsites();
+            showNotification('网站更新成功！', 'success');
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error('Error updating website:', error);
+        showNotification('更新网站失败', 'error');
+        return false;
+    }
+};
+
+/**
+ * Delete website
+ * @param {string} id - Website ID
+ * @returns {boolean} Success status
+ */
+const deleteWebsite = (id) => {
+    try {
+        state.websites = state.websites.filter(w => w.id !== id);
+        updateWebsites();
+        showNotification('网站删除成功！', 'success');
+        return true;
+    } catch (error) {
+        console.error('Error deleting website:', error);
+        showNotification('删除网站失败', 'error');
+        return false;
+    }
+};
+
+/**
  * Get stat key from label
  * @param {string} label - Stat label
  * @returns {string} Stat key
@@ -1038,6 +1140,7 @@ const initApp = () => {
     updateProjects();
     updateSkills();
     updateTools();
+    updateWebsites();
     updateStats();
 
     // Initialize features
@@ -1061,10 +1164,14 @@ const initApp = () => {
         createTool,
         updateTool,
         deleteTool,
+        createWebsite,
+        updateWebsite,
+        deleteWebsite,
         updatePersonalInfo,
         updateProjects,
         updateSkills,
         updateTools,
+        updateWebsites,
         updateStats,
         showNotification
     };

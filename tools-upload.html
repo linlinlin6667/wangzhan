@@ -62,7 +62,7 @@
                     工具上传下载
                 </h1>
                 <p class="text-[#B8B8C8] text-lg">
-                    上传和下载您的工具资源
+                    上传文件，系统自动生成其他信息
                 </p>
             </div>
 
@@ -86,91 +86,26 @@
                                 placeholder="输入工具名称">
                         </div>
 
-                        <!-- Tool Description -->
-                        <div class="form-group">
-                            <label for="tool-description" class="block text-sm font-medium mb-2">
-                                工具描述 <span class="text-[#FF00E6]">*</span>
-                            </label>
-                            <textarea id="tool-description" name="description" rows="3" required
-                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none"
-                                placeholder="输入工具描述"></textarea>
-                        </div>
-
-                        <!-- Tool Icon -->
-                        <div class="form-group">
-                            <label for="tool-icon" class="block text-sm font-medium mb-2">
-                                图标（Font Awesome）
-                            </label>
-                            <div class="relative">
-                                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-[#B8B8C8]"></i>
-                                <input type="text" id="tool-icon" name="icon" 
-                                    class="w-full pl-12 pr-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
-                                    placeholder="例如：fa-tools">
-                            </div>
-                        </div>
-
-                        <!-- Tool Category -->
-                        <div class="form-group">
-                            <label for="tool-category" class="block text-sm font-medium mb-2">
-                                工具类别
-                            </label>
-                            <select id="tool-category" name="category" 
-                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
-                                <option value="development">开发工具</option>
-                                <option value="design">设计工具</option>
-                                <option value="productivity">生产力工具</option>
-                                <option value="utilities">实用工具</option>
-                                <option value="other">其他</option>
-                            </select>
-                        </div>
-
-                        <!-- Tool Link -->
-                        <div class="form-group">
-                            <label for="tool-link" class="block text-sm font-medium mb-2">
-                                工具链接 <span class="text-[#FF00E6]">*</span>
-                            </label>
-                            <input type="url" id="tool-link" name="link" required
-                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
-                                placeholder="https://example.com">
-                        </div>
-
-                        <!-- Tool Color -->
-                        <div class="form-group">
-                            <label for="tool-color" class="block text-sm font-medium mb-2">
-                                颜色主题
-                            </label>
-                            <div class="flex items-center gap-4">
-                                <input type="color" id="tool-color" name="color" value="#00F0FF"
-                                    class="w-16 h-14 px-2 py-2 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 cursor-pointer">
-                                <div class="flex gap-2">
-                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#00F0FF] transition-all duration-300" data-color="#00F0FF" style="background-color: #00F0FF;"></button>
-                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#FF00E6] transition-all duration-300" data-color="#FF00E6" style="background-color: #FF00E6;"></button>
-                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#7B61FF] transition-all duration-300" data-color="#7B61FF" style="background-color: #7B61FF;"></button>
-                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#00FF94] transition-all duration-300" data-color="#00FF94" style="background-color: #00FF94;"></button>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- File Upload -->
                         <div class="form-group">
                             <label for="tool-file" class="block text-sm font-medium mb-2">
-                                上传文件
+                                上传文件 <span class="text-[#FF00E6]">*</span>
                             </label>
                             <div class="file-upload-area relative">
                                 <input type="file" id="tool-file" name="file" 
                                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                                    accept=".zip,.rar,.tar,.gz,.exe,.dmg,.pkg">
+                                    accept=".zip,.rar,.tar,.gz,.exe,.dmg,.pkg,.msi,.apk,.mp4,.avi,.mov,.wmv,.flv,.mkv,.webm,.pdf,.doc,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.json,.xml,.html,.css,.js,.py,.java,.cpp,.c,.h,.go,.rs,.swift,.kt,.php,.rb,.sql,.db,.sqlite,.md,.markdown,.yml,.yaml,.toml,.ini,.cfg,.conf,.log,.csv,.ts,.tsx,.jsx,.vue,.svelte,.svelte,.scss,.less,.sass,.styl,.png,.jpg,.jpeg,.gif,.bmp,.svg,.webp,.ico,.tiff,.heic,.avif,.jxl">
                                 <div class="file-upload-content border-2 border-dashed border-white/20 rounded-xl p-8 text-center transition-all duration-300 hover:border-[#00F0FF]">
                                     <i class="fas fa-cloud-upload-alt text-4xl text-[#00F0FF] mb-4"></i>
                                     <p class="text-white font-medium mb-2">拖放文件到此处或点击上传</p>
-                                    <p class="text-[#B8B8C8] text-sm">支持 ZIP, RAR, TAR, GZ, EXE, DMG, PKG 格式</p>
-                                    <p class="text-[#B8B8C8] text-xs mt-2">最大文件大小：50MB</p>
+                                    <p class="text-[#B8B8C8] text-sm">支持多种文件格式</p>
+                                    <p class="text-[#B8B8C8] text-xs mt-2">最大文件大小：100MB</p>
                                 </div>
                             </div>
                             <div id="file-info" class="hidden mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
-                                        <i class="fas fa-file-archive text-[#00F0FF] text-xl"></i>
+                                        <i class="fas fa-file text-[#00F0FF] text-xl"></i>
                                         <div>
                                             <p class="file-name text-white font-medium"></p>
                                             <p class="file-size text-[#B8B8C8] text-sm"></p>
@@ -198,30 +133,13 @@
                         下载工具
                     </h2>
 
-                    <!-- Search and Filter -->
-                    <div class="mb-6 space-y-4">
+                    <!-- Search -->
+                    <div class="mb-6">
                         <div class="relative">
                             <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-[#B8B8C8]"></i>
                             <input type="text" id="search-tools" 
                                 class="w-full pl-12 pr-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
                                 placeholder="搜索工具...">
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <button class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="all">
-                                全部
-                            </button>
-                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="development">
-                                开发工具
-                            </button>
-                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="design">
-                                设计工具
-                            </button>
-                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="productivity">
-                                生产力工具
-                            </button>
-                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="utilities">
-                                实用工具
-                            </button>
                         </div>
                     </div>
 
@@ -268,17 +186,23 @@
             const fileInput = document.getElementById('tool-file');
             const fileInfo = document.getElementById('file-info');
             const removeFileBtn = document.getElementById('remove-file');
+            const nameInput = document.getElementById('tool-name');
 
             // File input change
             fileInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Check file size (50MB limit)
-                    const maxSize = 50 * 1024 * 1024;
+                    // Check file size (100MB limit)
+                    const maxSize = 100 * 1024 * 1024;
                     if (file.size > maxSize) {
-                        alert('文件大小超过50MB限制！');
+                        alert('文件大小超过100MB限制！');
                         fileInput.value = '';
                         return;
+                    }
+
+                    // Auto-fill name if empty
+                    if (!nameInput.value) {
+                        nameInput.value = file.name.replace(/\.[^/.]+$/, '');
                     }
 
                     // Show file info
@@ -294,16 +218,6 @@
                 fileInfo.classList.add('hidden');
             });
 
-            // Color presets
-            const colorPresets = document.querySelectorAll('.color-preset');
-            const colorInput = document.getElementById('tool-color');
-            
-            colorPresets.forEach(preset => {
-                preset.addEventListener('click', function() {
-                    colorInput.value = this.getAttribute('data-color');
-                });
-            });
-
             // Form submission
             uploadForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -312,25 +226,205 @@
                 const data = Object.fromEntries(formData);
                 
                 // Validate
-                if (!data.name || !data.description || !data.link) {
-                    alert('请填写所有必填字段！');
+                if (!data.name || !fileInput.files[0]) {
+                    alert('请填写工具名称并上传文件！');
                     return;
                 }
+
+                // Auto-generate other information
+                const fileName = fileInput.files[0].name;
+                const fileExt = fileName.split('.').pop().toLowerCase();
+                
+                // Auto-generate description
+                const descriptions = [
+                    '这是一个实用的工具',
+                    '高效的工作助手',
+                    '提升生产力的工具',
+                    '简化日常任务',
+                    '专业的解决方案'
+                ];
+                const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+                
+                // Auto-generate category based on file type
+                let category = 'other';
+                const extCategories = {
+                    'exe': 'development',
+                    'dmg': 'development',
+                    'pkg': 'development',
+                    'msi': 'development',
+                    'apk': 'development',
+                    'zip': 'utilities',
+                    'rar': 'utilities',
+                    'tar': 'utilities',
+                    'gz': 'utilities',
+                    'mp4': 'video',
+                    'avi': 'video',
+                    'mov': 'video',
+                    'wmv': 'video',
+                    'flv': 'video',
+                    'mkv': 'video',
+                    'webm': 'video',
+                    'pdf': 'document',
+                    'doc': 'document',
+                    'docx': 'document',
+                    'xls': 'document',
+                    'xlsx': 'document',
+                    'ppt': 'document',
+                    'pptx': 'document',
+                    'txt': 'document',
+                    'json': 'document',
+                    'xml': 'document',
+                    'html': 'document',
+                    'css': 'document',
+                    'js': 'document',
+                    'py': 'document',
+                    'java': 'document',
+                    'cpp': 'document',
+                    'c': 'document',
+                    'h': 'document',
+                    'go': 'document',
+                    'rs': 'document',
+                    'swift': 'document',
+                    'kt': 'document',
+                    'php': 'document',
+                    'rb': 'document',
+                    'sql': 'document',
+                    'db': 'document',
+                    'sqlite': 'document',
+                    'md': 'document',
+                    'markdown': 'document',
+                    'yml': 'document',
+                    'yaml': 'document',
+                    'toml': 'document',
+                    'ini': 'document',
+                    'cfg': 'document',
+                    'conf': 'document',
+                    'log': 'document',
+                    'csv': 'document',
+                    'ts': 'document',
+                    'tsx': 'document',
+                    'jsx': 'document',
+                    'vue': 'document',
+                    'svelte': 'document',
+                    'scss': 'document',
+                    'less': 'document',
+                    'sass': 'document',
+                    'styl': 'document',
+                    'png': 'image',
+                    'jpg': 'image',
+                    'jpeg': 'image',
+                    'gif': 'image',
+                    'bmp': 'image',
+                    'svg': 'image',
+                    'webp': 'image',
+                    'ico': 'image',
+                    'tiff': 'image',
+                    'heic': 'image',
+                    'avif': 'image',
+                    'jxl': 'image'
+                };
+                category = extCategories[fileExt] || 'other';
+                
+                // Auto-generate icon based on file type
+                const icons = {
+                    'exe': 'fa-cube',
+                    'dmg': 'fa-cube',
+                    'pkg': 'fa-cube',
+                    'msi': 'fa-cube',
+                    'apk': 'fa-cube',
+                    'zip': 'fa-file-archive',
+                    'rar': 'fa-file-archive',
+                    'tar': 'fa-file-archive',
+                    'gz': 'fa-file-archive',
+                    'mp4': 'fa-video',
+                    'avi': 'fa-video',
+                    'mov': 'fa-video',
+                    'wmv': 'fa-video',
+                    'flv': 'fa-video',
+                    'mkv': 'fa-video',
+                    'webm': 'fa-video',
+                    'pdf': 'fa-file-pdf',
+                    'doc': 'fa-file-word',
+                    'docx': 'fa-file-word',
+                    'xls': 'fa-file-excel',
+                    'xlsx': 'fa-file-excel',
+                    'ppt': 'fa-file-powerpoint',
+                    'pptx': 'fa-file-powerpoint',
+                    'txt': 'fa-file-alt',
+                    'json': 'fa-file-code',
+                    'xml': 'fa-file-code',
+                    'html': 'fa-file-code',
+                    'css': 'fa-file-code',
+                    'js': 'fa-file-code',
+                    'py': 'fa-file-code',
+                    'java': 'fa-file-code',
+                    'cpp': 'fa-file-code',
+                    'c': 'fa-file-code',
+                    'h': 'fa-file-code',
+                    'go': 'fa-file-code',
+                    'rs': 'fa-file-code',
+                    'swift': 'fa-file-code',
+                    'kt': 'fa-file-code',
+                    'php': 'fa-file-code',
+                    'rb': 'fa-file-code',
+                    'sql': 'fa-database',
+                    'db': 'fa-database',
+                    'sqlite': 'fa-database',
+                    'md': 'fa-file-alt',
+                    'markdown': 'fa-file-alt',
+                    'yml': 'fa-file-alt',
+                    'yaml': 'fa-file-alt',
+                    'toml': 'fa-file-alt',
+                    'ini': 'fa-file-alt',
+                    'cfg': 'fa-file-alt',
+                    'conf': 'fa-file-alt',
+                    'log': 'fa-file-alt',
+                    'csv': 'fa-file-alt',
+                    'ts': 'fa-file-code',
+                    'tsx': 'fa-file-code',
+                    'jsx': 'fa-file-code',
+                    'vue': 'fa-file-code',
+                    'svelte': 'fa-file-code',
+                    'scss': 'fa-file-code',
+                    'less': 'fa-file-code',
+                    'sass': 'fa-file-code',
+                    'styl': 'fa-file-code',
+                    'png': 'fa-file-image',
+                    'jpg': 'fa-file-image',
+                    'jpeg': 'fa-file-image',
+                    'gif': 'fa-file-image',
+                    'bmp': 'fa-file-image',
+                    'svg': 'fa-file-image',
+                    'webp': 'fa-file-image',
+                    'ico': 'fa-file-image',
+                    'tiff': 'fa-file-image',
+                    'heic': 'fa-file-image',
+                    'avif': 'fa-file-image',
+                    'jxl': 'fa-file-image'
+                };
+                const icon = icons[fileExt] || 'fa-tools';
+                
+                // Auto-generate color (random from preset)
+                const colors = ['#00F0FF', '#FF00E6', '#7B61FF', '#00FF94', '#FFD700', '#FF6B6B'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Auto-generate link (placeholder)
+                const link = `https://example.com/download/${fileName}`;
 
                 // Create tool object
                 const newTool = {
                     id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9),
                     name: data.name,
-                    description: data.description,
-                    icon: data.icon || 'fa-tools',
-                    category: data.category,
-                    link: data.link,
-                    color: data.color,
-                    file: fileInput.files[0] ? {
-                        name: fileInput.files[0].name,
+                    description: randomDescription,
+                    icon: icon,
+                    category: category,
+                    link: link,
+                    color: randomColor,
+                    file: {
+                        name: fileName,
                         size: fileInput.files[0].size,
                         type: fileInput.files[0].type
-                    } : null,
+                    },
                     uploadedAt: new Date().toISOString()
                 };
 
@@ -353,19 +447,6 @@
             searchInput.addEventListener('input', debounce(function(e) {
                 filterTools(e.target.value);
             }, 300));
-
-            // Filter buttons
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            let currentFilter = 'all';
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.getAttribute('data-filter');
-                    filterTools(searchInput.value, currentFilter);
-                });
-            });
 
             // Load tools function
             function loadTools() {
@@ -391,7 +472,7 @@
                         <div class="flex-1">
                             <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${tool.name}</h3>
                             <p class="text-[#B8B8C8] text-sm">${tool.description}</p>
-                            ${tool.file ? `<p class="text-[${tool.color}] text-xs mt-1"><i class="fas fa-file-archive mr-1"></i>${tool.file.name} (${formatFileSize(tool.file.size)})</p>` : ''}
+                            ${tool.file ? `<p class="text-[${tool.color}] text-xs mt-1"><i class="fas fa-file mr-1"></i>${tool.file.name} (${formatFileSize(tool.file.size)})</p>` : ''}
                         </div>
                         <div class="flex gap-2">
                             <a href="${tool.link}" download class="btn-download w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300" title="下载">
@@ -406,20 +487,18 @@
             }
 
             // Filter tools function
-            function filterTools(searchTerm = '', category = 'all') {
+            function filterTools(searchTerm = '') {
                 const tools = window.MyWorldAPI ? window.MyWorldAPI.state.tools : [];
                 const toolItems = document.querySelectorAll('.tool-download-item');
                 
                 toolItems.forEach(item => {
                     const toolName = item.querySelector('h3').textContent.toLowerCase();
                     const toolDesc = item.querySelector('p').textContent.toLowerCase();
-                    const toolCategory = item.getAttribute('data-category');
                     
                     const matchesSearch = toolName.includes(searchTerm.toLowerCase()) || 
                                          toolDesc.includes(searchTerm.toLowerCase());
-                    const matchesCategory = category === 'all' || toolCategory === category;
                     
-                    if (matchesSearch && matchesCategory) {
+                    if (matchesSearch) {
                         item.style.display = 'flex';
                     } else {
                         item.style.display = 'none';
