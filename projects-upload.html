@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My World - 项目上传下载">
+    <title>项目上传下载 | My World</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.2);
+        }
+        
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.05);
+        }
+        
+        .upload-zone.dragover {
+            border-color: #00F0FF;
+            background: rgba(0, 240, 255, 0.1);
+        }
+        
+        .category-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .category-badge:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-[#0A0A0F] text-white min-h-screen">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#00F0FF] text-black px-4 py-2 rounded-lg z-50">
+        跳转到主要内容
+    </a>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300" role="navigation" aria-label="主导航">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="logo flex items-center gap-2 group" aria-label="返回首页">
+                    <span class="logo-text font-['Space_Grotesk'] text-xl lg:text-2xl font-bold tracking-wider">
+                        MY WORLD
+                    </span>
+                    <div class="logo-dot w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <ul class="nav-menu hidden md:flex items-center gap-1 lg:gap-2">
+                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">返回首页</a></li>
+                    <li><a href="admin.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">后台管理</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <a href="index.html" class="md:hidden inline-flex items-center gap-2 px-4 py-2 bg-[#00F0FF] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>返回</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-24 pb-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Page Header -->
+            <div class="page-header text-center mb-12">
+                <h1 class="font-['Space_Grotesk'] text-4xl sm:text-5xl font-bold mb-4">
+                    项目上传下载
+                </h1>
+                <p class="text-[#B8B8C8] text-lg">
+                    上传您的项目文件，方便用户下载使用
+                </p>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="max-w-4xl mx-auto mb-12">
+                <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+                    <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6">
+                        上传新项目
+                    </h2>
+                    
+                    <!-- Upload Form -->
+                    <form id="upload-form" class="space-y-6">
+                        <div class="form-group">
+                            <label for="name" class="block text-sm font-medium mb-2">项目名称</label>
+                            <input type="text" id="name" name="name" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300" placeholder="输入项目名称">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description" class="block text-sm font-medium mb-2">项目描述</label>
+                            <textarea id="description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none" placeholder="输入项目描述"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="file" class="block text-sm font-medium mb-2">项目文件</label>
+                            <div id="upload-zone" class="upload-zone rounded-2xl p-8 text-center cursor-pointer">
+                                <input type="file" id="file" name="file" accept=".zip,.rar,.tar,.gz,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.json,.xml,.html,.css,.js,.py,.java,.cpp,.c,.h,.go,.rs,.swift,.kt,.php,.rb,.sql,.db,.sqlite,.md,.markdown,.yml,.yaml,.toml,.ini,.cfg,.conf,.log,.csv,.ts,.tsx,.jsx,.vue,.svelte,.scss,.less,.sass,.styl" class="hidden" required>
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt text-6xl text-[#00F0FF] mb-4"></i>
+                                    <p class="text-[#B8B8C8] text-lg mb-2">点击或拖拽文件到此处</p>
+                                    <p class="text-[#B8B8C8] text-sm">支持 ZIP, RAR, TAR, GZ, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, JSON, XML, HTML, CSS, JS, PY, JAVA, CPP, C, H, GO, RS, SWIFT, KT, PHP, RB, SQL, DB, SQLITE, MD, MARKDOWN, YML, YAML, TOML, INI, CFG, CONF, LOG, CSV, TS, TSX, JSX, VUE, SVELTE, SCSS, LESS, SASS, STYL 等格式</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tags" class="block text-sm font-medium mb-2">标签（用逗号分隔）</label>
+                            <input type="text" id="tags" name="tags" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300" placeholder="例如：电商, 移动应用, Web开发">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                            <i class="fas fa-upload"></i>
+                            <span>上传项目</span>
+                        </button>
+                    </form>
+                    
+                    <!-- File Info -->
+                    <div id="file-info" class="hidden mt-6 p-4 bg-white/5 border border-white/10 rounded-xl">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-file text-4xl text-[#00F0FF]"></i>
+                            <div>
+                                <p id="file-name" class="font-semibold text-lg"></p>
+                                <p id="file-size" class="text-[#B8B8C8] text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects List -->
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="font-['Space_Grotesk'] text-2xl font-bold">
+                        已上传项目
+                    </h2>
+                    <div class="relative">
+                        <input type="text" id="search-projects" placeholder="搜索项目..." class="w-full md:w-80 px-5 py-3 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] transition-all duration-300">
+                        <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-[#B8B8C8]"></i>
+                    </div>
+                </div>
+                
+                <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Projects will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0F]/90 backdrop-blur-xl border-t border-white/10 py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-center md:text-left">
+                    <p class="text-[#B8B8C8] text-sm">
+                        © 2024 My World. All rights reserved.
+                    </p>
+                </div>
+                <div class="flex gap-4 justify-center md:justify-end">
+                    <a href="index.html" class="text-[#B8B8C8] hover:text-[#00F0FF] transition-colors duration-300">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="admin.html" class="text-[#B8B8C8] hover:text-[#00F0FF] transition-colors duration-300">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Projects upload page loaded');
+            
+            // Wait for main.js to initialize
+            setTimeout(() => {
+                if (!window.MyWorldAPI) {
+                    console.error('MyWorldAPI not found');
+                    return;
+                }
+                
+                console.log('MyWorldAPI loaded:', window.MyWorldAPI);
+                
+                // Initialize upload functionality
+                initUpload();
+                
+                // Load projects
+                loadProjects();
+            }, 100);
+        });
+
+        function initUpload() {
+            const uploadForm = document.getElementById('upload-form');
+            const fileInput = document.getElementById('file');
+            const uploadZone = document.getElementById('upload-zone');
+            const fileInfo = document.getElementById('file-info');
+            const fileName = document.getElementById('file-name');
+            const fileSize = document.getElementById('file-size');
+            
+            // Click to upload
+            uploadZone.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // Drag and drop
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    handleFileSelect(files[0]);
+                }
+            });
+            
+            // File select
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+            
+            // Form submission
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(uploadForm);
+                const data = Object.fromEntries(formData);
+                
+                // Validate
+                if (!data.name || !fileInput.files[0]) {
+                    alert('请填写项目名称并上传文件！');
+                    return;
+                }
+
+                // Auto-generate other information
+                const fileName = fileInput.files[0].name;
+                const fileExt = fileName.split('.').pop().toLowerCase();
+                
+                // Auto-generate description
+                const descriptions = [
+                    '这是一个创新的项目',
+                    '高效的工作流程',
+                    '提升用户体验的解决方案',
+                    '专业的技术实现',
+                    '现代化的应用程序'
+                ];
+                const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+                
+                // Auto-generate category based on file type
+                let category = 'other';
+                const extCategories = {
+                    'zip': 'utilities',
+                    'rar': 'utilities',
+                    'tar': 'utilities',
+                    'gz': 'utilities',
+                    'pdf': 'document',
+                    'doc': 'document',
+                    'docx': 'document',
+                    'xls': 'document',
+                    'xlsx': 'document',
+                    'ppt': 'document',
+                    'pptx': 'document',
+                    'txt': 'document',
+                    'json': 'document',
+                    'xml': 'document',
+                    'html': 'development',
+                    'css': 'development',
+                    'js': 'development',
+                    'py': 'development',
+                    'java': 'development',
+                    'cpp': 'development',
+                    'c': 'development',
+                    'h': 'development',
+                    'go': 'development',
+                    'rs': 'development',
+                    'swift': 'development',
+                    'kt': 'development',
+                    'php': 'development',
+                    'rb': 'development',
+                    'sql': 'database',
+                    'db': 'database',
+                    'sqlite': 'database',
+                    'md': 'document',
+                    'markdown': 'document',
+                    'yml': 'document',
+                    'yaml': 'document',
+                    'toml': 'document',
+                    'ini': 'document',
+                    'cfg': 'document',
+                    'conf': 'document',
+                    'log': 'document',
+                    'csv': 'document',
+                    'ts': 'development',
+                    'tsx': 'development',
+                    'jsx': 'development',
+                    'vue': 'development',
+                    'svelte': 'development',
+                    'scss': 'development',
+                    'less': 'development',
+                    'sass': 'development',
+                    'styl': 'development'
+                };
+                category = extCategories[fileExt] || 'other';
+                
+                // Auto-generate icon based on file type
+                const icons = {
+                    'zip': 'fa-file-archive',
+                    'rar': 'fa-file-archive',
+                    'tar': 'fa-file-archive',
+                    'gz': 'fa-file-archive',
+                    'pdf': 'fa-file-pdf',
+                    'doc': 'fa-file-word',
+                    'docx': 'fa-file-word',
+                    'xls': 'fa-file-excel',
+                    'xlsx': 'fa-file-excel',
+                    'ppt': 'fa-file-powerpoint',
+                    'pptx': 'fa-file-powerpoint',
+                    'txt': 'fa-file-alt',
+                    'json': 'fa-file-code',
+                    'xml': 'fa-file-code',
+                    'html': 'fa-file-code',
+                    'css': 'fa-file-code',
+                    'js': 'fa-file-code',
+                    'py': 'fa-file-code',
+                    'java': 'fa-file-code',
+                    'cpp': 'fa-file-code',
+                    'c': 'fa-file-code',
+                    'h': 'fa-file-code',
+                    'go': 'fa-file-code',
+                    'rs': 'fa-file-code',
+                    'swift': 'fa-file-code',
+                    'kt': 'fa-file-code',
+                    'php': 'fa-file-code',
+                    'rb': 'fa-file-code',
+                    'sql': 'fa-database',
+                    'db': 'fa-database',
+                    'sqlite': 'fa-database',
+                    'md': 'fa-file-alt',
+                    'markdown': 'fa-file-alt',
+                    'yml': 'fa-file-alt',
+                    'yaml': 'fa-file-alt',
+                    'toml': 'fa-file-alt',
+                    'ini': 'fa-file-alt',
+                    'cfg': 'fa-file-alt',
+                    'conf': 'fa-file-alt',
+                    'log': 'fa-file-alt',
+                    'csv': 'fa-file-alt',
+                    'ts': 'fa-file-code',
+                    'tsx': 'fa-file-code',
+                    'jsx': 'fa-file-code',
+                    'vue': 'fa-file-code',
+                    'svelte': 'fa-file-code',
+                    'scss': 'fa-file-code',
+                    'less': 'fa-file-code',
+                    'sass': 'fa-file-code',
+                    'styl': 'fa-file-code'
+                };
+                const icon = icons[fileExt] || 'fa-file';
+                
+                // Auto-generate color (random from preset)
+                const colors = ['#00F0FF', '#FF00E6', '#7B61FF', '#00FF94', '#FFD700', '#FF6B6B'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Auto-generate link (placeholder)
+                const link = `data:${fileInput.files[0].type};base64,`;
+                
+                // Save to localStorage
+                if (window.MyWorldAPI) {
+                    // Convert file to base64
+                    const file = fileInput.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        // Create project object with base64 file data
+                        const newProject = {
+                            id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9),
+                            name: data.name,
+                            description: data.description || randomDescription,
+                            image: 'https://picsum.photos/seed/' + Date.now() + '/800/600',
+                            tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : ['项目'],
+                            link: link,
+                            color: randomColor,
+                            file: {
+                                name: fileName,
+                                size: file.size,
+                                type: file.type,
+                                base64: e.target.result
+                            },
+                            uploadedAt: new Date().toISOString()
+                        };
+                        
+                        window.MyWorldAPI.createProject(newProject);
+                        loadProjects();
+                        
+                        // Reset form
+                        uploadForm.reset();
+                        fileInfo.classList.add('hidden');
+                        
+                        // Show notification
+                        window.MyWorldAPI.showNotification('项目上传成功！', 'success');
+                    };
+                    
+                    reader.onerror = function() {
+                        window.MyWorldAPI.showNotification('文件读取失败，请重试', 'error');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('search-projects');
+            searchInput.addEventListener('input', debounce(function(e) {
+                filterProjects(e.target.value);
+            }, 300));
+        }
+        
+        function handleFileSelect(file) {
+            const fileInfo = document.getElementById('file-info');
+            const fileName = document.getElementById('file-name');
+            const fileSize = document.getElementById('file-size');
+            
+            // Show file info
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.classList.remove('hidden');
+        }
+        
+        function loadProjects() {
+            const projectsList = document.getElementById('projects-list');
+            const projects = window.MyWorldAPI ? window.MyWorldAPI.state.projects : [];
+            
+            if (projects.length === 0) {
+                projectsList.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-folder-open text-6xl text-[#B8B8C8] mb-4"></i>
+                        <p class="text-[#B8B8C8] text-lg">暂无项目</p>
+                        <p class="text-[#B8B8C8] text-sm mt-2">上传您的第一个项目吧！</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            projectsList.innerHTML = projects.map(project => `
+                <div class="project-card bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 transition-all duration-300 hover:border-[${project.color}]/50 hover:shadow-[0_0_20px_rgba(${hexToRgb(project.color)},0.2)]" data-category="${project.category || 'other'}">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[${project.color}]/20 to-[${project.color}]/5 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-folder text-[${project.color}] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${project.name}</h3>
+                        <p class="text-[#B8B8C8] text-sm mb-2">${project.description}</p>
+                        ${project.file ? `<p class="text-[${project.color}] text-xs mt-1"><i class="fas fa-file mr-1"></i>${project.file.name} (${formatFileSize(project.file.size)})</p>` : ''}
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${project.tags.map(tag => `
+                                <span class="tag px-3 py-1 bg-[${project.color}]/10 border border-[${project.color}]/30 rounded-full text-[${project.color}] text-xs font-medium">${tag}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="${project.link}" download class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300" title="下载">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <button onclick="deleteProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300" title="删除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function filterProjects(searchTerm) {
+            const projects = window.MyWorldAPI ? window.MyWorldAPI.state.projects : [];
+            const filteredProjects = projects.filter(project => 
+                project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+            
+            const projectsList = document.getElementById('projects-list');
+            projectsList.innerHTML = filteredProjects.map(project => `
+                <div class="project-card bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 transition-all duration-300 hover:border-[${project.color}]/50 hover:shadow-[0_0_20px_rgba(${hexToRgb(project.color)},0.2)]" data-category="${project.category || 'other'}">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[${project.color}]/20 to-[${project.color}]/5 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-folder text-[${project.color}] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${project.name}</h3>
+                        <p class="text-[#B8B8C8] text-sm mb-2">${project.description}</p>
+                        ${project.file ? `<p class="text-[${project.color}] text-xs mt-1"><i class="fas fa-file mr-1"></i>${project.file.name} (${formatFileSize(project.file.size)})</p>` : ''}
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${project.tags.map(tag => `
+                                <span class="tag px-3 py-1 bg-[${project.color}]/10 border border-[${project.color}]/30 rounded-full text-[${project.color}] text-xs font-medium">${tag}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="${project.link}" download class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300" title="下载">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <button onclick="deleteProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300" title="删除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function deleteProject(id) {
+            if (confirm('确定要删除这个项目吗？')) {
+                window.MyWorldAPI.deleteProject(id);
+                loadProjects();
+                window.MyWorldAPI.showNotification('项目删除成功！', 'success');
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            const f = (bytes / Math.pow(k, i)).toFixed(2);
+            return f + ' ' + sizes[i];
+        }
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? 
+                `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+                '0, 240, 255';
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html>

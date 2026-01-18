@@ -707,5 +707,31 @@
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script>
+        // 监听localStorage变化，当后台修改数据时自动更新首页
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'myWorldData' && e.newValue) {
+                console.log('检测到数据变化，重新加载页面...');
+                // 重新加载数据
+                if (window.MyWorldAPI) {
+                    const newData = JSON.parse(e.newValue);
+                    window.MyWorldAPI.state.personal = newData.personal;
+                    window.MyWorldAPI.state.projects = newData.projects || [];
+                    window.MyWorldAPI.state.skills = newData.skills || [];
+                    window.MyWorldAPI.state.tools = newData.tools || [];
+                    window.MyWorldAPI.state.websites = newData.websites || [];
+                    window.MyWorldAPI.state.stats = newData.stats || {};
+                    
+                    // 更新UI
+                    window.MyWorldAPI.updatePersonalInfo();
+                    window.MyWorldAPI.updateProjects();
+                    window.MyWorldAPI.updateSkills();
+                    window.MyWorldAPI.updateTools();
+                    window.MyWorldAPI.updateWebsites();
+                    window.MyWorldAPI.updateStats();
+                }
+            }
+        });
+    </script>
 </body>
 </html>

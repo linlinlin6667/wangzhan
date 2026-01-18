@@ -99,6 +99,37 @@
             border-radius: 4px;
             transition: width 0.5s ease;
         }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.3);
+            border-color: rgba(0, 240, 255, 0.5);
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            color: #E0E0E0;
+            transition: color 0.3s ease;
+        }
+        
+        .form-group label:focus-within {
+            color: #00F0FF;
+        }
+        
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="bg-[#0A0A0F] text-white min-h-screen">

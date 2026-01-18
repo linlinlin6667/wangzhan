@@ -408,37 +408,50 @@
                 const colors = ['#00F0FF', '#FF00E6', '#7B61FF', '#00FF94', '#FFD700', '#FF6B6B'];
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 
-                // Auto-generate link (placeholder)
-                const link = `https://example.com/download/${fileName}`;
-
-                // Create tool object
-                const newTool = {
-                    id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9),
-                    name: data.name,
-                    description: randomDescription,
-                    icon: icon,
-                    category: category,
-                    link: link,
-                    color: randomColor,
-                    file: {
-                        name: fileName,
-                        size: fileInput.files[0].size,
-                        type: fileInput.files[0].type
-                    },
-                    uploadedAt: new Date().toISOString()
-                };
-
+                // Auto-generate link (placeholder) - will be replaced with base64 data
+                const link = `data:${fileInput.files[0].type};base64,`;
+                
                 // Save to localStorage
                 if (window.MyWorldAPI) {
-                    window.MyWorldAPI.createTool(newTool);
-                    loadTools();
+                    // Convert file to base64
+                    const file = fileInput.files[0];
+                    const reader = new FileReader();
                     
-                    // Reset form
-                    uploadForm.reset();
-                    fileInfo.classList.add('hidden');
+                    reader.onload = function(e) {
+                        // Create tool object with base64 file data
+                        const newTool = {
+                            id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9),
+                            name: data.name,
+                            description: randomDescription,
+                            icon: icon,
+                            category: category,
+                            link: `data:${file.type};base64,${e.target.result}`,
+                            color: randomColor,
+                            file: {
+                                name: fileName,
+                                size: file.size,
+                                type: file.type,
+                                base64: e.target.result
+                            },
+                            uploadedAt: new Date().toISOString()
+                        };
+                        
+                        window.MyWorldAPI.createTool(newTool);
+                        loadTools();
+                        
+                        // Reset form
+                        uploadForm.reset();
+                        fileInfo.classList.add('hidden');
+                        
+                        // Show notification
+                        window.MyWorldAPI.showNotification('工具上传成功！', 'success');
+                    };
                     
-                    // Show notification
-                    window.MyWorldAPI.showNotification('工具上传成功！', 'success');
+                    reader.onerror = function() {
+                        window.MyWorldAPI.showNotification('文件读取失败，请重试', 'error');
+                    };
+                    
+                    reader.readAsDataURL(file);
                 }
             });
 
