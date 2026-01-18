@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API测试报告 - My World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --primary-dark: #00B8C4;
+            --secondary: #FF00E6;
+            --success: #00FF94;
+            --warning: #FFD600;
+            --error: #FF0055;
+            --bg-dark: #0A0A0F;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #FFFFFF;
+            --text-muted: #B8B8C8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: var(--bg-dark);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00F0FF, #00B8C4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .test-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .test-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .test-item:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .test-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .test-status {
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: rgba(255, 214, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 214, 0, 0.3);
+        }
+
+        .status-success {
+            background: rgba(0, 255, 148, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 148, 0.3);
+        }
+
+        .status-error {
+            background: rgba(255, 0, 85, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(255, 0, 85, 0.3);
+        }
+
+        .test-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .detail-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .test-error {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 0, 85, 0.1);
+            border-left: 3px solid var(--error);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00F0FF, #00B8C4);
+            color: white;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .summary-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .summary-value.total { color: var(--primary); }
+        .summary-value.success { color: var(--success); }
+        .summary-value.error { color: var(--error); }
+        .summary-value.pending { color: var(--warning); }
+
+        .recommendations {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+        }
+
+        .recommendations h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendations li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .recommendations li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .test-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-vial"></i> API测试报告</h1>
+            <p>My World网站API端点全面测试</p>
+            <p id="test-time" style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.875rem;"></p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <button id="run-tests-btn" class="btn btn-primary" onclick="runAllTests()">
+                <i class="fas fa-play"></i> 运行所有测试
+            </button>
+        </div>
+
+        <div class="summary">
+            <div class="summary-card">
+                <div class="summary-value total" id="total-tests">0</div>
+                <div class="summary-label">总测试数</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value success" id="success-tests">0</div>
+                <div class="summary-label">通过</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value error" id="error-tests">0</div>
+                <div class="summary-label">失败</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value pending" id="pending-tests">0</div>
+                <div class="summary-label">待测试</div>
+            </div>
+        </div>
+
+        <div id="test-results"></div>
+
+        <div class="recommendations" id="recommendations" style="display: none;">
+            <h3><i class="fas fa-lightbulb"></i> 改进建议</h3>
+            <ul id="recommendations-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const GITHUB_DATA_URL = 'https://raw.githubusercontent.com/linlinlin6667/wangzhan/main/data.json';
+        const WORKER_URL = 'localStorage'; // Worker未部署，使用localStorage模拟
+
+        let testResults = [];
+        let recommendations = [];
+
+        // 更新测试时间
+        document.getElementById('test-time').textContent = `测试时间: ${new Date().toLocaleString('zh-CN')}`;
+
+        async function runAllTests() {
+            const btn = document.getElementById('run-tests-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 测试中...';
+
+            testResults = [];
+            recommendations = [];
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('recommendations').style.display = 'none';
+
+            // 测试GitHub Pages API
+            await testGitHubDataAPI();
+
+            // 测试localStorage功能
+            await testLocalStorage();
+
+            // 测试工具上传下载功能
+            await testToolsUpload();
+
+            // 测试后台管理功能
+            await testAdminFunctions();
+
+            // 更新摘要
+            updateSummary();
+
+            // 显示建议
+            if (recommendations.length > 0) {
+                showRecommendations();
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play"></i> 重新运行测试';
+        }
+
+        async function testGitHubDataAPI() {
+            const section = createTestSection('GitHub Pages API', 'fa-github');
+            const container = section.querySelector('.test-items');
+
+            // 测试1: 获取完整数据
+            const test1 = await runTest(
+                '获取完整数据',
+                async () => {
+                    const start = performance.now();
+                    const response = await fetch(GITHUB_DATA_URL);
+                    const end = performance.now();
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    if (!data.personal || !data.projects || !data.tools || !data.skills || !data.stats) {
+                        throw new Error('数据结构不完整');
+                    }
+
+                    return {
+                        responseTime: (end - start).toFixed(2),
+                        dataSize: JSON.stringify(data).length,
+                        personal: data.personal.name,
+                        projectsCount: data.projects.length,
+                        toolsCount: data.tools.length,
+                        skillsCount: data.skills.length
+                    };
+                },
+                container
+            );
+
+            // 测试2: 验证数据完整性
+            const test2 = await runTest(
+                '验证数据完整性',
+                async () => {
+                    const response = await fetch(GITHUB_DATA_URL);
+                    const data = await response.json();
+
+                    const checks = {
+                        hasPersonal: !!data.personal,
+                        hasProjects: Array.isArray(data.projects) && data.projects.length > 0,
+                        hasTools: Array.isArray(data.tools) && data.tools.length > 0,
+                        hasSkills: Array.isArray(data.skills) && data.skills.length > 0,
+                        hasStats: !!data.stats
+                    };
+
+                    const failedChecks = Object.entries(checks)
+                        .filter(([_, value]) => !value)
+                        .map(([key]) => key);
+
+                    if (failedChecks.length > 0) {
+                        throw new Error(`缺少数据: ${failedChecks.join(', ')}`);
+                    }
+
+                    return checks;
+                },
+                container
+            );
+
+            // 测试3: 验证数据格式
+            const test3 = await runTest(
+                '验证数据格式',
+                async () => {
+                    const response = await fetch(GITHUB_DATA_URL);
+                    const data = await response.json();
+
+                    const errors = [];
+
+                    // 检查personal字段
+                    if (!data.personal.name || !data.personal.email) {
+                        errors.push('personal缺少必需字段');
+                    }
+
+                    // 检查projects
+                    data.projects.forEach((project, index) => {
+                        if (!project.id || !project.name || !project.description) {
+                            errors.push(`projects[${index}]缺少必需字段`);
+                        }
+                    });
+
+                    // 检查tools
+                    data.tools.forEach((tool, index) => {
+                        if (!tool.id || !tool.name || !tool.icon) {
+                            errors.push(`tools[${index}]缺少必需字段`);
+                        }
+                    });
+
+                    // 检查skills
+                    data.skills.forEach((skill, index) => {
+                        if (!skill.id || !skill.name || typeof skill.proficiency !== 'number') {
+                            errors.push(`skills[${index}]缺少必需字段或proficiency不是数字`);
+                        }
+                    });
+
+                    if (errors.length > 0) {
+                        throw new Error(errors.join('; '));
+                    }
+
+                    return { valid: true };
+                },
+                container
+            );
+
+            document.getElementById('test-results').appendChild(section);
+
+            // 添加建议
+            if (!test1.success) {
+                recommendations.push('GitHub Pages API无法访问，请检查仓库是否公开');
+            }
+        }
+
+        async function testLocalStorage() {
+            const section = createTestSection('LocalStorage功能', 'fa-database');
+            const container = section.querySelector('.test-items');
+
+            // 测试1: 写入数据
+            const test1 = await runTest(
+                '写入数据',
+                async () => {
+                    const start = performance.now();
+                    const testData = {
+                        test: true,
+                        timestamp: Date.now(),
+                        data: '测试数据'
+                    };
+                    localStorage.setItem('testData', JSON.stringify(testData));
+                    const end = performance.now();
+
+                    return {
+                        writeTime: (end - start).toFixed(2),
+                        dataSize: JSON.stringify(testData).length
+                    };
+                },
+                container
+            );
+
+            // 测试2: 读取数据
+            const test2 = await runTest(
+                '读取数据',
+                async () => {
+                    const start = performance.now();
+                    const stored = localStorage.getItem('testData');
+                    const end = performance.now();
+
+                    if (!stored) {
+                        throw new Error('无法读取数据');
+                    }
+
+                    const data = JSON.parse(stored);
+
+                    if (!data.test || !data.timestamp) {
+                        throw new Error('数据格式不正确');
+                    }
+
+                    return {
+                        readTime: (end - start).toFixed(2),
+                        timestamp: new Date(data.timestamp).toLocaleString('zh-CN')
+                    };
+                },
+                container
+            );
+
+            // 测试3: 删除数据
+            const test3 = await runTest(
+                '删除数据',
+                async () => {
+                    const start = performance.now();
+                    localStorage.removeItem('testData');
+                    const end = performance.now();
+
+                    const stored = localStorage.getItem('testData');
+                    if (stored !== null) {
+                        throw new Error('数据删除失败');
+                    }
+
+                    return {
+                        deleteTime: (end - start).toFixed(2)
+                    };
+                },
+                container
+            );
+
+            // 测试4: 存储容量测试
+            const test4 = await runTest(
+                '存储容量测试',
+                async () => {
+                    const testKey = 'capacityTest';
+                    let totalSize = 0;
+                    let chunkSize = 1024 * 100; // 100KB chunks
+
+                    try {
+                        while (true) {
+                            const chunk = 'x'.repeat(chunkSize);
+                            const existing = localStorage.getItem(testKey) || '';
+                            const newData = existing + chunk;
+                            localStorage.setItem(testKey, newData);
+                            totalSize += chunkSize;
+                        }
+                    } catch (e) {
+                        localStorage.removeItem(testKey);
+                        return {
+                            capacity: (totalSize / 1024 / 1024).toFixed(2) + ' MB',
+                            error: e.message
+                        };
+                    }
+                },
+                container
+            );
+
+            document.getElementById('test-results').appendChild(section);
+        }
+
+        async function testToolsUpload() {
+            const section = createTestSection('工具上传下载功能', 'fa-cloud-upload-alt');
+            const container = section.querySelector('.test-items');
+
+            // 测试1: 初始化默认工具
+            const test1 = await runTest(
+                '初始化默认工具',
+                async () => {
+                    const start = performance.now();
+                    const defaultTools = [
+                        {
+                            id: Date.now(),
+                            name: '测试工具',
+                            description: '这是一个测试工具',
+                            version: '1.0.0',
+                            category: '测试',
+                            link: '#',
+                            icon: 'fa-tools',
+                            uploadDate: new Date().toISOString()
+                        }
+                    ];
+
+                    localStorage.setItem('uploadedTools', JSON.stringify(defaultTools));
+                    const end = performance.now();
+
+                    const stored = localStorage.getItem('uploadedTools');
+                    const tools = JSON.parse(stored);
+
+                    if (tools.length !== 1) {
+                        throw new Error('工具数量不正确');
+                    }
+
+                    return {
+                        initTime: (end - start).toFixed(2),
+                        toolsCount: tools.length
+                    };
+                },
+                container
+            );
+
+            // 测试2: 添加新工具
+            const test2 = await runTest(
+                '添加新工具',
+                async () => {
+                    const start = performance.now();
+                    const newTool = {
+                        id: Date.now(),
+                        name: '新工具',
+                        description: '新添加的工具',
+                        version: '2.0.0',
+                        category: '开发工具',
+                        link: 'https://example.com',
+                        icon: 'fa-code',
+                        uploadDate: new Date().toISOString()
+                    };
+
+                    const stored = localStorage.getItem('uploadedTools');
+                    let tools = stored ? JSON.parse(stored) : [];
+                    tools.unshift(newTool);
+                    localStorage.setItem('uploadedTools', JSON.stringify(tools));
+                    const end = performance.now();
+
+                    const updated = JSON.parse(localStorage.getItem('uploadedTools'));
+                    if (updated.length !== 2) {
+                        throw new Error('工具添加失败');
+                    }
+
+                    return {
+                        addTime: (end - start).toFixed(2),
+                        totalTools: updated.length
+                    };
+                },
+                container
+            );
+
+            // 测试3: 过滤工具
+            const test3 = await runTest(
+                '过滤工具',
+                async () => {
+                    const start = performance.now();
+                    const stored = localStorage.getItem('uploadedTools');
+                    const tools = JSON.parse(stored);
+
+                    const filtered = tools.filter(tool => tool.category === '开发工具');
+                    const end = performance.now();
+
+                    return {
+                        filterTime: (end - start).toFixed(2),
+                        totalTools: tools.length,
+                        filteredCount: filtered.length
+                    };
+                },
+                container
+            );
+
+            // 测试4: 删除工具
+            const test4 = await runTest(
+                '删除工具',
+                async () => {
+                    const start = performance.now();
+                    const stored = localStorage.getItem('uploadedTools');
+                    let tools = JSON.parse(stored);
+
+                    const toolId = tools[0].id;
+                    tools = tools.filter(tool => tool.id !== toolId);
+                    localStorage.setItem('uploadedTools', JSON.stringify(tools));
+                    const end = performance.now();
+
+                    const updated = JSON.parse(localStorage.getItem('uploadedTools'));
+                    if (updated.length !== 1) {
+                        throw new Error('工具删除失败');
+                    }
+
+                    return {
+                        deleteTime: (end - start).toFixed(2),
+                        remainingTools: updated.length
+                    };
+                },
+                container
+            );
+
+            // 清理测试数据
+            localStorage.removeItem('uploadedTools');
+
+            document.getElementById('test-results').appendChild(section);
+        }
+
+        async function testAdminFunctions() {
+            const section = createTestSection('后台管理功能', 'fa-cog');
+            const container = section.querySelector('.test-items');
+
+            // 测试1: 保存个人信息
+            const test1 = await runTest(
+                '保存个人信息',
+                async () => {
+                    const start = performance.now();
+                    const personalData = {
+                        name: '测试用户',
+                        title: '测试职位',
+                        introduction: '测试介绍',
+                        description: '测试描述',
+                        avatar: 'https://example.com/avatar.jpg',
+                        email: 'test@example.com',
+                        phone: '+86 138 0000 0000',
+                        location: '中国 · 北京'
+                    };
+
+                    const websiteData = {
+                        personal: personalData,
+                        projects: [],
+                        tools: [],
+                        skills: [],
+                        stats: {}
+                    };
+
+                    localStorage.setItem('websiteData', JSON.stringify(websiteData));
+                    const end = performance.now();
+
+                    const stored = JSON.parse(localStorage.getItem('websiteData'));
+                    if (stored.personal.name !== '测试用户') {
+                        throw new Error('个人信息保存失败');
+                    }
+
+                    return {
+                        saveTime: (end - start).toFixed(2),
+                        fields: Object.keys(personalData).length
+                    };
+                },
+                container
+            );
+
+            // 测试2: 添加项目
+            const test2 = await runTest(
+                '添加项目',
+                async () => {
+                    const start = performance.now();
+                    const project = {
+                        id: Date.now(),
+                        name: '测试项目',
+                        description: '测试项目描述',
+                        image: 'https://example.com/project.jpg',
+                        tags: ['React', 'Node.js']
+                    };
+
+                    const stored = localStorage.getItem('websiteData');
+                    let data = JSON.parse(stored);
+                    data.projects.push(project);
+                    localStorage.setItem('websiteData', JSON.stringify(data));
+                    const end = performance.now();
+
+                    const updated = JSON.parse(localStorage.getItem('websiteData'));
+                    if (updated.projects.length !== 1) {
+                        throw new Error('项目添加失败');
+                    }
+
+                    return {
+                        addTime: (end - start).toFixed(2),
+                        projectCount: updated.projects.length
+                    };
+                },
+                container
+            );
+
+            // 测试3: 更新技能
+            const test3 = await runTest(
+                '更新技能',
+                async () => {
+                    const start = performance.now();
+                    const skill = {
+                        id: Date.now(),
+                        name: 'JavaScript',
+                        proficiency: 90,
+                        icon: 'fa-js'
+                    };
+
+                    const stored = localStorage.getItem('websiteData');
+                    let data = JSON.parse(stored);
+                    data.skills.push(skill);
+                    localStorage.setItem('websiteData', JSON.stringify(data));
+                    const end = performance.now();
+
+                    const updated = JSON.parse(localStorage.getItem('websiteData'));
+                    if (updated.skills.length !== 1) {
+                        throw new Error('技能添加失败');
+                    }
+
+                    return {
+                        updateTime: (end - start).toFixed(2),
+                        skillCount: updated.skills.length
+                    };
+                },
+                container
+            );
+
+            // 测试4: 更新统计数据
+            const test4 = await runTest(
+                '更新统计数据',
+                async () => {
+                    const start = performance.now();
+                    const stats = {
+                        experience: 5,
+                        projects: 50,
+                        clients: 30,
+                        commits: 100
+                    };
+
+                    const stored = localStorage.getItem('websiteData');
+                    let data = JSON.parse(stored);
+                    data.stats = stats;
+                    localStorage.setItem('websiteData', JSON.stringify(data));
+                    const end = performance.now();
+
+                    const updated = JSON.parse(localStorage.getItem('websiteData'));
+                    if (updated.stats.experience !== 5) {
+                        throw new Error('统计数据更新失败');
+                    }
+
+                    return {
+                        updateTime: (end - start).toFixed(2),
+                        statsCount: Object.keys(stats).length
+                    };
+                },
+                container
+            );
+
+            // 清理测试数据
+            localStorage.removeItem('websiteData');
+
+            document.getElementById('test-results').appendChild(section);
+        }
+
+        async function runTest(name, testFn, container) {
+            const testItem = document.createElement('div');
+            testItem.className = 'test-item';
+            testItem.innerHTML = `
+                <div class="test-header">
+                    <span class="test-name">${name}</span>
+                    <span class="test-status status-pending">待测试</span>
+                </div>
+                <div class="test-details"></div>
+            `;
+            container.appendChild(testItem);
+
+            const statusEl = testItem.querySelector('.test-status');
+            const detailsEl = testItem.querySelector('.test-details');
+
+            try {
+                const result = await testFn();
+                statusEl.className = 'test-status status-success';
+                statusEl.textContent = '通过';
+
+                Object.entries(result).forEach(([key, value]) => {
+                    const detailItem = document.createElement('div');
+                    detailItem.className = 'detail-item';
+                    detailItem.innerHTML = `
+                        <span class="detail-label">${key}</span>
+                        <span class="detail-value">${value}</span>
+                    `;
+                    detailsEl.appendChild(detailItem);
+                });
+
+                testResults.push({ name, success: true, result });
+                return { success: true, result };
+            } catch (error) {
+                statusEl.className = 'test-status status-error';
+                statusEl.textContent = '失败';
+
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'test-error';
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${error.message}`;
+                testItem.appendChild(errorDiv);
+
+                testResults.push({ name, success: false, error: error.message });
+                return { success: false, error: error.message };
+            }
+        }
+
+        function createTestSection(title, icon) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `
+                <h2 class="section-title">
+                    <i class="fas ${icon}"></i> ${title}
+                </h2>
+                <div class="test-items"></div>
+            `;
+            return section;
+        }
+
+        function updateSummary() {
+            const total = testResults.length;
+            const success = testResults.filter(r => r.success).length;
+            const error = testResults.filter(r => !r.success).length;
+            const pending = 0;
+
+            document.getElementById('total-tests').textContent = total;
+            document.getElementById('success-tests').textContent = success;
+            document.getElementById('error-tests').textContent = error;
+            document.getElementById('pending-tests').textContent = pending;
+        }
+
+        function showRecommendations() {
+            const list = document.getElementById('recommendations-list');
+            list.innerHTML = '';
+
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                list.appendChild(li);
+            });
+
+            document.getElementById('recommendations').style.display = 'block';
+        }
+
+        // 页面加载时自动运行测试
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 500);
+        });
+    </script>
+</body>
+</html>

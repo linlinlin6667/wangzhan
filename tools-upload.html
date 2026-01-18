@@ -1,127 +1,473 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工具上传下载 - 我的世界</title>
+    <meta name="description" content="My World - 工具上传下载">
+    <title>工具上传下载 | My World</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/tools-upload.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="cursor-glow"></div>
-    <div class="particles" id="particles"></div>
-    
-    <nav class="navbar">
-        <div class="container">
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link">返回首页</a></li>
-                <li class="nav-item"><a href="admin.html" class="nav-link">后台管理</a></li>
-            </ul>
-            <a class="logo" href="index.html">
-                <span class="logo-text">MY WORLD</span>
-                <div class="logo-dot"></div>
-            </a>
+<body class="bg-[#0A0A0F] text-white min-h-screen">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#00F0FF] text-black px-4 py-2 rounded-lg z-50">
+        跳转到主要内容
+    </a>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300" role="navigation" aria-label="主导航">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="logo flex items-center gap-2 group" aria-label="返回首页">
+                    <span class="logo-text font-['Space_Grotesk'] text-xl lg:text-2xl font-bold tracking-wider">
+                        MY WORLD
+                    </span>
+                    <div class="logo-dot w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <ul class="nav-menu hidden md:flex items-center gap-1 lg:gap-2">
+                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">返回首页</a></li>
+                    <li><a href="admin.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">后台管理</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <a href="index.html" class="md:hidden inline-flex items-center gap-2 px-4 py-2 bg-[#00F0FF] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>返回</span>
+                </a>
+            </div>
         </div>
     </nav>
 
-    <section class="tools-upload">
-        <div class="container">
-            <div class="section-header">
-                <h1 class="section-title">工具上传下载</h1>
-                <div class="title-line"></div>
-                <p class="section-subtitle">分享和获取实用的开发工具</p>
+    <!-- Main Content -->
+    <main id="main-content" class="pt-24 pb-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Page Header -->
+            <div class="page-header mb-12">
+                <h1 class="font-['Space_Grotesk'] text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                    工具上传下载
+                </h1>
+                <p class="text-[#B8B8C8] text-lg">
+                    上传和下载您的工具资源
+                </p>
             </div>
 
-            <div class="upload-section">
-                <div class="upload-card">
-                    <div class="upload-header">
-                        <h2><i class="fas fa-cloud-upload-alt"></i> 上传新工具</h2>
-                    </div>
-                    <form id="uploadForm" class="upload-form">
+            <!-- Tools Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Upload Section -->
+                <div class="upload-section bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                    <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-cloud-upload-alt text-[#00F0FF]"></i>
+                        上传工具
+                    </h2>
+                    
+                    <form id="upload-form" class="space-y-6">
+                        <!-- Tool Name -->
                         <div class="form-group">
-                            <label>工具名称</label>
-                            <input type="text" class="form-input" id="toolName" placeholder="输入工具名称" required>
+                            <label for="tool-name" class="block text-sm font-medium mb-2">
+                                工具名称 <span class="text-[#FF00E6]">*</span>
+                            </label>
+                            <input type="text" id="tool-name" name="name" required 
+                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
+                                placeholder="输入工具名称">
                         </div>
+
+                        <!-- Tool Description -->
                         <div class="form-group">
-                            <label>工具描述</label>
-                            <textarea class="form-textarea" id="toolDescription" placeholder="描述工具的功能和用途" rows="3" required></textarea>
+                            <label for="tool-description" class="block text-sm font-medium mb-2">
+                                工具描述 <span class="text-[#FF00E6]">*</span>
+                            </label>
+                            <textarea id="tool-description" name="description" rows="3" required
+                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none"
+                                placeholder="输入工具描述"></textarea>
                         </div>
+
+                        <!-- Tool Icon -->
                         <div class="form-group">
-                            <label>工具版本</label>
-                            <input type="text" class="form-input" id="toolVersion" placeholder="例如：1.0.0" required>
+                            <label for="tool-icon" class="block text-sm font-medium mb-2">
+                                图标（Font Awesome）
+                            </label>
+                            <div class="relative">
+                                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-[#B8B8C8]"></i>
+                                <input type="text" id="tool-icon" name="icon" 
+                                    class="w-full pl-12 pr-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
+                                    placeholder="例如：fa-tools">
+                            </div>
                         </div>
+
+                        <!-- Tool Category -->
                         <div class="form-group">
-                            <label>工具分类</label>
-                            <select class="form-input" id="toolCategory" required>
-                                <option value="">选择分类</option>
-                                <option value="开发工具">开发工具</option>
-                                <option value="设计工具">设计工具</option>
-                                <option value="效率工具">效率工具</option>
-                                <option value="学习资源">学习资源</option>
-                                <option value="其他">其他</option>
+                            <label for="tool-category" class="block text-sm font-medium mb-2">
+                                工具类别
+                            </label>
+                            <select id="tool-category" name="category" 
+                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                <option value="development">开发工具</option>
+                                <option value="design">设计工具</option>
+                                <option value="productivity">生产力工具</option>
+                                <option value="utilities">实用工具</option>
+                                <option value="other">其他</option>
                             </select>
                         </div>
+
+                        <!-- Tool Link -->
                         <div class="form-group">
-                            <label>下载链接</label>
-                            <input type="url" class="form-input" id="toolLink" placeholder="输入工具的下载链接" required>
+                            <label for="tool-link" class="block text-sm font-medium mb-2">
+                                工具链接 <span class="text-[#FF00E6]">*</span>
+                            </label>
+                            <input type="url" id="tool-link" name="link" required
+                                class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
+                                placeholder="https://example.com">
                         </div>
+
+                        <!-- Tool Color -->
                         <div class="form-group">
-                            <label>工具图标</label>
-                            <select class="form-input" id="toolIcon" required>
-                                <option value="">选择图标</option>
-                                <option value="fa-download">下载图标</option>
-                                <option value="fa-code">代码图标</option>
-                                <option value="fa-palette">调色板图标</option>
-                                <option value="fa-cog">齿轮图标</option>
-                                <option value="fa-tools">工具图标</option>
-                                <option value="fa-folder">文件夹图标</option>
-                                <option value="fa-file-alt">文件图标</option>
-                                <option value="fa-star">星星图标</option>
-                            </select>
+                            <label for="tool-color" class="block text-sm font-medium mb-2">
+                                颜色主题
+                            </label>
+                            <div class="flex items-center gap-4">
+                                <input type="color" id="tool-color" name="color" value="#00F0FF"
+                                    class="w-16 h-14 px-2 py-2 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 cursor-pointer">
+                                <div class="flex gap-2">
+                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#00F0FF] transition-all duration-300" data-color="#00F0FF" style="background-color: #00F0FF;"></button>
+                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#FF00E6] transition-all duration-300" data-color="#FF00E6" style="background-color: #FF00E6;"></button>
+                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#7B61FF] transition-all duration-300" data-color="#7B61FF" style="background-color: #7B61FF;"></button>
+                                    <button type="button" class="color-preset w-10 h-10 rounded-lg border-2 border-white/10 hover:border-[#00FF94] transition-all duration-300" data-color="#00FF94" style="background-color: #00FF94;"></button>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-upload">
+
+                        <!-- File Upload -->
+                        <div class="form-group">
+                            <label for="tool-file" class="block text-sm font-medium mb-2">
+                                上传文件
+                            </label>
+                            <div class="file-upload-area relative">
+                                <input type="file" id="tool-file" name="file" 
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                    accept=".zip,.rar,.tar,.gz,.exe,.dmg,.pkg">
+                                <div class="file-upload-content border-2 border-dashed border-white/20 rounded-xl p-8 text-center transition-all duration-300 hover:border-[#00F0FF]">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-[#00F0FF] mb-4"></i>
+                                    <p class="text-white font-medium mb-2">拖放文件到此处或点击上传</p>
+                                    <p class="text-[#B8B8C8] text-sm">支持 ZIP, RAR, TAR, GZ, EXE, DMG, PKG 格式</p>
+                                    <p class="text-[#B8B8C8] text-xs mt-2">最大文件大小：50MB</p>
+                                </div>
+                            </div>
+                            <div id="file-info" class="hidden mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-file-archive text-[#00F0FF] text-xl"></i>
+                                        <div>
+                                            <p class="file-name text-white font-medium"></p>
+                                            <p class="file-size text-[#B8B8C8] text-sm"></p>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="remove-file" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
                             <i class="fas fa-upload"></i>
                             <span>上传工具</span>
                         </button>
                     </form>
                 </div>
-            </div>
 
-            <div class="tools-list-section">
-                <div class="tools-list-header">
-                    <h2><i class="fas fa-list"></i> 工具列表</h2>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">全部</button>
-                        <button class="filter-btn" data-filter="开发工具">开发工具</button>
-                        <button class="filter-btn" data-filter="设计工具">设计工具</button>
-                        <button class="filter-btn" data-filter="效率工具">效率工具</button>
-                        <button class="filter-btn" data-filter="学习资源">学习资源</button>
-                        <button class="filter-btn" data-filter="其他">其他</button>
+                <!-- Download Section -->
+                <div class="download-section bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                    <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-download text-[#FF00E6]"></i>
+                        下载工具
+                    </h2>
+
+                    <!-- Search and Filter -->
+                    <div class="mb-6 space-y-4">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-[#B8B8C8]"></i>
+                            <input type="text" id="search-tools" 
+                                class="w-full pl-12 pr-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300"
+                                placeholder="搜索工具...">
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="all">
+                                全部
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="development">
+                                开发工具
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="design">
+                                设计工具
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="productivity">
+                                生产力工具
+                            </button>
+                            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#00F0FF]/10" data-filter="utilities">
+                                实用工具
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="tools-list" id="toolsList">
+
+                    <!-- Tools List -->
+                    <div id="tools-list" class="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                        <!-- Tools will be loaded here -->
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 My World. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+    <!-- Footer -->
+    <footer class="footer bg-[#0A0A0F] border-t border-white/10 py-8 lg:py-12" role="contentinfo">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="footer-content flex flex-col lg:flex-row items-center justify-between gap-4">
+                <p class="text-[#B8B8C8] text-sm">
+                    &copy; 2024 My World. All rights reserved.
+                </p>
+                <div class="social-links flex items-center gap-3">
+                    <a href="#" class="social-link w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#00F0FF] hover:text-white hover:border-[#00F0FF] transition-all duration-300 hover:-translate-y-1 hover:rotate-360" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#00F0FF] hover:text-white hover:border-[#00F0FF] transition-all duration-300 hover:-translate-y-1 hover:rotate-360" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#00F0FF] hover:text-white hover:border-[#00F0FF] transition-all duration-300 hover:-translate-y-1 hover:rotate-360" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/tools-upload.js"></script>
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load tools from localStorage
+            loadTools();
+
+            // Upload form
+            const uploadForm = document.getElementById('upload-form');
+            const fileInput = document.getElementById('tool-file');
+            const fileInfo = document.getElementById('file-info');
+            const removeFileBtn = document.getElementById('remove-file');
+
+            // File input change
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file size (50MB limit)
+                    const maxSize = 50 * 1024 * 1024;
+                    if (file.size > maxSize) {
+                        alert('文件大小超过50MB限制！');
+                        fileInput.value = '';
+                        return;
+                    }
+
+                    // Show file info
+                    fileInfo.classList.remove('hidden');
+                    fileInfo.querySelector('.file-name').textContent = file.name;
+                    fileInfo.querySelector('.file-size').textContent = formatFileSize(file.size);
+                }
+            });
+
+            // Remove file
+            removeFileBtn.addEventListener('click', function() {
+                fileInput.value = '';
+                fileInfo.classList.add('hidden');
+            });
+
+            // Color presets
+            const colorPresets = document.querySelectorAll('.color-preset');
+            const colorInput = document.getElementById('tool-color');
+            
+            colorPresets.forEach(preset => {
+                preset.addEventListener('click', function() {
+                    colorInput.value = this.getAttribute('data-color');
+                });
+            });
+
+            // Form submission
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(uploadForm);
+                const data = Object.fromEntries(formData);
+                
+                // Validate
+                if (!data.name || !data.description || !data.link) {
+                    alert('请填写所有必填字段！');
+                    return;
+                }
+
+                // Create tool object
+                const newTool = {
+                    id: Date.now().toString() + '-' + Math.random().toString(36).substr(2, 9),
+                    name: data.name,
+                    description: data.description,
+                    icon: data.icon || 'fa-tools',
+                    category: data.category,
+                    link: data.link,
+                    color: data.color,
+                    file: fileInput.files[0] ? {
+                        name: fileInput.files[0].name,
+                        size: fileInput.files[0].size,
+                        type: fileInput.files[0].type
+                    } : null,
+                    uploadedAt: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                if (window.MyWorldAPI) {
+                    window.MyWorldAPI.createTool(newTool);
+                    loadTools();
+                    
+                    // Reset form
+                    uploadForm.reset();
+                    fileInfo.classList.add('hidden');
+                    
+                    // Show notification
+                    window.MyWorldAPI.showNotification('工具上传成功！', 'success');
+                }
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('search-tools');
+            searchInput.addEventListener('input', debounce(function(e) {
+                filterTools(e.target.value);
+            }, 300));
+
+            // Filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            let currentFilter = 'all';
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-filter');
+                    filterTools(searchInput.value, currentFilter);
+                });
+            });
+
+            // Load tools function
+            function loadTools() {
+                const toolsList = document.getElementById('tools-list');
+                const tools = window.MyWorldAPI ? window.MyWorldAPI.state.tools : [];
+                
+                if (tools.length === 0) {
+                    toolsList.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-inbox text-6xl text-[#B8B8C8] mb-4"></i>
+                            <p class="text-[#B8B8C8] text-lg">暂无工具</p>
+                            <p class="text-[#B8B8C8] text-sm mt-2">上传您的第一个工具吧！</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                toolsList.innerHTML = tools.map(tool => `
+                    <div class="tool-download-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 transition-all duration-300 hover:border-[${tool.color}]/50 hover:shadow-[0_0_20px_rgba(${hexToRgb(tool.color)},0.2)]" data-category="${tool.category || 'other'}">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center flex-shrink-0">
+                            <i class="fas ${tool.icon} text-[${tool.color}] text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${tool.name}</h3>
+                            <p class="text-[#B8B8C8] text-sm">${tool.description}</p>
+                            ${tool.file ? `<p class="text-[${tool.color}] text-xs mt-1"><i class="fas fa-file-archive mr-1"></i>${tool.file.name} (${formatFileSize(tool.file.size)})</p>` : ''}
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="${tool.link}" download class="btn-download w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300" title="下载">
+                                <i class="fas fa-download"></i>
+                            </a>
+                            <button onclick="deleteTool('${tool.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300" title="删除">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Filter tools function
+            function filterTools(searchTerm = '', category = 'all') {
+                const tools = window.MyWorldAPI ? window.MyWorldAPI.state.tools : [];
+                const toolItems = document.querySelectorAll('.tool-download-item');
+                
+                toolItems.forEach(item => {
+                    const toolName = item.querySelector('h3').textContent.toLowerCase();
+                    const toolDesc = item.querySelector('p').textContent.toLowerCase();
+                    const toolCategory = item.getAttribute('data-category');
+                    
+                    const matchesSearch = toolName.includes(searchTerm.toLowerCase()) || 
+                                         toolDesc.includes(searchTerm.toLowerCase());
+                    const matchesCategory = category === 'all' || toolCategory === category;
+                    
+                    if (matchesSearch && matchesCategory) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            // Delete tool function
+            window.deleteTool = function(id) {
+                if (confirm('确定要删除这个工具吗？')) {
+                    if (window.MyWorldAPI) {
+                        window.MyWorldAPI.deleteTool(id);
+                        loadTools();
+                        window.MyWorldAPI.showNotification('工具删除成功！', 'success');
+                    }
+                }
+            };
+
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+            }
+
+            // Convert hex to RGB
+            function hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result 
+                    ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+                    : '0, 240, 255';
+            }
+
+            // Debounce function
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+        });
+    </script>
 </body>
 </html>

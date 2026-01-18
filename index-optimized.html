@@ -5,23 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="My World - 个人作品集网站">
     <meta name="keywords" content="前端开发, 设计师, 作品集, 个人网站">
+    <meta name="theme-color" content="#00F0FF">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="My World">
     <title>My World | 个人作品集</title>
     
-    <!-- Fonts -->
+    <!-- Preconnect to CDNs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <link rel="preload" href="css/style-optimized.css" as="style">
+    <link rel="stylesheet" href="css/style-optimized.css">
+    
+    <!-- Preload Critical JavaScript -->
+    <link rel="preload" href="js/performance-monitor.js" as="script">
+    <link rel="preload" href="js/main-optimized.js" as="script">
     
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
     
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Open Graph -->
+    <meta property="og:title" content="My World | 个人作品集">
+    <meta property="og:description" content="前端开发者 & 创意设计师的作品集网站">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myworld.com">
+    <meta property="og:image" content="https://myworld.com/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="My World | 个人作品集">
+    <meta name="twitter:description" content="前端开发者 & 创意设计师的作品集网站">
+    <meta name="twitter:image" content="https://myworld.com/twitter-image.jpg">
+    
+    <!-- Critical CSS (Inline for above-the-fold content) -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        body {
+            background-color: #0A0A0F;
+            color: #FFFFFF;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        .cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            contain: strict;
+        }
+        
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+            contain: strict;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 300ms;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease forwards;
+            opacity: 0;
+        }
+        
+        /* Loading state */
+        .loading {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loaded {
+            opacity: 1;
+        }
+    </style>
 </head>
-<body class="bg-[#0A0A0F] text-white min-h-screen overflow-x-hidden">
+<body class="bg-[#0A0A0F] text-white min-h-screen overflow-x-hidden loading">
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#00F0FF] text-black px-4 py-2 rounded-lg z-50">
         跳转到主要内容
@@ -38,7 +177,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300" role="navigation" aria-label="主导航">
+    <nav class="navbar" role="navigation" aria-label="主导航">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <!-- Logo -->
@@ -84,7 +223,7 @@
     <!-- Main Content -->
     <main id="main-content">
         <!-- Hero Section -->
-        <section id="hero" class="hero min-h-screen flex items-center justify-center pt-20 relative overflow-hidden" aria-labelledby="hero-title">
+        <section id="hero" class="hero" aria-labelledby="hero-title">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="hero-content max-w-4xl mx-auto text-center">
                     <!-- Greeting -->
@@ -151,7 +290,7 @@
                             <!-- Avatar -->
                             <div class="avatar-wrapper relative">
                                 <div class="avatar w-32 h-32 lg:w-40 lg:h-40 rounded-2xl bg-gradient-to-br from-[#00F0FF] to-[#7B61FF] p-1">
-                                    <img src="https://picsum.photos/seed/avatar/400/400" alt="头像" class="w-full h-full object-cover rounded-xl">
+                                    <img src="https://picsum.photos/seed/avatar/400/400" alt="头像" class="w-full h-full object-cover rounded-xl" loading="lazy">
                                 </div>
                                 <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-[#00FF94] rounded-full flex items-center justify-center shadow-lg">
                                     <i class="fas fa-check text-white"></i>
@@ -266,7 +405,7 @@
                     <!-- Project Card 1 -->
                     <article class="project-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-[#00F0FF]/50 hover:shadow-[0_0_40px_rgba(0,240,255,0.2)] hover:-translate-y-2">
                         <div class="project-image relative aspect-video overflow-hidden">
-                            <img src="https://picsum.photos/seed/project1/800/600" alt="电商平台" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <img src="https://picsum.photos/seed/project1/800/600" alt="电商平台" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                             <div class="project-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                 <a href="#" class="btn-view inline-flex items-center gap-2 px-6 py-3 bg-[#00F0FF] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                                     <span>查看详情</span>
@@ -292,7 +431,7 @@
                     <!-- Project Card 2 -->
                     <article class="project-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-[#FF00E6]/50 hover:shadow-[0_0_40px_rgba(255,0,230,0.2)] hover:-translate-y-2">
                         <div class="project-image relative aspect-video overflow-hidden">
-                            <img src="https://picsum.photos/seed/project2/800/600" alt="管理系统" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <img src="https://picsum.photos/seed/project2/800/600" alt="管理系统" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                             <div class="project-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                 <a href="#" class="btn-view inline-flex items-center gap-2 px-6 py-3 bg-[#FF00E6] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                                     <span>查看详情</span>
@@ -318,7 +457,7 @@
                     <!-- Project Card 3 -->
                     <article class="project-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-[#7B61FF]/50 hover:shadow-[0_0_40px_rgba(123,97,255,0.2)] hover:-translate-y-2">
                         <div class="project-image relative aspect-video overflow-hidden">
-                            <img src="https://picsum.photos/seed/project3/800/600" alt="移动应用" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <img src="https://picsum.photos/seed/project3/800/600" alt="移动应用" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                             <div class="project-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                 <a href="#" class="btn-view inline-flex items-center gap-2 px-6 py-3 bg-[#7B61FF] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                                     <span>查看详情</span>
@@ -681,7 +820,28 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
+    <!-- Performance Monitoring (Load first) -->
+    <script src="js/performance-monitor.js" async></script>
+    
+    <!-- Tailwind CSS (Load asynchronously) -->
+    <script src="https://cdn.tailwindcss.com" async></script>
+    
+    <!-- Main JavaScript (Load after critical resources) -->
+    <script src="js/main-optimized.js" defer></script>
+    
+    <!-- Loading state management -->
+    <script>
+        // Remove loading class when page is fully loaded
+        window.addEventListener('load', () => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        });
+        
+        // Fallback: remove loading class after 3 seconds
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        }, 3000);
+    </script>
 </body>
 </html>

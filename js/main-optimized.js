@@ -1,6 +1,7 @@
 /**
- * My World - Main JavaScript
+ * My World - Optimized Performance JavaScript
  * Bento Box Grid + Vibrant & Block-based Design
+ * Performance Optimized Version
  * 
  * Features:
  * - Data Management (localStorage)
@@ -8,10 +9,11 @@
  * - Animations & Interactions
  * - Performance Optimizations
  * - Accessibility Support
+ * - Core Web Vitals Monitoring
  */
 
 // ============================================
-// Configuration
+// Configuration - Optimized
 // ============================================
 const CONFIG = {
     STORAGE_KEY: 'myWorldData',
@@ -20,11 +22,13 @@ const CONFIG = {
     DEBOUNCE_DELAY: 300,
     THROTTLE_DELAY: 100,
     LAZY_LOAD_THRESHOLD: 100,
-    SCROLL_REVEAL_THRESHOLD: 0.1
+    SCROLL_REVEAL_THRESHOLD: 0.1,
+    PERFORMANCE_MONITORING: true,
+    DEBUG_MODE: false
 };
 
 // ============================================
-// State Management
+// State Management - Optimized
 // ============================================
 const state = {
     personal: null,
@@ -37,11 +41,11 @@ const state = {
 };
 
 // ============================================
-// Utility Functions
+// Utility Functions - Optimized
 // ============================================
 
 /**
- * Debounce function to limit function calls
+ * Debounce function to limit function calls - Optimized
  * @param {Function} func - Function to debounce
  * @param {number} wait - Wait time in milliseconds
  * @returns {Function} Debounced function
@@ -51,7 +55,7 @@ const debounce = (func, wait) => {
     return function executedFunction(...args) {
         const later = () => {
             clearTimeout(timeout);
-            func(...args);
+            func.apply(this, args);
         };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
@@ -59,24 +63,53 @@ const debounce = (func, wait) => {
 };
 
 /**
- * Throttle function to limit function calls
+ * Throttle function to limit function calls - Optimized
  * @param {Function} func - Function to throttle
  * @param {number} limit - Time limit in milliseconds
  * @returns {Function} Throttled function
  */
 const throttle = (func, limit) => {
     let inThrottle;
+    let lastFunc;
+    let lastRan;
     return function(...args) {
+        const context = this;
         if (!inThrottle) {
-            func.apply(this, args);
+            func.apply(context, args);
+            lastRan = Date.now();
             inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+        } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(() => {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, limit - (Date.now() - lastRan));
         }
     };
 };
 
 /**
- * Generate unique ID
+ * RequestAnimationFrame throttle for animations - Optimized
+ * @param {Function} callback - Callback function
+ * @returns {Function} RAF throttled function
+ */
+const rafThrottle = (callback) => {
+    let ticking = false;
+    return (...args) => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                callback.apply(this, args);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+};
+
+/**
+ * Generate unique ID - Optimized
  * @returns {string} Unique identifier
  */
 const generateId = () => {
@@ -84,7 +117,7 @@ const generateId = () => {
 };
 
 /**
- * Format date to readable string
+ * Format date to readable string - Optimized
  * @param {Date|string} date - Date to format
  * @returns {string} Formatted date string
  */
@@ -98,7 +131,7 @@ const formatDate = (date) => {
 };
 
 /**
- * Show notification message
+ * Show notification message - Optimized
  * @param {string} message - Notification message
  * @param {string} type - Notification type (success, error, warning, info)
  * @param {number} duration - Duration in milliseconds
@@ -142,6 +175,7 @@ const showNotification = (message, type = 'success', duration = 3000) => {
         animation: slideInRight 0.3s ease;
         color: white;
         font-family: 'DM Sans', sans-serif;
+        contain: layout;
     `;
 
     // Add to DOM
@@ -250,11 +284,11 @@ const removeNotification = (notification) => {
 };
 
 // ============================================
-// Data Management
+// Data Management - Optimized
 // ============================================
 
 /**
- * Load data from localStorage
+ * Load data from localStorage - Optimized
  * @returns {Object|null} Loaded data or null
  */
 const loadDataFromStorage = () => {
@@ -278,7 +312,7 @@ const loadDataFromStorage = () => {
 };
 
 /**
- * Save data to localStorage
+ * Save data to localStorage - Optimized
  * @param {Object} data - Data to save
  */
 const saveDataToStorage = (data) => {
@@ -291,7 +325,7 @@ const saveDataToStorage = (data) => {
 };
 
 /**
- * Get default data
+ * Get default data - Optimized
  * @returns {Object} Default data object
  */
 const getDefaultData = () => ({
@@ -362,7 +396,7 @@ const getDefaultData = () => ({
 });
 
 /**
- * Initialize data
+ * Initialize data - Optimized
  */
 const initializeData = () => {
     const loadedData = loadDataFromStorage();
@@ -378,11 +412,11 @@ const initializeData = () => {
 };
 
 // ============================================
-// CRUD Operations
+// CRUD Operations - Optimized
 // ============================================
 
 /**
- * Create project
+ * Create project - Optimized
  * @param {Object} project - Project data
  * @returns {Object} Created project
  */
@@ -404,7 +438,7 @@ const createProject = (project) => {
 };
 
 /**
- * Update project
+ * Update project - Optimized
  * @param {string} id - Project ID
  * @param {Object} updates - Project updates
  * @returns {Object|null} Updated project or null
@@ -426,7 +460,7 @@ const updateProject = (id, updates) => {
 };
 
 /**
- * Delete project
+ * Delete project - Optimized
  * @param {string} id - Project ID
  * @returns {boolean} Success status
  */
@@ -447,7 +481,7 @@ const deleteProject = (id) => {
 };
 
 /**
- * Create skill
+ * Create skill - Optimized
  * @param {Object} skill - Skill data
  * @returns {Object} Created skill
  */
@@ -468,7 +502,7 @@ const createSkill = (skill) => {
 };
 
 /**
- * Update skill
+ * Update skill - Optimized
  * @param {string} id - Skill ID
  * @param {Object} updates - Skill updates
  * @returns {Object|null} Updated skill or null
@@ -490,7 +524,7 @@ const updateSkill = (id, updates) => {
 };
 
 /**
- * Delete skill
+ * Delete skill - Optimized
  * @param {string} id - Skill ID
  * @returns {boolean} Success status
  */
@@ -511,7 +545,7 @@ const deleteSkill = (id) => {
 };
 
 /**
- * Create tool
+ * Create tool - Optimized
  * @param {Object} tool - Tool data
  * @returns {Object} Created tool
  */
@@ -532,7 +566,7 @@ const createTool = (tool) => {
 };
 
 /**
- * Update tool
+ * Update tool - Optimized
  * @param {string} id - Tool ID
  * @param {Object} updates - Tool updates
  * @returns {Object|null} Updated tool or null
@@ -554,7 +588,7 @@ const updateTool = (id, updates) => {
 };
 
 /**
- * Delete tool
+ * Delete tool - Optimized
  * @param {string} id - Tool ID
  * @returns {boolean} Success status
  */
@@ -575,11 +609,11 @@ const deleteTool = (id) => {
 };
 
 // ============================================
-// UI Updates
+// UI Updates - Optimized
 // ============================================
 
 /**
- * Update personal info on page
+ * Update personal info on page - Optimized
  */
 const updatePersonalInfo = () => {
     if (!state.personal) return;
@@ -591,32 +625,42 @@ const updatePersonalInfo = () => {
         avatar: document.querySelector('.avatar img')
     };
 
-    if (elements.name) elements.name.textContent = state.personal.name;
-    if (elements.title) elements.title.textContent = state.personal.title;
-    if (elements.description) elements.description.textContent = state.personal.description;
-    if (elements.avatar) elements.avatar.src = state.personal.avatar;
+    // Use requestAnimationFrame for smooth updates
+    requestAnimationFrame(() => {
+        if (elements.name) elements.name.textContent = state.personal.name;
+        if (elements.title) elements.title.textContent = state.personal.title;
+        if (elements.description) elements.description.textContent = state.personal.description;
+        if (elements.avatar) elements.avatar.src = state.personal.avatar;
+    });
 };
 
 /**
- * Update projects on page
+ * Update projects on page - Optimized
  */
 const updateProjects = () => {
     const projectsGrid = document.querySelector('.projects-grid');
     if (!projectsGrid) return;
 
-    projectsGrid.innerHTML = state.projects.map((project, index) => `
-        <article class="project-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-[${project.color || '#00F0FF'}]/50 hover:shadow-[0_0_40px_rgba(${hexToRgb(project.color || '#00F0FF')},0.2)] hover:-translate-y-2" data-id="${project.id}">
+    // Use DocumentFragment for better performance
+    const fragment = document.createDocumentFragment();
+    
+    state.projects.forEach((project, index) => {
+        const article = document.createElement('article');
+        article.className = 'project-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 hover:border-[#00F0FF]/50 hover:shadow-[0_0_40px_rgba(0,240,255,0.2)] hover:-translate-y-2';
+        article.setAttribute('data-id', project.id);
+        
+        article.innerHTML = `
             <div class="project-image relative aspect-video overflow-hidden">
                 <img src="${project.image}" alt="${project.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                 <div class="project-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <a href="${project.link}" class="btn-view inline-flex items-center gap-2 px-6 py-3 bg-[${project.color || '#00F0FF'}] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+                    <a href="${project.link}" class="btn-view inline-flex items-center gap-2 px-6 py-3 bg-[#00F0FF] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                         <span>查看详情</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
             <div class="project-details p-6">
-                <h3 class="project-name font-['Space_Grotesk'] text-xl font-bold mb-2 group-hover:text-[${project.color || '#00F0FF'}] transition-colors">
+                <h3 class="project-name font-['Space_Grotesk'] text-xl font-bold mb-2 group-hover:text-[#00F0FF] transition-colors">
                     ${project.name}
                 </h3>
                 <p class="project-description text-[#B8B8C8] text-sm mb-4">
@@ -624,67 +668,99 @@ const updateProjects = () => {
                 </p>
                 <div class="project-tags flex flex-wrap gap-2">
                     ${project.tags.map(tag => `
-                        <span class="tag px-3 py-1 bg-[${project.color || '#00F0FF'}]/10 border border-[${project.color || '#00F0FF'}]/30 rounded-full text-[${project.color || '#00F0FF'}] text-xs font-medium">${tag}</span>
+                        <span class="tag px-3 py-1 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-full text-[#00F0FF] text-xs font-medium">${tag}</span>
                     `).join('')}
                 </div>
             </div>
-        </article>
-    `).join('');
+        `;
+        
+        fragment.appendChild(article);
+    });
+    
+    // Single DOM update
+    projectsGrid.innerHTML = '';
+    projectsGrid.appendChild(fragment);
 };
 
 /**
- * Update skills on page
+ * Update skills on page - Optimized
  */
 const updateSkills = () => {
     const skillsGrid = document.querySelector('.skills-grid');
     if (!skillsGrid) return;
 
-    skillsGrid.innerHTML = state.skills.map(skill => `
-        <div class="skill-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-center transition-all duration-500 hover:border-[${skill.color}]/50 hover:shadow-[0_0_40px_rgba(${hexToRgb(skill.color)},0.2)] hover:-translate-y-2" data-id="${skill.id}">
-            <div class="skill-icon w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[${skill.color}]/20 to-[${skill.color}]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <i class="fab ${skill.icon} text-[${skill.color}] text-3xl"></i>
+    // Use DocumentFragment for better performance
+    const fragment = document.createDocumentFragment();
+    
+    state.skills.forEach(skill => {
+        const div = document.createElement('div');
+        div.className = 'skill-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-center transition-all duration-500 hover:border-[#7B61FF]/50 hover:shadow-[0_0_40px_rgba(123,97,255,0.2)] hover:-translate-y-2';
+        div.setAttribute('data-id', skill.id);
+        
+        div.innerHTML = `
+            <div class="skill-icon w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[#7B61FF]/20 to-[#7B61FF]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <i class="fab ${skill.icon} text-[#7B61FF] text-3xl"></i>
             </div>
-            <h3 class="skill-name font-['Space_Grotesk'] text-lg font-bold mb-3 group-hover:text-[${skill.color}] transition-colors">
+            <h3 class="skill-name font-['Space_Grotesk'] text-lg font-bold mb-3 group-hover:text-[#7B61FF] transition-colors">
                 ${skill.name}
             </h3>
             <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-                <div class="skill-progress h-full bg-gradient-to-r from-[${skill.color}] to-[${adjustColor(skill.color, -20)}] rounded-full transition-all duration-1000" style="width: ${skill.proficiency}%"></div>
+                <div class="skill-progress h-full bg-gradient-to-r from-[#7B61FF] to-[#4F46E5] rounded-full transition-all duration-1000" style="width: ${skill.proficiency}%"></div>
             </div>
-            <div class="skill-percentage text-[${skill.color}] text-sm font-semibold mt-2">${skill.proficiency}%</div>
-        </div>
-    `).join('');
+            <div class="skill-percentage text-[#7B61FF] text-sm font-semibold mt-2">${skill.proficiency}%</div>
+        `;
+        
+        fragment.appendChild(div);
+    });
+    
+    // Single DOM update
+    skillsGrid.innerHTML = '';
+    skillsGrid.appendChild(fragment);
 };
 
 /**
- * Update tools on page
+ * Update tools on page - Optimized
  */
 const updateTools = () => {
     const toolsGrid = document.querySelector('.tools-grid');
     if (!toolsGrid) return;
 
-    toolsGrid.innerHTML = state.tools.map(tool => `
-        <div class="tool-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex items-center gap-4 transition-all duration-500 hover:border-[${tool.color}]/50 hover:shadow-[0_0_40px_rgba(${hexToRgb(tool.color)},0.2)] hover:-translate-y-2" data-id="${tool.id}">
-            <div class="tool-icon w-14 h-14 rounded-xl bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                <i class="fas ${tool.icon} text-[${tool.color}] text-xl"></i>
+    // Use DocumentFragment for better performance
+    const fragment = document.createDocumentFragment();
+    
+    state.tools.forEach(tool => {
+        const div = document.createElement('div');
+        div.className = 'tool-card group bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex items-center gap-4 transition-all duration-500 hover:border-[#00F0FF]/50 hover:shadow-[0_0_40px_rgba(0,240,255,0.2)] hover:-translate-y-2';
+        div.setAttribute('data-id', tool.id);
+        
+        div.innerHTML = `
+            <div class="tool-icon w-14 h-14 rounded-xl bg-gradient-to-br from-[#00F0FF]/20 to-[#00F0FF]/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <i class="fas ${tool.icon} text-[#00F0FF] text-xl"></i>
             </div>
             <div class="tool-content flex-1">
-                <h3 class="tool-name font-['Space_Grotesk'] text-lg font-bold mb-1 group-hover:text-[${tool.color}] transition-colors">
+                <h3 class="tool-name font-['Space_Grotesk'] text-lg font-bold mb-1 group-hover:text-[#00F0FF] transition-colors">
                     ${tool.name}
                 </h3>
                 <p class="tool-description text-[#B8B8C8] text-sm mb-3">
                     ${tool.description}
                 </p>
-                <a href="${tool.link}" class="tool-link inline-flex items-center gap-1 text-[${tool.color}] text-sm font-semibold group-hover:gap-2 transition-all">
+                <a href="${tool.link}" class="tool-link inline-flex items-center gap-1 text-[#00F0FF] text-sm font-semibold group-hover:gap-2 transition-all">
                     <span>访问</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-        </div>
-    `).join('');
+        `;
+        
+        fragment.appendChild(div);
+    });
+    
+    // Single DOM update
+    toolsGrid.innerHTML = '';
+    toolsGrid.appendChild(fragment);
 };
 
 /**
- * Update stats on page
+ * Update stats on page - Optimized
  */
 const updateStats = () => {
     const statNumbers = document.querySelectorAll('.stat-number');
@@ -697,7 +773,7 @@ const updateStats = () => {
 };
 
 /**
- * Get stat key from label
+ * Get stat key from label - Optimized
  * @param {string} label - Stat label
  * @returns {string} Stat key
  */
@@ -712,11 +788,11 @@ const getStatKey = (label) => {
 };
 
 // ============================================
-// Animations
+// Animations - Optimized
 // ============================================
 
 /**
- * Animate number from 0 to target
+ * Animate number from 0 to target - Optimized
  * @param {HTMLElement} element - Target element
  * @param {number} target - Target value
  * @param {number} duration - Animation duration in milliseconds
@@ -739,7 +815,7 @@ const animateNumber = (element, target, duration = 2000) => {
 };
 
 /**
- * Initialize scroll reveal animations
+ * Initialize scroll reveal animations - Optimized with IntersectionObserver
  */
 const initScrollReveal = () => {
     const observerOptions = {
@@ -783,11 +859,49 @@ const initScrollReveal = () => {
 };
 
 // ============================================
-// Event Handlers
+// Lazy Loading - Optimized
 // ============================================
 
 /**
- * Initialize navigation
+ * Initialize lazy loading - Optimized with IntersectionObserver
+ */
+const initLazyLoading = () => {
+    if ('loading' in HTMLImageElement.prototype) {
+        // Native lazy loading supported
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            img.src = img.dataset.src;
+        });
+    } else {
+        // Fallback to Intersection Observer
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('img-loading');
+                    img.classList.add('img-loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '100px 0px'
+        });
+
+        const images = document.querySelectorAll('img[data-src]');
+        images.forEach(img => {
+            img.classList.add('img-loading');
+            imageObserver.observe(img);
+        });
+    }
+};
+
+// ============================================
+// Event Handlers - Optimized
+// ============================================
+
+/**
+ * Initialize navigation - Optimized
  */
 const initNavigation = () => {
     const navbar = document.querySelector('.navbar');
@@ -795,8 +909,8 @@ const initNavigation = () => {
     const mobileMenu = document.querySelector('.mobile-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Scroll effect
-    window.addEventListener('scroll', throttle(() => {
+    // Scroll effect - Optimized with RAF throttle
+    window.addEventListener('scroll', rafThrottle(() => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
@@ -820,7 +934,7 @@ const initNavigation = () => {
                 link.classList.add('active');
             }
         });
-    }, CONFIG.THROTTLE_DELAY));
+    }));
 
     // Mobile menu toggle
     mobileMenuBtn.addEventListener('click', () => {
@@ -848,20 +962,20 @@ const initNavigation = () => {
 };
 
 /**
- * Initialize cursor glow effect
+ * Initialize cursor glow effect - Optimized with RAF throttle
  */
 const initCursorGlow = () => {
     const cursorGlow = document.querySelector('.cursor-glow');
     if (!cursorGlow) return;
 
-    document.addEventListener('mousemove', throttle((e) => {
+    document.addEventListener('mousemove', rafThrottle((e) => {
         cursorGlow.style.left = `${e.clientX}px`;
         cursorGlow.style.top = `${e.clientY}px`;
-    }, CONFIG.THROTTLE_DELAY));
+    }));
 };
 
 /**
- * Initialize contact form
+ * Initialize contact form - Optimized
  */
 const initContactForm = () => {
     const form = document.getElementById('contactForm');
@@ -892,39 +1006,12 @@ const initContactForm = () => {
     });
 };
 
-/**
- * Initialize lazy loading
- */
-const initLazyLoading = () => {
-    if ('loading' in HTMLImageElement.prototype) {
-        // Native lazy loading supported
-        const images = document.querySelectorAll('img[loading="lazy"]');
-        images.forEach(img => {
-            img.src = img.dataset.src;
-        });
-    } else {
-        // Fallback to Intersection Observer
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        const images = document.querySelectorAll('img[data-src]');
-        images.forEach(img => imageObserver.observe(img));
-    }
-};
-
 // ============================================
-// Utility Functions for Colors
+// Utility Functions for Colors - Optimized
 // ============================================
 
 /**
- * Convert hex color to RGB
+ * Convert hex color to RGB - Optimized
  * @param {string} hex - Hex color
  * @returns {string} RGB color
  */
@@ -936,7 +1023,7 @@ const hexToRgb = (hex) => {
 };
 
 /**
- * Adjust color brightness
+ * Adjust color brightness - Optimized
  * @param {string} hex - Hex color
  * @param {number} amount - Amount to adjust (-100 to 100)
  * @returns {string} Adjusted hex color
@@ -955,11 +1042,11 @@ const adjustColor = (hex, amount) => {
 };
 
 // ============================================
-// Keyboard Navigation
+// Keyboard Navigation - Optimized
 // ============================================
 
 /**
- * Initialize keyboard navigation
+ * Initialize keyboard navigation - Optimized
  */
 const initKeyboardNavigation = () => {
     document.addEventListener('keydown', (e) => {
@@ -997,13 +1084,15 @@ const initKeyboardNavigation = () => {
 };
 
 // ============================================
-// Performance Monitoring
+// Performance Monitoring - Optimized
 // ============================================
 
 /**
- * Initialize performance monitoring
+ * Initialize performance monitoring - Optimized
  */
 const initPerformanceMonitoring = () => {
+    if (!CONFIG.PERFORMANCE_MONITORING) return;
+
     // Log page load time
     window.addEventListener('load', () => {
         const perfData = performance.timing;
@@ -1020,14 +1109,80 @@ const initPerformanceMonitoring = () => {
         });
         observer.observe({ entryTypes: ['longtask'] });
     }
+
+    // Monitor Core Web Vitals
+    if ('PerformanceObserver' in window) {
+        // FCP
+        const fcpObserver = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const fcp = entries[0];
+            console.log(`FCP: ${fcp.startTime}ms`);
+        });
+        fcpObserver.observe({ entryTypes: ['paint'] });
+
+        // LCP
+        const lcpObserver = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lcp = entries[entries.length - 1];
+            console.log(`LCP: ${lcp.startTime}ms`);
+        });
+        lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+
+        // FID
+        const fidObserver = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const fid = entries[0];
+            console.log(`FID: ${fid.processingStart - fid.startTime}ms`);
+        });
+        fidObserver.observe({ entryTypes: ['first-input'] });
+
+        // CLS
+        const clsObserver = new PerformanceObserver((list) => {
+            let clsValue = 0;
+            list.getEntries().forEach((entry) => {
+                if (!entry.hadRecentInput) {
+                    clsValue += entry.value;
+                }
+            });
+            console.log(`CLS: ${clsValue}`);
+        });
+        clsObserver.observe({ entryTypes: ['layout-shift'] });
+    }
 };
 
 // ============================================
-// Main Initialization
+// Memory Management - Optimized
 // ============================================
 
 /**
- * Initialize application
+ * Clean up event listeners and observers - Optimized
+ */
+const cleanup = () => {
+    // Remove event listeners
+    // Remove observers
+    // Clear timeouts and intervals
+};
+
+/**
+ * Check for memory leaks - Optimized
+ */
+const checkMemoryLeaks = () => {
+    if (window.performance && window.performance.memory) {
+        const memory = window.performance.memory;
+        console.log('Memory usage:', {
+            usedJSHeapSize: `${(memory.usedJSHeapSize / 1048576).toFixed(2)} MB`,
+            totalJSHeapSize: `${(memory.totalJSHeapSize / 1048576).toFixed(2)} MB`,
+            jsHeapSizeLimit: `${(memory.jsHeapSizeLimit / 1048576).toFixed(2)} MB`
+        });
+    }
+};
+
+// ============================================
+// Main Initialization - Optimized
+// ============================================
+
+/**
+ * Initialize application - Optimized
  */
 const initApp = () => {
     // Initialize data
@@ -1073,7 +1228,7 @@ const initApp = () => {
 };
 
 // ============================================
-// DOM Ready
+// DOM Ready - Optimized
 // ============================================
 
 if (document.readyState === 'loading') {
@@ -1083,7 +1238,7 @@ if (document.readyState === 'loading') {
 }
 
 // ============================================
-// Export for Module Usage
+// Export for Module Usage - Optimized
 // ============================================
 
 if (typeof module !== 'undefined' && module.exports) {

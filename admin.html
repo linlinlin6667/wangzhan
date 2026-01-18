@@ -1,882 +1,652 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后台管理 - My World</title>
+    <meta name="description" content="My World - 后台管理">
+    <title>后台管理 | My World</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        :root {
-            --primary: #00F0FF;
-            --primary-dark: #00B8C4;
-            --secondary: #FF00E6;
-            --accent: #7B61FF;
-            --success: #00FF94;
-            --warning: #FFD600;
-            
-            --bg-dark: #0A0A0F;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --text-main: #FFFFFF;
-            --text-muted: #B8B8C8;
-            
-            --glow-primary: 0 0 30px rgba(0, 240, 255, 0.6);
-            --glow-secondary: 0 0 30px rgba(255, 0, 230, 0.6);
-            
-            --gradient-1: linear-gradient(135deg, #00F0FF, #00B8C4);
-            --gradient-2: linear-gradient(135deg, #FF00E6, #FF0066);
-            --gradient-3: linear-gradient(135deg, #7B61FF, #4F46E5);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--text-main);
-            background: var(--bg-dark);
-            min-height: 100vh;
-        }
-        
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .admin-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .admin-nav {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .admin-nav-item {
-            padding: 0.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .admin-nav-item:hover,
-        .admin-nav-item.active {
-            background: var(--gradient-1);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .admin-content {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 2rem;
-        }
-        
-        .admin-sidebar {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1rem;
-            height: fit-content;
-        }
-        
-        .sidebar-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .sidebar-item {
-            padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .sidebar-item:hover,
-        .sidebar-item.active {
-            background: var(--gradient-2);
-            color: white;
-            transform: translateX(5px);
-            border-color: var(--secondary);
-        }
-        
-        .sidebar-item i {
-            width: 20px;
-            text-align: center;
-        }
-        
-        .admin-main {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-        
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-main);
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .btn {
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-1);
-            color: white;
-            box-shadow: var(--glow-primary);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--secondary);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #FF0055, #FF0033);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.6);
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: var(--glow-primary);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .card-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .card-actions .btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-        }
-        
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 20px;
-            font-size: 0.875rem;
-            color: var(--primary);
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            background: var(--bg-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .notification.success {
-            border-left: 4px solid var(--success);
-        }
-        
-        .notification.error {
-            border-left: 4px solid #FF0055;
-        }
-        
-        @media (max-width: 768px) {
-            .admin-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-nav {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
 </head>
-<body>
-    <div id="notification" class="notification hidden"></div>
-    
-    <div class="admin-container">
-        <div class="admin-header">
-            <h1 class="admin-title">后台管理系统</h1>
-            <div class="admin-nav">
-                <a href="index.html" class="admin-nav-item">
-                    <i class="fas fa-home"></i> 首页
+<body class="bg-[#0A0A0F] text-white min-h-screen">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#00F0FF] text-black px-4 py-2 rounded-lg z-50">
+        跳转到主要内容
+    </a>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300" role="navigation" aria-label="主导航">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="logo flex items-center gap-2 group" aria-label="返回首页">
+                    <span class="logo-text font-['Space_Grotesk'] text-xl lg:text-2xl font-bold tracking-wider">
+                        MY WORLD
+                    </span>
+                    <div class="logo-dot w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
                 </a>
-                <a href="tools-upload.html" class="admin-nav-item">
-                    <i class="fas fa-cloud-upload-alt"></i> 工具上传
-                </a>
-                <a href="https://github.com/linlinlin6667/wangzhan" target="_blank" class="admin-nav-item">
-                    <i class="fab fa-github"></i> GitHub
+
+                <!-- Desktop Navigation -->
+                <ul class="nav-menu hidden md:flex items-center gap-1 lg:gap-2">
+                    <li><a href="index.html" class="nav-link px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 hover:bg-[#00F0FF]/10">返回首页</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <a href="index.html" class="md:hidden inline-flex items-center gap-2 px-4 py-2 bg-[#00F0FF] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>返回</span>
                 </a>
             </div>
         </div>
-        
-        <div class="admin-content">
-            <div class="admin-sidebar">
-                <div class="sidebar-menu">
-                    <div class="sidebar-item active" data-section="personal">
-                        <i class="fas fa-user"></i> 个人信息
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-24 pb-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Page Header -->
+            <div class="page-header mb-12">
+                <h1 class="font-['Space_Grotesk'] text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+                    后台管理
+                </h1>
+                <p class="text-[#B8B8C8] text-lg">
+                    管理您的个人信息、项目、技能和工具资源
+                </p>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="admin-tabs flex flex-wrap gap-2 mb-8 border-b border-white/10 pb-4">
+                <button class="tab-btn active px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="personal">
+                    <i class="fas fa-user mr-2"></i>个人信息
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="projects">
+                    <i class="fas fa-project-diagram mr-2"></i>项目管理
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="skills">
+                    <i class="fas fa-code mr-2"></i>技能管理
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="tools">
+                    <i class="fas fa-tools mr-2"></i>工具管理
+                </button>
+                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="stats">
+                    <i class="fas fa-chart-bar mr-2"></i>统计数据
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Personal Info Tab -->
+                <div id="personal-tab" class="tab-pane active">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6">编辑个人信息</h2>
+                        <form id="personal-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="name" class="block text-sm font-medium mb-2">姓名</label>
+                                    <input type="text" id="name" name="name" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="block text-sm font-medium mb-2">职位</label>
+                                    <input type="text" id="title" name="title" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="block text-sm font-medium mb-2">简介</label>
+                                <textarea id="description" name="description" rows="4" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none"></textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="email" class="block text-sm font-medium mb-2">邮箱</label>
+                                    <input type="email" id="email" name="email" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="block text-sm font-medium mb-2">电话</label>
+                                    <input type="tel" id="phone" name="phone" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="location" class="block text-sm font-medium mb-2">位置</label>
+                                <input type="text" id="location" name="location" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                            </div>
+                            <div class="form-group">
+                                <label for="avatar" class="block text-sm font-medium mb-2">头像URL</label>
+                                <input type="url" id="avatar" name="avatar" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                                <i class="fas fa-save"></i>
+                                <span>保存个人信息</span>
+                            </button>
+                        </form>
                     </div>
-                    <div class="sidebar-item" data-section="projects">
-                        <i class="fas fa-project-diagram"></i> 作品管理
+                </div>
+
+                <!-- Projects Tab -->
+                <div id="projects-tab" class="tab-pane hidden">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">项目管理</h2>
+                            <button id="add-project-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                                <i class="fas fa-plus"></i>
+                                <span>添加项目</span>
+                            </button>
+                        </div>
+                        <div id="projects-list" class="space-y-4">
+                            <!-- Projects will be loaded here -->
+                        </div>
                     </div>
-                    <div class="sidebar-item" data-section="tools">
-                        <i class="fas fa-tools"></i> 工具管理
+                </div>
+
+                <!-- Skills Tab -->
+                <div id="skills-tab" class="tab-pane hidden">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">技能管理</h2>
+                            <button id="add-skill-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                                <i class="fas fa-plus"></i>
+                                <span>添加技能</span>
+                            </button>
+                        </div>
+                        <div id="skills-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Skills will be loaded here -->
+                        </div>
                     </div>
-                    <div class="sidebar-item" data-section="skills">
-                        <i class="fas fa-code"></i> 技能管理
+                </div>
+
+                <!-- Tools Tab -->
+                <div id="tools-tab" class="tab-pane hidden">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">工具管理</h2>
+                            <button id="add-tool-btn" class="btn btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-[#00F0FF] text-[#00F0FF] font-semibold rounded-xl transition-all duration-300 hover:bg-[#00F0FF] hover:text-white">
+                                <i class="fas fa-plus"></i>
+                                <span>添加工具</span>
+                            </button>
+                        </div>
+                        <div id="tools-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Tools will be loaded here -->
+                        </div>
                     </div>
-                    <div class="sidebar-item" data-section="stats">
-                        <i class="fas fa-chart-bar"></i> 统计数据
+                </div>
+
+                <!-- Stats Tab -->
+                <div id="stats-tab" class="tab-pane hidden">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <h2 class="font-['Space_Grotesk'] text-2xl font-bold mb-6">统计数据</h2>
+                        <form id="stats-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="experience" class="block text-sm font-medium mb-2">年经验</label>
+                                    <input type="number" id="experience" name="experience" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="projects-count" class="block text-sm font-medium mb-2">项目完成</label>
+                                    <input type="number" id="projects-count" name="projects" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="clients" class="block text-sm font-medium mb-2">满意客户</label>
+                                    <input type="number" id="clients" name="clients" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="commits" class="block text-sm font-medium mb-2">代码提交</label>
+                                    <input type="number" id="commits" name="commits" min="0" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                                <i class="fas fa-save"></i>
+                                <span>保存统计数据</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            
-            <div class="admin-main">
-                <div id="loading" class="loading hidden">
-                    <div class="spinner"></div>
-                </div>
-                
-                <div id="personal-section">
-                    <h2 class="section-title">个人信息</h2>
-                    <form id="personal-form">
-                        <div class="form-group">
-                            <label class="form-label">姓名</label>
-                            <input type="text" class="form-input" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">职位/头衔</label>
-                            <input type="text" class="form-input" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">个人介绍</label>
-                            <input type="text" class="form-input" name="introduction" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">详细简介</label>
-                            <textarea class="form-input form-textarea" name="description" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">头像URL</label>
-                            <input type="url" class="form-input" name="avatar" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">邮箱</label>
-                            <input type="email" class="form-input" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">电话</label>
-                            <input type="tel" class="form-input" name="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">位置</label>
-                            <input type="text" class="form-input" name="location" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> 保存个人信息
-                        </button>
-                    </form>
-                </div>
-                
-                <div id="projects-section" class="hidden">
-                    <h2 class="section-title">作品管理</h2>
-                    <div id="projects-list"></div>
-                    <button id="add-project-btn" class="btn btn-primary" style="margin-top: 1rem;">
-                        <i class="fas fa-plus"></i> 添加作品
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="modal-backdrop"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="modal-content bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="modal-title" class="font-['Space_Grotesk'] text-2xl font-bold">添加项目</h3>
+                    <button id="modal-close" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#FF00E6] hover:text-white hover:border-[#FF00E6] transition-all duration-300" aria-label="关闭">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
-                
-                <div id="tools-section" class="hidden">
-                    <h2 class="section-title">工具管理</h2>
-                    <div id="tools-list"></div>
-                    <button id="add-tool-btn" class="btn btn-primary" style="margin-top: 1rem;">
-                        <i class="fas fa-plus"></i> 添加工具
-                    </button>
-                </div>
-                
-                <div id="skills-section" class="hidden">
-                    <h2 class="section-title">技能管理</h2>
-                    <div id="skills-list"></div>
-                    <button id="add-skill-btn" class="btn btn-primary" style="margin-top: 1rem;">
-                        <i class="fas fa-plus"></i> 添加技能
-                    </button>
-                </div>
-                
-                <div id="stats-section" class="hidden">
-                    <h2 class="section-title">统计数据</h2>
-                    <form id="stats-form">
-                        <div class="form-group">
-                            <label class="form-label">年经验</label>
-                            <input type="number" class="form-input" name="experience" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">项目完成</label>
-                            <input type="number" class="form-input" name="projects" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">满意客户</label>
-                            <input type="number" class="form-input" name="clients" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">代码提交</label>
-                            <input type="number" class="form-input" name="commits" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> 保存统计数据
-                        </button>
-                    </form>
+                <div id="modal-body">
+                    <!-- Modal content will be loaded here -->
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
     <script>
-        const API_URL = 'localStorage';
-        const WORKER_URL = 'localStorage';
-        
-        let currentData = {
-            personal: {},
-            projects: [],
-            tools: [],
-            skills: [],
-            stats: {}
-        };
-        
+        // Admin Panel JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            setupEventListeners();
-        });
-        
-        async function loadData() {
-            showLoading(true);
-            try {
-                const storedData = localStorage.getItem('websiteData');
-                if (storedData) {
-                    currentData = JSON.parse(storedData);
-                    displayPersonal();
-                    displayProjects();
-                    displayTools();
-                    displaySkills();
-                    displayStats();
-                    showNotification('数据加载成功', 'success');
-                } else {
-                    showNotification('没有找到数据，请先在首页初始化', 'error');
-                }
-            } catch (error) {
-                showNotification('数据加载失败', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-        
-        function showLoading(show) {
-            document.getElementById('loading').classList.toggle('hidden', !show);
-        }
-        
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.remove('hidden');
-            
-            setTimeout(() => {
-                notification.classList.add('hidden');
-            }, 3000);
-        }
-        
-        function setupEventListeners() {
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const section = this.dataset.section;
-                    switchSection(section);
+            // Tab switching
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Update active states
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    tabPanes.forEach(pane => {
+                        pane.classList.add('hidden');
+                        pane.classList.remove('active');
+                    });
+                    
+                    const activePane = document.getElementById(`${tabId}-tab`);
+                    activePane.classList.remove('hidden');
+                    activePane.classList.add('active');
                 });
             });
-            
-            document.getElementById('personal-form').addEventListener('submit', handlePersonalSubmit);
-            document.getElementById('add-project-btn').addEventListener('click', showProjectForm);
-            document.getElementById('add-tool-btn').addEventListener('click', showToolForm);
-            document.getElementById('add-skill-btn').addEventListener('click', showSkillForm);
-            document.getElementById('stats-form').addEventListener('submit', handleStatsSubmit);
-        }
-        
-        function switchSection(section) {
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`[data-section="${section}"]`).classList.add('active');
-            
-            document.querySelectorAll('[id$="-section"]').forEach(sec => {
-                sec.classList.add('hidden');
-            });
-            document.getElementById(`${section}-section`).classList.remove('hidden');
-        }
-        
-        function displayPersonal() {
-            const form = document.getElementById('personal-form');
-            const data = currentData.personal || {};
-            
-            form.querySelector('[name="name"]').value = data.name || '';
-            form.querySelector('[name="title"]').value = data.title || '';
-            form.querySelector('[name="introduction"]').value = data.introduction || '';
-            form.querySelector('[name="description"]').value = data.description || '';
-            form.querySelector('[name="avatar"]').value = data.avatar || '';
-            form.querySelector('[name="email"]').value = data.email || '';
-            form.querySelector('[name="phone"]').value = data.phone || '';
-            form.querySelector('[name="location"]').value = data.location || '';
-        }
-        
-        function displayProjects() {
-            const container = document.getElementById('projects-list');
-            container.innerHTML = '';
-            
-            currentData.projects.forEach(project => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3 class="card-title">${project.name}</h3>
-                        <div class="card-actions">
-                            <button class="btn btn-secondary" onclick="editProject(${project.id})">
-                                <i class="fas fa-edit"></i> 编辑
-                            </button>
-                            <button class="btn btn-danger" onclick="deleteProject(${project.id})">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
-                        </div>
-                    </div>
-                    <p>${project.description}</p>
-                    <div>
-                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-        
-        function displayTools() {
-            const container = document.getElementById('tools-list');
-            container.innerHTML = '';
-            
-            currentData.tools.forEach(tool => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3 class="card-title">${tool.name}</h3>
-                        <div class="card-actions">
-                            <button class="btn btn-secondary" onclick="editTool(${tool.id})">
-                                <i class="fas fa-edit"></i> 编辑
-                            </button>
-                            <button class="btn btn-danger" onclick="deleteTool(${tool.id})">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
-                        </div>
-                    </div>
-                    <p>${tool.description}</p>
-                `;
-                container.appendChild(card);
-            });
-        }
-        
-        function displaySkills() {
-            const container = document.getElementById('skills-list');
-            container.innerHTML = '';
-            
-            currentData.skills.forEach(skill => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3 class="card-title">${skill.name}</h3>
-                        <div class="card-actions">
-                            <button class="btn btn-secondary" onclick="editSkill(${skill.id})">
-                                <i class="fas fa-edit"></i> 编辑
-                            </button>
-                            <button class="btn btn-danger" onclick="deleteSkill(${skill.id})">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
-                        </div>
-                    </div>
-                    <p>熟练度: ${skill.proficiency}%</p>
-                `;
-                container.appendChild(card);
-            });
-        }
-        
-        function displayStats() {
-            const form = document.getElementById('stats-form');
-            const data = currentData.stats || {};
-            
-            form.querySelector('[name="experience"]').value = data.experience || 0;
-            form.querySelector('[name="projects"]').value = data.projects || 0;
-            form.querySelector('[name="clients"]').value = data.clients || 0;
-            form.querySelector('[name="commits"]').value = data.commits || 0;
-        }
-        
-        async function handlePersonalSubmit(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
-            
-            showLoading(true);
-            try {
-                currentData.personal = { ...currentData.personal, ...data };
-                saveDataToStorage(currentData);
-                showNotification('个人信息保存成功', 'success');
-            } catch (error) {
-                showNotification('保存失败', 'error');
-            } finally {
-                showLoading(false);
+
+            // Load data from main.js
+            if (window.MyWorldAPI) {
+                loadPersonalInfo();
+                loadProjects();
+                loadSkills();
+                loadTools();
+                loadStats();
+            }
+
+            // Personal form
+            const personalForm = document.getElementById('personal-form');
+            if (personalForm) {
+                personalForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(personalForm);
+                    const data = Object.fromEntries(formData);
+                    
+                    if (window.MyWorldAPI) {
+                        window.MyWorldAPI.state.personal = {
+                            ...window.MyWorldAPI.state.personal,
+                            ...data
+                        };
+                        localStorage.setItem('myWorldData', JSON.stringify({
+                            personal: window.MyWorldAPI.state.personal,
+                            projects: window.MyWorldAPI.state.projects,
+                            skills: window.MyWorldAPI.state.skills,
+                            tools: window.MyWorldAPI.state.tools,
+                            stats: window.MyWorldAPI.state.stats
+                        }));
+                        window.MyWorldAPI.showNotification('个人信息保存成功！', 'success');
+                    }
+                });
+            }
+
+            // Stats form
+            const statsForm = document.getElementById('stats-form');
+            if (statsForm) {
+                statsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(statsForm);
+                    const data = Object.fromEntries(formData);
+                    
+                    if (window.MyWorldAPI) {
+                        window.MyWorldAPI.state.stats = {
+                            experience: parseInt(data.experience),
+                            projects: parseInt(data.projects),
+                            clients: parseInt(data.clients),
+                            commits: parseInt(data.commits)
+                        };
+                        localStorage.setItem('myWorldData', JSON.stringify({
+                            personal: window.MyWorldAPI.state.personal,
+                            projects: window.MyWorldAPI.state.projects,
+                            skills: window.MyWorldAPI.state.skills,
+                            tools: window.MyWorldAPI.state.tools,
+                            stats: window.MyWorldAPI.state.stats
+                        }));
+                        window.MyWorldAPI.showNotification('统计数据保存成功！', 'success');
+                    }
+                });
+            }
+
+            // Add project button
+            const addProjectBtn = document.getElementById('add-project-btn');
+            if (addProjectBtn) {
+                addProjectBtn.addEventListener('click', () => {
+                    openModal('project');
+                });
+            }
+
+            // Add skill button
+            const addSkillBtn = document.getElementById('add-skill-btn');
+            if (addSkillBtn) {
+                addSkillBtn.addEventListener('click', () => {
+                    openModal('skill');
+                });
+            }
+
+            // Add tool button
+            const addToolBtn = document.getElementById('add-tool-btn');
+            if (addToolBtn) {
+                addToolBtn.addEventListener('click', () => {
+                    openModal('tool');
+                });
+            }
+
+            // Modal close
+            const modalClose = document.getElementById('modal-close');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const modal = document.getElementById('modal');
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.getElementById('modal-body').innerHTML = '';
+            };
+
+            modalClose.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+        });
+
+        // Load personal info
+        function loadPersonalInfo() {
+            const personal = window.MyWorldAPI.state.personal;
+            if (personal) {
+                document.getElementById('name').value = personal.name || '';
+                document.getElementById('title').value = personal.title || '';
+                document.getElementById('description').value = personal.description || '';
+                document.getElementById('email').value = personal.email || '';
+                document.getElementById('phone').value = personal.phone || '';
+                document.getElementById('location').value = personal.location || '';
+                document.getElementById('avatar').value = personal.avatar || '';
             }
         }
-        
-        async function handleStatsSubmit(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
+
+        // Load projects
+        function loadProjects() {
+            const projectsList = document.getElementById('projects-list');
+            const projects = window.MyWorldAPI.state.projects;
             
-            showLoading(true);
-            try {
-                currentData.stats = { ...currentData.stats, ...data };
-                saveDataToStorage(currentData);
-                showNotification('统计数据保存成功', 'success');
-            } catch (error) {
-                showNotification('保存失败', 'error');
-            } finally {
-                showLoading(false);
-            }
-        }
-        
-        function showDataToCopy() {
-            const dataToCopy = JSON.stringify(currentData, null, 2);
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: var(--bg-dark); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%;">
-                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">复制数据到data.json</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">请复制以下JSON数据，然后粘贴到 E:\\wangzhan\\data.json 文件中：</p>
-                    <textarea id="data-to-copy" style="width: 100%; height: 300px; background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; color: var(--text-main); font-family: monospace; font-size: 0.875rem; resize: vertical;">${dataToCopy}</textarea>
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <button onclick="copyData()" style="padding: 0.75rem 2rem; background: var(--gradient-1); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">
-                            <i class="fas fa-copy"></i> 复制数据
+            projectsList.innerHTML = projects.map(project => `
+                <div class="project-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${project.id}">
+                    <img src="${project.image}" alt="${project.name}" class="w-20 h-20 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${project.name}</h3>
+                        <p class="text-[#B8B8C8] text-sm">${project.description}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
+                            <i class="fas fa-edit"></i>
                         </button>
-                        <button onclick="closeModal()" style="padding: 0.75rem 2rem; background: transparent; border: 2px solid var(--secondary); color: var(--secondary); border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">
-                            <i class="fas fa-times"></i> 关闭
+                        <button onclick="deleteProject('${project.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
+                            <i class="fas fa-trash"></i>
                         </button>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">
-                        <i class="fas fa-info-circle"></i> 步骤：
-                        <br>1. 点击"复制数据"按钮
-                        <br>2. 打开 E:\\wangzhan\\data.json 文件
-                        <br>3. 粘贴数据并保存
-                    </p>
                 </div>
+            `).join('');
+        }
+
+        // Load skills
+        function loadSkills() {
+            const skillsList = document.getElementById('skills-list');
+            const skills = window.MyWorldAPI.state.skills;
+            
+            skillsList.innerHTML = skills.map(skill => `
+                <div class="skill-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${skill.id}">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${skill.color}]/20 to-[${skill.color}]/5 flex items-center justify-center">
+                        <i class="fab ${skill.icon} text-[${skill.color}] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${skill.name}</h3>
+                        <p class="text-[${skill.color}] text-sm">${skill.proficiency}%</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editSkill('${skill.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteSkill('${skill.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load tools
+        function loadTools() {
+            const toolsList = document.getElementById('tools-list');
+            const tools = window.MyWorldAPI.state.tools;
+            
+            toolsList.innerHTML = tools.map(tool => `
+                <div class="tool-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${tool.id}">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center">
+                        <i class="fas ${tool.icon} text-[${tool.color}] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${tool.name}</h3>
+                        <p class="text-[#B8B8C8] text-sm">${tool.description}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editTool('${tool.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteTool('${tool.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load stats
+        function loadStats() {
+            const stats = window.MyWorldAPI.state.stats;
+            if (stats) {
+                document.getElementById('experience').value = stats.experience || 0;
+                document.getElementById('projects-count').value = stats.projects || 0;
+                document.getElementById('clients').value = stats.clients || 0;
+                document.getElementById('commits').value = stats.commits || 0;
+            }
+        }
+
+        // Open modal
+        function openModal(type, id = null) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            
+            modal.classList.remove('hidden');
+            
+            if (type === 'project') {
+                modalTitle.textContent = id ? '编辑项目' : '添加项目';
+                modalBody.innerHTML = getProjectForm(id);
+            } else if (type === 'skill') {
+                modalTitle.textContent = id ? '编辑技能' : '添加技能';
+                modalBody.innerHTML = getSkillForm(id);
+            } else if (type === 'tool') {
+                modalTitle.textContent = id ? '编辑工具' : '添加工具';
+                modalBody.innerHTML = getToolForm(id);
+            }
+        }
+
+        // Get project form
+        function getProjectForm(id = null) {
+            const project = id ? window.MyWorldAPI.state.projects.find(p => p.id === id) : null;
+            return `
+                <form id="project-form" class="space-y-4">
+                    <div class="form-group">
+                        <label for="project-name" class="block text-sm font-medium mb-2">项目名称</label>
+                        <input type="text" id="project-name" name="name" value="${project ? project.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-description" class="block text-sm font-medium mb-2">项目描述</label>
+                        <textarea id="project-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${project ? project.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-image" class="block text-sm font-medium mb-2">图片URL</label>
+                        <input type="url" id="project-image" name="image" value="${project ? project.image : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-tags" class="block text-sm font-medium mb-2">标签（用逗号分隔）</label>
+                        <input type="text" id="project-tags" name="tags" value="${project ? project.tags.join(', ') : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-link" class="block text-sm font-medium mb-2">项目链接</label>
+                        <input type="url" id="project-link" name="link" value="${project ? project.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                        <i class="fas fa-save"></i>
+                        <span>${id ? '更新项目' : '添加项目'}</span>
+                    </button>
+                </form>
             `;
-            
-            document.body.appendChild(modal);
         }
-        
-        function copyData() {
-            const textarea = document.getElementById('data-to-copy');
-            textarea.select();
-            document.execCommand('copy');
-            showNotification('数据已复制到剪贴板', 'success');
+
+        // Get skill form
+        function getSkillForm(id = null) {
+            const skill = id ? window.MyWorldAPI.state.skills.find(s => s.id === id) : null;
+            return `
+                <form id="skill-form" class="space-y-4">
+                    <div class="form-group">
+                        <label for="skill-name" class="block text-sm font-medium mb-2">技能名称</label>
+                        <input type="text" id="skill-name" name="name" value="${skill ? skill.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="skill-proficiency" class="block text-sm font-medium mb-2">熟练度 (%)</label>
+                        <input type="number" id="skill-proficiency" name="proficiency" min="0" max="100" value="${skill ? skill.proficiency : 50}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="skill-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
+                        <input type="text" id="skill-icon" name="icon" value="${skill ? skill.icon : 'fa-code'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="skill-color" class="block text-sm font-medium mb-2">颜色</label>
+                        <input type="color" id="skill-color" name="color" value="${skill ? skill.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                        <i class="fas fa-save"></i>
+                        <span>${id ? '更新技能' : '添加技能'}</span>
+                    </button>
+                </form>
+            `;
         }
-        
-        function closeModal() {
-            const modal = document.querySelector('div[style*="position: fixed"]');
-            if (modal) {
-                modal.remove();
-            }
+
+        // Get tool form
+        function getToolForm(id = null) {
+            const tool = id ? window.MyWorldAPI.state.tools.find(t => t.id === id) : null;
+            return `
+                <form id="tool-form" class="space-y-4">
+                    <div class="form-group">
+                        <label for="tool-name" class="block text-sm font-medium mb-2">工具名称</label>
+                        <input type="text" id="tool-name" name="name" value="${tool ? tool.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-description" class="block text-sm font-medium mb-2">工具描述</label>
+                        <textarea id="tool-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${tool ? tool.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
+                        <input type="text" id="tool-icon" name="icon" value="${tool ? tool.icon : 'fa-tools'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-link" class="block text-sm font-medium mb-2">工具链接</label>
+                        <input type="url" id="tool-link" name="link" value="${tool ? tool.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-color" class="block text-sm font-medium mb-2">颜色</label>
+                        <input type="color" id="tool-color" name="color" value="${tool ? tool.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                        <i class="fas fa-save"></i>
+                        <span>${id ? '更新工具' : '添加工具'}</span>
+                    </button>
+                </form>
+            `;
         }
-        
-        function showProjectForm(project = null) {
-            const name = prompt('作品名称:', project?.name || '');
-            const description = prompt('作品描述:', project?.description || '');
-            const tags = prompt('标签（用逗号分隔）:', project?.tags?.join(', ') || '');
-            
-            if (name && description) {
-                const data = {
-                    id: project?.id,
-                    name,
-                    description,
-                    tags: tags.split(',').map(t => t.trim()),
-                    image: 'https://picsum.photos/seed/' + Date.now() + '/600/400'
-                };
-                
-                if (project?.id) {
-                    const index = currentData.projects.findIndex(p => p.id === project.id);
-                    currentData.projects[index] = { ...currentData.projects[index], ...data };
-                } else {
-                    currentData.projects.push({ ...data, id: Date.now() });
-                }
-                
-                displayProjects();
-                showNotification('作品保存成功', 'success');
-            }
-        }
-        
-        function showToolForm(tool = null) {
-            const name = prompt('工具名称:', tool?.name || '');
-            const description = prompt('工具描述:', tool?.description || '');
-            
-            if (name && description) {
-                const data = {
-                    id: tool?.id,
-                    name,
-                    description,
-                    icon: 'fa-download',
-                    link: '#'
-                };
-                
-                if (tool?.id) {
-                    const index = currentData.tools.findIndex(t => t.id === tool.id);
-                    currentData.tools[index] = { ...currentData.tools[index], ...data };
-                } else {
-                    currentData.tools.push({ ...data, id: Date.now() });
-                }
-                
-                displayTools();
-                showNotification('工具保存成功', 'success');
-            }
-        }
-        
-        function showSkillForm(skill = null) {
-            const name = prompt('技能名称:', skill?.name || '');
-            const proficiency = prompt('熟练度 (0-100):', skill?.proficiency || 85);
-            
-            if (name && proficiency) {
-                const data = {
-                    id: skill?.id,
-                    name,
-                    proficiency: parseInt(proficiency),
-                    icon: 'fa-code'
-                };
-                
-                if (skill?.id) {
-                    const index = currentData.skills.findIndex(s => s.id === skill.id);
-                    currentData.skills[index] = { ...currentData.skills[index], ...data };
-                } else {
-                    currentData.skills.push({ ...data, id: Date.now() });
-                }
-                
-                displaySkills();
-                showNotification('技能保存成功', 'success');
-            }
-        }
-        
-        async function deleteProject(id) {
-            if (confirm('确定要删除这个作品吗？')) {
-                currentData.projects = currentData.projects.filter(p => p.id !== id);
-                displayProjects();
-                showNotification('作品删除成功', 'success');
-            }
-        }
-        
-        async function deleteTool(id) {
-            if (confirm('确定要删除这个工具吗？')) {
-                currentData.tools = currentData.tools.filter(t => t.id !== id);
-                displayTools();
-                showNotification('工具删除成功', 'success');
-            }
-        }
-        
-        async function deleteSkill(id) {
-            if (confirm('确定要删除这个技能吗？')) {
-                currentData.skills = currentData.skills.filter(s => s.id !== id);
-                displaySkills();
-                showNotification('技能删除成功', 'success');
-            }
-        }
-        
+
+        // Edit functions
         function editProject(id) {
-            const project = currentData.projects.find(p => p.id === id);
-            showProjectForm(project);
+            openModal('project', id);
         }
-        
-        function editTool(id) {
-            const tool = currentData.tools.find(t => t.id === id);
-            showToolForm(tool);
-        }
-        
+
         function editSkill(id) {
-            const skill = currentData.skills.find(s => s.id === id);
-            showSkillForm(skill);
+            openModal('skill', id);
         }
+
+        function editTool(id) {
+            openModal('tool', id);
+        }
+
+        // Delete functions
+        function deleteProject(id) {
+            if (confirm('确定要删除这个项目吗？')) {
+                window.MyWorldAPI.deleteProject(id);
+                loadProjects();
+                window.MyWorldAPI.showNotification('项目删除成功！', 'success');
+            }
+        }
+
+        function deleteSkill(id) {
+            if (confirm('确定要删除这个技能吗？')) {
+                window.MyWorldAPI.deleteSkill(id);
+                loadSkills();
+                window.MyWorldAPI.showNotification('技能删除成功！', 'success');
+            }
+        }
+
+        function deleteTool(id) {
+            if (confirm('确定要删除这个工具吗？')) {
+                window.MyWorldAPI.deleteTool(id);
+                loadTools();
+                window.MyWorldAPI.showNotification('工具删除成功！', 'success');
+            }
+        }
+
+        // Form submissions
+        document.addEventListener('submit', function(e) {
+            if (e.target.id === 'project-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                data.tags = data.tags.split(',').map(tag => tag.trim());
+                
+                window.MyWorldAPI.createProject(data);
+                loadProjects();
+                document.getElementById('modal').classList.add('hidden');
+                window.MyWorldAPI.showNotification('项目添加成功！', 'success');
+            } else if (e.target.id === 'skill-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                data.proficiency = parseInt(data.proficiency);
+                
+                window.MyWorldAPI.createSkill(data);
+                loadSkills();
+                document.getElementById('modal').classList.add('hidden');
+                window.MyWorldAPI.showNotification('技能添加成功！', 'success');
+            } else if (e.target.id === 'tool-form') {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                
+                window.MyWorldAPI.createTool(data);
+                loadTools();
+                document.getElementById('modal').classList.add('hidden');
+                window.MyWorldAPI.showNotification('工具添加成功！', 'success');
+            }
+        });
     </script>
 </body>
 </html>

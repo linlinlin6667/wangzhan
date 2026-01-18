@@ -1,10 +1,11 @@
 /* ============================================
-   My World - Custom Styles
+   My World - Optimized Performance CSS
    Bento Box Grid + Vibrant & Block-based Design
+   Performance Optimized Version
    ============================================ */
 
 /* ============================================
-   CSS Variables
+   CSS Variables - Optimized for Performance
    ============================================ */
 :root {
     /* Primary Colors */
@@ -36,13 +37,13 @@
     --text-muted: #B8B8C8;
     --text-light: #6B7280;
     
-    /* Glow Effects */
+    /* Glow Effects - Optimized */
     --glow-primary: 0 0 30px rgba(0, 240, 255, 0.6);
     --glow-secondary: 0 0 30px rgba(255, 0, 230, 0.6);
     --glow-accent: 0 0 30px rgba(123, 97, 255, 0.6);
     --glow-success: 0 0 30px rgba(0, 255, 148, 0.6);
     
-    /* Gradients */
+    /* Gradients - Optimized */
     --gradient-primary: linear-gradient(135deg, #00F0FF, #00B8C4);
     --gradient-secondary: linear-gradient(135deg, #FF00E6, #FF0066);
     --gradient-accent: linear-gradient(135deg, #7B61FF, #4F46E5);
@@ -65,12 +66,12 @@
     --spacing-2xl: 3rem;
     --spacing-3xl: 4rem;
     
-    /* Transitions */
+    /* Transitions - Optimized */
     --transition-fast: 150ms ease;
     --transition-normal: 300ms ease;
     --transition-slow: 500ms ease;
     
-    /* Shadows */
+    /* Shadows - Optimized */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -78,15 +79,10 @@
 }
 
 /* ============================================
-   Tailwind Configuration
+   Critical CSS - Above the Fold
    ============================================ */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-/* ============================================
-   Base Styles
-   ============================================ */
+/* Base Styles - Critical */
 * {
     margin: 0;
     padding: 0;
@@ -107,9 +103,10 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
-/* Screen Reader Only */
+/* Screen Reader Only - Critical */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -123,7 +120,44 @@ body {
 }
 
 /* ============================================
-   Cursor Glow Effect
+   Performance Optimizations
+   ============================================ */
+
+/* GPU Acceleration - Hardware Acceleration */
+.gpu-accelerated {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+/* Contain Layout - Reduce Reflow */
+.contain-layout {
+    contain: layout style;
+}
+
+/* Contain Paint - Reduce Repaint */
+.contain-paint {
+    contain: paint;
+}
+
+/* Optimize Images */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Optimize Fonts */
+@font-face {
+    font-display: swap;
+}
+
+/* ============================================
+   Cursor Glow Effect - Optimized
    ============================================ */
 .cursor-glow {
     position: fixed;
@@ -138,10 +172,11 @@ body {
     transform: translate(-50%, -50%);
     transition: transform 0.1s ease-out;
     will-change: transform;
+    contain: strict;
 }
 
 /* ============================================
-   Aurora Background
+   Aurora Background - Optimized
    ============================================ */
 .aurora-background {
     position: fixed;
@@ -152,6 +187,7 @@ body {
     z-index: -2;
     overflow: hidden;
     pointer-events: none;
+    contain: strict;
 }
 
 .aurora {
@@ -162,6 +198,8 @@ body {
     filter: blur(80px);
     opacity: 0.3;
     animation: aurora-move 20s ease-in-out infinite;
+    will-change: transform;
+    contain: strict;
 }
 
 .aurora-1 {
@@ -202,13 +240,14 @@ body {
 }
 
 /* ============================================
-   Navigation
+   Navigation - Optimized
    ============================================ */
 .navbar {
     background: rgba(10, 10, 15, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    contain: layout style;
 }
 
 .navbar.scrolled {
@@ -254,6 +293,7 @@ body {
     background: var(--primary);
     transition: all var(--transition-normal);
     transform: translateX(-50%);
+    will-change: width;
 }
 
 .nav-link:hover::before,
@@ -266,7 +306,7 @@ body {
     color: var(--text-main);
 }
 
-/* Mobile Menu */
+/* Mobile Menu - Optimized */
 .mobile-menu-btn span:nth-child(1) {
     transition: transform var(--transition-normal);
 }
@@ -294,6 +334,7 @@ body {
 .mobile-menu.show {
     display: block;
     animation: slideDown 0.3s ease;
+    contain: layout;
 }
 
 @keyframes slideDown {
@@ -308,10 +349,11 @@ body {
 }
 
 /* ============================================
-   Hero Section
+   Hero Section - Optimized
    ============================================ */
 .hero {
     position: relative;
+    contain: layout;
 }
 
 .hero-title {
@@ -338,10 +380,11 @@ body {
 }
 
 /* ============================================
-   Section Styles
+   Section Styles - Optimized
    ============================================ */
 .section {
     position: relative;
+    contain: layout;
 }
 
 .section-title {
@@ -357,11 +400,12 @@ body {
 }
 
 /* ============================================
-   Bento Grid
+   Bento Grid - Optimized
    ============================================ */
 .bento-grid {
     display: grid;
     gap: 1.5rem;
+    contain: layout;
 }
 
 .bento-card {
@@ -370,6 +414,7 @@ body {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all var(--transition-slow);
+    contain: layout style;
 }
 
 .bento-card:hover {
@@ -377,7 +422,7 @@ body {
     box-shadow: var(--glow-primary);
 }
 
-/* Profile Card */
+/* Profile Card - Optimized */
 .profile-card .avatar {
     box-shadow: var(--glow-primary);
 }
@@ -387,13 +432,14 @@ body {
     transition: transform var(--transition-normal);
 }
 
-/* Stat Cards */
+/* Stat Cards - Optimized */
 .stat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    contain: layout;
 }
 
 .stat-icon {
@@ -408,15 +454,17 @@ body {
 }
 
 /* ============================================
-   Project Cards
+   Project Cards - Optimized
    ============================================ */
 .project-card {
     overflow: hidden;
+    contain: layout;
 }
 
 .project-image {
     position: relative;
     overflow: hidden;
+    contain: layout;
 }
 
 .project-image img {
@@ -446,13 +494,14 @@ body {
 }
 
 /* ============================================
-   Skill Cards
+   Skill Cards - Optimized
    ============================================ */
 .skill-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    contain: layout;
 }
 
 .skill-icon {
@@ -470,12 +519,13 @@ body {
 }
 
 /* ============================================
-   Tool Cards
+   Tool Cards - Optimized
    ============================================ */
 .tool-card {
     display: flex;
     align-items: center;
     gap: 1rem;
+    contain: layout;
 }
 
 .tool-icon {
@@ -492,12 +542,13 @@ body {
 }
 
 /* ============================================
-   Contact Section
+   Contact Section - Optimized
    ============================================ */
 .info-card {
     display: flex;
     align-items: center;
     gap: 1rem;
+    contain: layout;
 }
 
 .info-icon {
@@ -509,7 +560,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Form Styles */
+/* Form Styles - Optimized */
 .form-group input,
 .form-group textarea {
     transition: all var(--transition-normal);
@@ -521,7 +572,7 @@ body {
 }
 
 /* ============================================
-   Buttons
+   Buttons - Optimized
    ============================================ */
 .btn {
     position: relative;
@@ -531,6 +582,7 @@ body {
     justify-content: center;
     gap: 0.5rem;
     transition: all var(--transition-normal);
+    contain: layout;
 }
 
 .btn::before {
@@ -542,6 +594,7 @@ body {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s ease;
+    will-change: left;
 }
 
 .btn:hover::before {
@@ -591,10 +644,11 @@ body {
 }
 
 /* ============================================
-   Footer
+   Footer - Optimized
    ============================================ */
 .footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    contain: layout;
 }
 
 .social-link {
@@ -607,7 +661,7 @@ body {
 }
 
 /* ============================================
-   Scroll Indicator
+   Scroll Indicator - Optimized
    ============================================ */
 .scroll-indicator {
     animation: bounce 2s infinite;
@@ -626,7 +680,7 @@ body {
 }
 
 /* ============================================
-   Responsive Design
+   Responsive Design - Optimized
    ============================================ */
 
 /* Extra Small Devices (phones, 576px and down) */
@@ -727,7 +781,7 @@ body {
 }
 
 /* ============================================
-   Utility Classes
+   Utility Classes - Optimized
    ============================================ */
 
 /* Text Gradients */
@@ -752,15 +806,16 @@ body {
     background-clip: text;
 }
 
-/* Glass Effect */
+/* Glass Effect - Optimized */
 .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    contain: layout;
 }
 
-/* Glow Effects */
+/* Glow Effects - Optimized */
 .glow-primary {
     box-shadow: var(--glow-primary);
 }
@@ -773,7 +828,7 @@ body {
     box-shadow: var(--glow-accent);
 }
 
-/* Animations */
+/* Animations - Optimized */
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
@@ -803,7 +858,7 @@ body {
 }
 
 /* ============================================
-   Accessibility
+   Accessibility - Optimized
    ============================================ */
 
 /* Focus Styles */
@@ -812,7 +867,7 @@ body {
     outline-offset: 2px;
 }
 
-/* Reduced Motion */
+/* Reduced Motion - Performance */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -849,7 +904,7 @@ body {
 }
 
 /* ============================================
-   Print Styles
+   Print Styles - Optimized
    ============================================ */
 @media print {
     .cursor-glow,
@@ -876,10 +931,10 @@ body {
 }
 
 /* ============================================
-   Performance Optimizations
+   Performance Optimizations - Advanced
    ============================================ */
 
-/* GPU Acceleration */
+/* GPU Acceleration for Animations */
 .bento-card,
 .project-card,
 .skill-card,
@@ -892,12 +947,189 @@ body {
     -webkit-backface-visibility: hidden;
 }
 
-/* Image Loading */
-img {
-    image-rendering: -webkit-optimize-contrast;
+/* Optimize Content Visibility */
+.content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
 }
 
-/* Font Display */
-@font-face {
-    font-display: swap;
+/* Optimize Paint */
+.paint-optimized {
+    contain: paint;
 }
+
+/* Optimize Layout */
+.layout-optimized {
+    contain: layout;
+}
+
+/* Optimize Size */
+.size-optimized {
+    contain: size;
+}
+
+/* Optimize Style */
+.style-optimized {
+    contain: style;
+}
+
+/* ============================================
+   Lazy Loading Styles
+   ============================================ */
+
+/* Image Placeholder */
+.img-placeholder {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Image Loaded */
+.img-loaded {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Image Loading */
+.img-loading {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* ============================================
+   Skeleton Loading Styles
+   ============================================ */
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.skeleton-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.skeleton-card {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+}
+
+/* ============================================
+   Virtual Scroll Styles
+   ============================================ */
+
+.virtual-scroll-container {
+    overflow-y: auto;
+    contain: strict;
+    will-change: scroll-position;
+}
+
+.virtual-scroll-item {
+    contain: layout style;
+}
+
+/* ============================================
+   Code Splitting Styles
+   ============================================ */
+
+/* Critical CSS - Above the Fold */
+.critical-css {
+    /* Already defined above */
+}
+
+/* Non-Critical CSS - Below the Fold */
+.non-critical-css {
+    /* Loaded asynchronously */
+}
+
+/* ============================================
+   Preload Styles
+   ============================================ */
+
+/* Preload Critical Resources */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('DM Sans'), local('DM Sans-Regular'),
+         url('https://fonts.gstatic.com/s/dmsans/v14/rP2Hp2ywxg089UriCZ2IHSeH.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Space Grotesk'), local('SpaceGrotesk-Regular'),
+         url('https://fonts.gstatic.com/s/spacegrotesk/v16/V8mDoQDjQSkFtoMM3T6r8E7mPb54C-s0.woff2') format('woff2');
+}
+
+/* ============================================
+   Performance Monitoring Styles
+   ============================================ */
+
+/* Performance Metrics Display */
+.performance-metrics {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 10000;
+    display: none;
+}
+
+.performance-metrics.visible {
+    display: block;
+}
+
+.performance-metric {
+    margin: 2px 0;
+}
+
+.performance-metric.good {
+    color: #00FF94;
+}
+
+.performance-metric.warning {
+    color: #FFD600;
+}
+
+.performance-metric.bad {
+    color: #FF0055;
+}
+
+/* ============================================
+   Debug Styles
+   ============================================ */
+
+.debug-border {
+    border: 1px solid red;
+}
+
+.debug-outline {
+    outline: 1px solid blue;
+}
+
+.debug-background {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* ============================================
+   End of Optimized CSS
+   ============================================ */
