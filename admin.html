@@ -79,6 +79,9 @@
                 <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="tools">
                     <i class="fas fa-tools mr-2"></i>工具管理
                 </button>
+                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="websites">
+                    <i class="fas fa-globe mr-2"></i>网站管理
+                </button>
                 <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="stats">
                     <i class="fas fa-chart-bar mr-2"></i>统计数据
                 </button>
@@ -179,6 +182,22 @@
                     </div>
                 </div>
 
+                <!-- Websites Tab -->
+                <div id="websites-tab" class="tab-pane hidden">
+                    <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">网站管理</h2>
+                            <button id="add-website-btn" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-plus"></i>
+                                <span>添加网站</span>
+                            </button>
+                        </div>
+                        <div id="websites-list" class="space-y-4">
+                            <!-- Websites will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Stats Tab -->
                 <div id="stats-tab" class="tab-pane hidden">
                     <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-6 lg:p-8">
@@ -267,6 +286,7 @@
                 loadProjects();
                 loadSkills();
                 loadTools();
+                loadWebsites();
                 loadStats();
             }
 
@@ -288,6 +308,7 @@
                             projects: window.MyWorldAPI.state.projects,
                             skills: window.MyWorldAPI.state.skills,
                             tools: window.MyWorldAPI.state.tools,
+                            websites: window.MyWorldAPI.state.websites,
                             stats: window.MyWorldAPI.state.stats
                         }));
                         window.MyWorldAPI.showNotification('个人信息保存成功！', 'success');
@@ -315,6 +336,7 @@
                             projects: window.MyWorldAPI.state.projects,
                             skills: window.MyWorldAPI.state.skills,
                             tools: window.MyWorldAPI.state.tools,
+                            websites: window.MyWorldAPI.state.websites,
                             stats: window.MyWorldAPI.state.stats
                         }));
                         window.MyWorldAPI.showNotification('统计数据保存成功！', 'success');
@@ -343,6 +365,14 @@
             if (addToolBtn) {
                 addToolBtn.addEventListener('click', () => {
                     openModal('tool');
+                });
+            }
+
+            // Add website button
+            const addWebsiteBtn = document.getElementById('add-website-btn');
+            if (addWebsiteBtn) {
+                addWebsiteBtn.addEventListener('click', () => {
+                    openModal('website');
                 });
             }
 
@@ -461,6 +491,32 @@
             }
         }
 
+        // Load websites
+        function loadWebsites() {
+            const websitesList = document.getElementById('websites-list');
+            const websites = window.MyWorldAPI.state.websites;
+            
+            websitesList.innerHTML = websites.map(website => `
+                <div class="website-item bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4" data-id="${website.id}">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[${website.color}]/20 to-[${website.color}]/5 flex items-center justify-center">
+                        <i class="fab ${website.icon} text-[${website.color}] text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-1">${website.name}</h3>
+                        <p class="text-[#B8B8C8] text-sm">${website.description}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editWebsite('${website.id}')" class="w-10 h-10 rounded-lg bg-[#00F0FF]/10 border border-[#00F0FF]/30 flex items-center justify-center text-[#00F0FF] hover:bg-[#00F0FF] hover:text-white transition-all duration-300">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteWebsite('${website.id}')" class="w-10 h-10 rounded-lg bg-[#FF00E6]/10 border border-[#FF00E6]/30 flex items-center justify-center text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white transition-all duration-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         // Open modal
         function openModal(type, id = null) {
             const modal = document.getElementById('modal');
@@ -478,6 +534,9 @@
             } else if (type === 'tool') {
                 modalTitle.textContent = id ? '编辑工具' : '添加工具';
                 modalBody.innerHTML = getToolForm(id);
+            } else if (type === 'website') {
+                modalTitle.textContent = id ? '编辑网站' : '添加网站';
+                modalBody.innerHTML = getWebsiteForm(id);
             }
         }
 
@@ -576,6 +635,39 @@
             `;
         }
 
+        // Get website form
+        function getWebsiteForm(id = null) {
+            const website = id ? window.MyWorldAPI.state.websites.find(w => w.id === id) : null;
+            return `
+                <form id="website-form" class="space-y-4">
+                    <div class="form-group">
+                        <label for="website-name" class="block text-sm font-medium mb-2">网站名称</label>
+                        <input type="text" id="website-name" name="name" value="${website ? website.name : ''}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="website-description" class="block text-sm font-medium mb-2">网站描述</label>
+                        <textarea id="website-description" name="description" rows="3" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300 resize-none">${website ? website.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="website-icon" class="block text-sm font-medium mb-2">图标（Font Awesome）</label>
+                        <input type="text" id="website-icon" name="icon" value="${website ? website.icon : 'fa-globe'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="website-link" class="block text-sm font-medium mb-2">网站链接</label>
+                        <input type="url" id="website-link" name="link" value="${website ? website.link : '#'}" required class="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <div class="form-group">
+                        <label for="website-color" class="block text-sm font-medium mb-2">颜色</label>
+                        <input type="color" id="website-color" name="color" value="${website ? website.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00F0FF] focus:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all duration-300">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00F0FF] to-[#00B8C4] text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)]">
+                        <i class="fas fa-save"></i>
+                        <span>${id ? '更新网站' : '添加网站'}</span>
+                    </button>
+                </form>
+            `;
+        }
+
         // Edit functions
         function editProject(id) {
             openModal('project', id);
@@ -587,6 +679,10 @@
 
         function editTool(id) {
             openModal('tool', id);
+        }
+
+        function editWebsite(id) {
+            openModal('website', id);
         }
 
         // Delete functions
@@ -611,6 +707,14 @@
                 window.MyWorldAPI.deleteTool(id);
                 loadTools();
                 window.MyWorldAPI.showNotification('工具删除成功！', 'success');
+            }
+        }
+
+        function deleteWebsite(id) {
+            if (confirm('确定要删除这个网站吗？')) {
+                window.MyWorldAPI.deleteWebsite(id);
+                loadWebsites();
+                window.MyWorldAPI.showNotification('网站删除成功！', 'success');
             }
         }
 
