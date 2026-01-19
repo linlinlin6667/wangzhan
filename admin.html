@@ -70,8 +70,11 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 24px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
         .bento-card:hover {
@@ -130,6 +133,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 24px;
+            will-change: transform;
+            transform: translateZ(0);
         }
         
         .form-group {
@@ -151,13 +156,15 @@
             border-radius: 12px;
             color: #fff;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            will-change: transform, box-shadow;
         }
         
         .form-input:focus {
             outline: none;
             border-color: #00F0FF;
-            box-shadow: 0 0 0 10px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
+            transform: translateY(-2px);
         }
         
         .form-textarea {
@@ -170,14 +177,16 @@
             font-size: 1rem;
             font-family: 'DM Sans', sans-serif;
             resize: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             min-height: 100px;
+            will-change: transform, box-shadow;
         }
         
         .form-textarea:focus {
             outline: none;
             border-color: #00F0FF;
-            box-shadow: 0 0 0 10px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
+            transform: translateY(-2px);
         }
         
         .btn-primary {
@@ -189,8 +198,9 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             width: 100%;
+            will-change: transform, box-shadow;
         }
         
         .btn-primary:hover {
@@ -207,8 +217,9 @@
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             width: 100%;
+            will-change: transform, background;
         }
         
         .btn-secondary:hover {
@@ -227,7 +238,8 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            will-change: transform, box-shadow;
         }
         
         .item-card:hover {
@@ -288,9 +300,10 @@
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: none;
             flex: 1;
+            will-change: transform, background;
         }
         
         .btn-action.edit {
@@ -342,6 +355,7 @@
             display: none;
             align-items: center;
             justify-content: center;
+            will-change: opacity;
         }
         
         .modal-overlay.active {
@@ -358,6 +372,9 @@
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
         .modal-header {
@@ -404,6 +421,7 @@
             align-items: center;
             gap: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            will-change: transform, opacity;
         }
         
         .notification.success {
@@ -481,6 +499,20 @@
     </style>
 </head>
 <body class="bg-[#0A0A0F] text-white min-h-screen">
+    <!-- Meteor Background -->
+    <div class="meteor-background">
+        <div class="meteor meteor-1"></div>
+        <div class="meteor meteor-2"></div>
+        <div class="meteor meteor-3"></div>
+        <div class="meteor meteor-4"></div>
+        <div class="meteor meteor-5"></div>
+        <div class="meteor meteor-6"></div>
+        <div class="meteor meteor-7"></div>
+        <div class="meteor meteor-8"></div>
+        <div class="meteor meteor-9"></div>
+        <div class="meteor meteor-10"></div>
+    </div>
+
     <!-- Loading Overlay -->
     <div id="loading" class="loading">
         <div class="loading-spinner"></div>

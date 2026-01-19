@@ -1,6 +1,6 @@
 /* ============================================
-   My World - Custom Styles
-   Bento Box Grid + Vibrant & Block-based Design
+   My World - Optimized Styles
+   Reduced Motion + Meteor Shower Background
    ============================================ */
 
 /* ============================================
@@ -36,11 +36,11 @@
     --text-muted: #B8B8C8;
     --text-light: #6B7280;
     
-    /* Glow Effects */
-    --glow-primary: 0 0 30px rgba(0, 240, 255, 0.6);
-    --glow-secondary: 0 0 30px rgba(255, 0, 230, 0.6);
-    --glow-accent: 0 0 30px rgba(123, 97, 255, 0.6);
-    --glow-success: 0 0 30px rgba(0, 255, 148, 0.6);
+    /* Glow Effects - Optimized */
+    --glow-primary: 0 0 20px rgba(0, 240, 255, 0.3);
+    --glow-secondary: 0 0 20px rgba(255, 0, 230, 0.3);
+    --glow-accent: 0 0 20px rgba(123, 97, 255, 0.3);
+    --glow-success: 0 0 20px rgba(0, 255, 148, 0.3);
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #00F0FF, #00B8C4);
@@ -66,9 +66,9 @@
     --spacing-3xl: 4rem;
     
     /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-normal: 300ms ease;
-    --transition-slow: 500ms ease;
+    --transition-fast: 100ms ease;
+    --transition-normal: 200ms ease;
+    --transition-slow: 300ms ease;
     
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -123,81 +123,285 @@ body {
 }
 
 /* ============================================
-   Cursor Glow Effect
+   Optimized Cursor Glow Effect
    ============================================ */
 .cursor-glow {
     position: fixed;
     top: 0;
     left: 0;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
-    z-index: -1;
+    z-index: 1;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out;
+    transition: transform 0.15s ease-out;
     will-change: transform;
+    opacity: 0.6;
 }
 
 /* ============================================
-   Aurora Background
+   Meteor Shower Background
    ============================================ */
-.aurora-background {
+.meteor-background {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -2;
+    z-index: -1;
     overflow: hidden;
     pointer-events: none;
 }
 
-.aurora {
+.meteor {
     position: absolute;
-    width: 150%;
-    height: 150%;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #00F0FF, #7B61FF);
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.3;
-    animation: aurora-move 20s ease-in-out infinite;
+    opacity: 0;
+    box-shadow: 0 5px 15px rgba(0, 240, 255, 0.5);
 }
 
-.aurora-1 {
-    top: -50%;
-    left: -50%;
-    background: radial-gradient(circle, rgba(0, 240, 255, 0.4) 0%, transparent 60%);
+.meteor-1 {
+    top: 10%;
+    left: 10%;
+    animation: meteor-fall-1 8s linear infinite;
     animation-delay: 0s;
 }
 
-.aurora-2 {
-    top: -50%;
-    right: -50%;
-    background: radial-gradient(circle, rgba(255, 0, 230, 0.3) 0%, transparent 60%);
-    animation-delay: -7s;
+.meteor-2 {
+    top: 20%;
+    left: 30%;
+    animation: meteor-fall-2 10s linear infinite;
+    animation-delay: 2s;
 }
 
-.aurora-3 {
-    bottom: -50%;
+.meteor-3 {
+    top: 15%;
     left: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(123, 97, 255, 0.3) 0%, transparent 60%);
-    animation-delay: -14s;
+    animation: meteor-fall-3 12s linear infinite;
+    animation-delay: 4s;
 }
 
-@keyframes aurora-move {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg) scale(1);
+.meteor-4 {
+    top: 25%;
+    left: 70%;
+    animation: meteor-fall-4 15s linear infinite;
+    animation-delay: 6s;
+}
+
+.meteor-5 {
+    top: 5%;
+    left: 20%;
+    animation: meteor-fall-5 10s linear infinite;
+    animation-delay: 1s;
+}
+
+.meteor-6 {
+    top: 30%;
+    left: 80%;
+    animation: meteor-fall-6 12s linear infinite;
+    animation-delay: 3s;
+}
+
+.meteor-7 {
+    top: 40%;
+    left: 40%;
+    animation: meteor-fall-7 15s linear infinite;
+    animation-delay: 5s;
+}
+
+.meteor-8 {
+    top: 35%;
+    left: 60%;
+    animation: meteor-fall-8 10s linear infinite;
+    animation-delay: 7s;
+}
+
+.meteor-9 {
+    top: 50%;
+    left: 85%;
+    animation: meteor-fall-9 12s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.meteor-10 {
+    top: 45%;
+    left: 15%;
+    animation: meteor-fall-10 10s linear infinite;
+    animation-delay: 1.5s;
+}
+
+@keyframes meteor-fall-1 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
     }
-    25% {
-        transform: translate(10%, 10%) rotate(90deg) scale(1.1);
+    10% {
+        opacity: 1;
     }
-    50% {
-        transform: translate(0, 20%) rotate(180deg) scale(1);
+    90% {
+        opacity: 0.8;
     }
-    75% {
-        transform: translate(-10%, 10%) rotate(270deg) scale(1.1);
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-2 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-3 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-4 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-5 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-6 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-7 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-8 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-9 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-fall-10 {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
     }
 }
 
@@ -205,14 +409,14 @@ body {
    Navigation
    ============================================ */
 .navbar {
-    background: rgba(10, 10, 15, 0.8);
+    background: rgba(10, 10, 15, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar.scrolled {
-    background: rgba(10, 10, 15, 0.95);
+    background: rgba(10, 10, 15, 0.9);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -315,7 +519,7 @@ body {
 }
 
 .hero-title {
-    background: linear-gradient(135deg, #FFFFFF 0%, #00F0FF 50%, #7B61FF 100%);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -369,12 +573,14 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all var(--transition-slow);
+    transition: all var(--transition-normal);
+    will-change: transform;
 }
 
 .bento-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--glow-primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
 /* Profile Card */
@@ -389,29 +595,41 @@ body {
 
 /* Stat Cards */
 .stat-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-primary);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
 .stat-icon {
     transition: transform var(--transition-normal);
 }
 
-.stat-number {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
 }
 
-/* ============================================
-   Project Cards
-   ============================================ */
+/* Project Cards */
 .project-card {
-    overflow: hidden;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
+    will-change: transform;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
 .project-image {
@@ -424,7 +642,7 @@ body {
 }
 
 .project-card:hover .project-image img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .project-overlay {
@@ -436,27 +654,38 @@ body {
     opacity: 1;
 }
 
-.project-tags .tag {
+.btn-view {
+    background: var(--gradient-primary);
+    box-shadow: var(--glow-primary);
     transition: all var(--transition-normal);
 }
 
-.project-tags .tag:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow-primary);
+.btn-view:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
 }
 
-/* ============================================
-   Skill Cards
-   ============================================ */
+/* Skill Cards */
 .skill-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-primary);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
 .skill-icon {
     transition: transform var(--transition-normal);
+}
+
+.skill-card:hover .skill-icon {
+    transform: scale(1.1);
 }
 
 .skill-bar {
@@ -466,50 +695,79 @@ body {
 
 .skill-progress {
     transition: width 1s ease;
+}
+
+.skill-card:hover .skill-progress {
     box-shadow: var(--glow-primary);
 }
 
-/* ============================================
-   Tool Cards
-   ============================================ */
+/* Tool Cards */
 .tool-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-primary);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
 .tool-icon {
-    flex-shrink: 0;
     transition: transform var(--transition-normal);
+}
+
+.tool-card:hover .tool-icon {
+    transform: scale(1.1);
 }
 
 .tool-link {
     transition: all var(--transition-normal);
 }
 
-.tool-link:hover {
-    gap: 0.5rem;
+.tool-card:hover .tool-link {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
 }
 
-/* ============================================
-   Contact Section
-   ============================================ */
-.info-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+/* Website Cards */
+.website-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
 }
 
-.info-icon {
-    flex-shrink: 0;
+.website-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-primary);
+    border-color: rgba(0, 240, 255, 0.3);
+}
+
+.website-icon {
     transition: transform var(--transition-normal);
 }
 
-.info-card:hover .info-icon {
+.website-card:hover .website-icon {
     transform: scale(1.1);
 }
 
-/* Form Styles */
+.website-link {
+    transition: all var(--transition-normal);
+}
+
+.website-card:hover .website-link {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
+}
+
+/* ============================================
+   Form Styles
+   ============================================ */
 .form-group input,
 .form-group textarea {
     transition: all var(--transition-normal);
@@ -518,6 +776,7 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
 }
 
 /* ============================================
@@ -526,26 +785,24 @@ body {
 .btn {
     position: relative;
     overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     transition: all var(--transition-normal);
+    will-change: transform;
 }
 
 .btn::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s ease;
+    transform: translateX(-100%);
 }
 
 .btn:hover::before {
-    left: 100%;
+    left: 0;
 }
 
 .btn-primary {
@@ -555,23 +812,25 @@ body {
 
 .btn-primary:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 50px rgba(0, 240, 255, 0.8);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
 }
 
 .btn-secondary {
-    border: 2px solid var(--secondary);
-    color: var(--secondary);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    transition: all var(--transition-normal);
 }
 
 .btn-secondary:hover {
-    background: var(--secondary);
+    background: var(--primary);
     color: white;
-    box-shadow: var(--glow-secondary);
+    box-shadow: var(--glow-primary);
 }
 
 .btn-outline {
     border: 2px solid var(--primary);
     color: var(--primary);
+    transition: all var(--transition-normal);
 }
 
 .btn-outline:hover {
@@ -587,7 +846,7 @@ body {
 
 .btn-submit:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 50px rgba(255, 0, 230, 0.8);
+    box-shadow: 0 0 30px rgba(255, 0, 230, 0.8);
 }
 
 /* ============================================
@@ -626,111 +885,66 @@ body {
 }
 
 /* ============================================
-   Responsive Design
+   Glass Effect
    ============================================ */
-
-/* Extra Small Devices (phones, 576px and down) */
-@media (max-width: 575.98px) {
-    :root {
-        --spacing-xl: 1.5rem;
-        --spacing-2xl: 2rem;
-        --spacing-3xl: 3rem;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .section-title {
-        font-size: 1.75rem;
-    }
-    
-    .bento-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .profile-card {
-        grid-column: span 1 !important;
-        grid-row: span 1 !important;
-    }
-    
-    .projects-grid,
-    .skills-grid,
-    .tools-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Small Devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-/* Medium Devices (tablets, 768px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    .hero-title {
-        font-size: 3.5rem;
-    }
-    
-    .section-title {
-        font-size: 2.25rem;
-    }
-    
-    .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .profile-card {
-        grid-column: span 2 !important;
-        grid-row: span 1 !important;
-    }
-}
-
-/* Large Devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    .hero-title {
-        font-size: 4rem;
-    }
-    
-    .section-title {
-        font-size: 2.5rem;
-    }
-    
-    .bento-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* Extra Large Devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    .hero-title {
-        font-size: 5rem;
-    }
-    
-    .section-title {
-        font-size: 3rem;
-    }
-    
-    .bento-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ============================================
-   Utility Classes
+   Glow Effects - Optimized
    ============================================ */
+.glow-primary {
+    box-shadow: var(--glow-primary);
+}
 
-/* Text Gradients */
+.glow-secondary {
+    box-shadow: var(--glow-secondary);
+}
+
+.glow-accent {
+    box-shadow: var(--glow-accent);
+}
+
+.glow-success {
+    box-shadow: var(--glow-success);
+}
+
+/* ============================================
+   Animations - Optimized
+   ============================================ */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: 200% 100%;
+    }
+}
+
+.animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+}
+
+/* ============================================
+   Text Gradients
+   ============================================ */
 .text-gradient-primary {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -752,67 +966,9 @@ body {
     background-clip: text;
 }
 
-/* Glass Effect */
-.glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Glow Effects */
-.glow-primary {
-    box-shadow: var(--glow-primary);
-}
-
-.glow-secondary {
-    box-shadow: var(--glow-secondary);
-}
-
-.glow-accent {
-    box-shadow: var(--glow-accent);
-}
-
-/* Animations */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-.animate-float {
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-.animate-shimmer {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-}
-
 /* ============================================
-   Accessibility
+   Reduced Motion
    ============================================ */
-
-/* Focus Styles */
-*:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
-
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -826,12 +982,14 @@ body {
         display: none;
     }
     
-    .aurora-background {
+    .meteor-background {
         display: none;
     }
 }
 
-/* High Contrast Mode */
+/* ============================================
+   High Contrast Mode
+   ============================================ */
 @media (prefers-contrast: high) {
     :root {
         --bg-dark: #000000;
@@ -843,7 +1001,8 @@ body {
     .project-card,
     .skill-card,
     .tool-card,
-    .info-card {
+    .website-card,
+    .stat-card {
         border: 2px solid var(--text-main);
     }
 }
@@ -853,7 +1012,7 @@ body {
    ============================================ */
 @media print {
     .cursor-glow,
-    .aurora-background,
+    .meteor-background,
     .navbar,
     .footer,
     .scroll-indicator {
@@ -868,7 +1027,9 @@ body {
     .bento-card,
     .project-card,
     .skill-card,
-    .tool-card {
+    .tool-card,
+    .website-card,
+    .stat-card {
         break-inside: avoid;
         box-shadow: none;
         border: 1px solid #ccc;
@@ -876,28 +1037,37 @@ body {
 }
 
 /* ============================================
-   Performance Optimizations
+   GPU Acceleration
    ============================================ */
-
-/* GPU Acceleration */
 .bento-card,
 .project-card,
 .skill-card,
 .tool-card,
-.btn,
-.nav-link {
+.website-card,
+.stat-card {
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
-/* Image Loading */
+.btn,
+.nav-link,
+.social-link {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* ============================================
+   Image Loading
+   ============================================ */
 img {
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* Font Display */
+/* ============================================
+   Font Display
+   ============================================ */
 @font-face {
     font-display: swap;
 }
