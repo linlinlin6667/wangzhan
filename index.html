@@ -19,6 +19,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/space-background.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-[#0A0A0F] text-white min-h-screen overflow-x-hidden">
@@ -696,26 +697,27 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="js/space-background.js"></script>
     <script src="js/meteor-shower.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- Initialize Space Background -->
     <script>
-        // Initialize Meteor Shower
         document.addEventListener('DOMContentLoaded', function() {
-            if (window.MeteorShower && document.body) {
-                window.indexMeteorShower = new MeteorShower(document.body, {
-                    maxMeteors: 25,
-                    minSpeed: 4,
-                    maxSpeed: 10,
-                    minSize: 2,
-                    maxSize: 6,
-                    colors: ['#00F0FF', '#7B61FF', '#FF00E6', '#00FF94', '#FFD700'],
-                    spawnInterval: 400
+            if (window.SpaceBackground && document.body) {
+                window.spaceBackground = new SpaceBackground(document.body, {
+                    starCount: 200,
+                    meteorCount: 15,
+                    meteorColors: ['#00F0FF', '#7B61FF', '#FF00E6', '#00FF94', '#FFD700'],
+                    dustCount: 50
                 });
-                console.log('Meteor shower initialized');
+                console.log('Space background initialized');
             }
         });
+    </script>
 
-        // 监听localStorage变化，当后台修改数据时自动更新首页
+    <!-- 监听localStorage变化，当后台修改数据时自动更新首页 -->
+    <script>
         window.addEventListener('storage', function(e) {
             if (e.key === 'myWorldData' && e.newValue) {
                 console.log('检测到数据变化，重新加载页面...');

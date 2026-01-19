@@ -18,6 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/space-background.css">
     <link rel="stylesheet" href="css/style.css">
     
     <style>
@@ -607,12 +608,24 @@
     </div>
 
     <!-- JavaScript -->
+    <script src="js/space-background.js"></script>
     <script src="js/meteor-shower.js"></script>
     <script src="js/main.js"></script>
     <script>
         // Admin Panel JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Admin panel loaded');
+            
+            // Initialize Space Background
+            if (window.SpaceBackground && document.body) {
+                window.adminSpaceBackground = new SpaceBackground(document.body, {
+                    starCount: 150,
+                    meteorCount: 12,
+                    meteorColors: ['#00F0FF', '#7B61FF', '#FF00E6', '#00FF94'],
+                    dustCount: 40
+                });
+                console.log('Space background initialized');
+            }
             
             // Initialize Meteor Shower
             if (window.MeteorShower && document.body) {
