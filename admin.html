@@ -21,25 +21,162 @@
     <link rel="stylesheet" href="css/style.css">
     
     <style>
-        .tab-btn.active {
-            background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+        .admin-header {
+            margin-bottom: 30px;
         }
         
-        .input-field:focus {
+        .admin-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00F0FF;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            color: #B8B8C8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .bento-card {
+            background: linear-gradient(135deg, rgba(18, 18, 18, 0.1) 0%, rgba(18, 18, 18, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.2);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        
+        .bento-card.active {
             border-color: #00F0FF;
-            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        
+        .card-icon i {
+            font-size: 24px;
+            color: #000;
+        }
+        
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .card-description {
+            color: #B8B8C8;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        
+        .card-count {
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00F0FF;
+        }
+        
+        .form-container {
+            background: rgba(18, 18, 18, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #E0E0E0;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            resize: none;
+            transition: all 0.3s ease;
+            min-height: 100px;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: #00F0FF;
+            box-shadow: 0 0 0 10px rgba(0, 240, 255, 0.3);
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
+            width: 100%;
         }
         
         .btn-primary:hover {
@@ -47,328 +184,386 @@
             box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
         }
         
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .item-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
         
         .item-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px;
             transition: all 0.3s ease;
         }
         
         .item-card:hover {
             background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 240, 255, 0.3);
+            border-color: rgba(0, 240, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
         }
         
-        .action-btn {
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .item-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #00F0FF 0%, #00B8C4 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .item-icon i {
+            font-size: 20px;
+            color: #000;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .item-description {
+            color: #B8B8C8;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-action {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
+            border: none;
+            flex: 1;
         }
         
-        .action-btn:hover {
-            transform: scale(1.1);
+        .btn-action.edit {
+            background: rgba(0, 240, 255, 0.1);
+            color: #00F0FF;
+        }
+        
+        .btn-action.edit:hover {
+            background: rgba(0, 240, 255, 0.15);
+            transform: scale(1.05);
+        }
+        
+        .btn-action.delete {
+            background: rgba(255, 0, 230, 0.1);
+            color: #FF00E6;
+        }
+        
+        .btn-action.delete:hover {
+            background: rgba(255, 0, 230, 0.15);
+            transform: scale(1.05);
         }
         
         .empty-state {
-            padding: 60px 20px;
             text-align: center;
+            padding: 60px 20px;
+            color: #B8B8C8;
         }
         
         .empty-state i {
             font-size: 64px;
-            color: #B8B8C8;
             margin-bottom: 20px;
+            opacity: 0.5;
         }
         
         .empty-state p {
-            color: #B8B8C8;
-            font-size: 18px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
         
-        .skill-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
         
-        .skill-progress {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
+        .modal-overlay.active {
+            display: flex;
         }
         
-        .stat-card {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            transition: all 0.3s ease;
+        .modal-content {
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
         }
         
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.3);
-            border-color: rgba(0, 240, 255, 0.5);
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
         }
         
-        .form-group label {
-            font-weight: 500;
-            color: #E0E0E0;
-            transition: color 0.3s ease;
-        }
-        
-        .form-group label:focus-within {
+        .modal-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: #00F0FF;
         }
         
-        .tab-btn {
+        .modal-close {
+            background: rgba(255, 0, 230, 0.1);
+            color: #FF00E6;
+            border: none;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
         
-        .tab-btn:hover {
-            background: rgba(0, 240, 255, 0.1);
-            transform: translateY(-2px);
+        .modal-close:hover {
+            background: rgba(255, 0, 230, 0.15);
+            transform: scale(1.1);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            z-index: 1001;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .notification.success {
+            border-color: #00F0FF;
+        }
+        
+        .notification.error {
+            border-color: #FF00E6;
+        }
+        
+        .notification.show {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading.active {
+            display: flex;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 240, 255, 0.2);
+            border-top-color: #00F0FF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 <body class="bg-[#0A0A0F] text-white min-h-screen">
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0F]/90 backdrop-blur-xl border-b border-white/10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-2 group">
-                    <span class="font-['Space_Grotesk'] text-xl font-bold tracking-wider group-hover:text-[#00F0FF] transition-colors">
-                        MY WORLD
-                    </span>
-                    <div class="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse"></div>
-                </a>
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+    </div>
 
-                <!-- Back Button -->
-                <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-[#00F0FF] hover:text-black hover:border-[#00F0FF] transition-all duration-300">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>返回首页</span>
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="pt-24 pb-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Page Header -->
-            <div class="text-center mb-12">
-                <h1 class="font-['Space_Grotesk'] text-4xl sm:text-5xl font-bold mb-4">
-                    后台管理
-                </h1>
-                <p class="text-[#B8B8C8] text-lg">
-                    管理您的个人信息、项目、技能和工具资源
-                </p>
-            </div>
-
-            <!-- Admin Tabs -->
-            <div class="flex flex-wrap justify-center gap-2 mb-8">
-                <button class="tab-btn active px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="personal">
-                    <i class="fas fa-user mr-2"></i>个人信息
-                </button>
-                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="projects">
-                    <i class="fas fa-project-diagram mr-2"></i>项目管理
-                </button>
-                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="skills">
-                    <i class="fas fa-code mr-2"></i>技能管理
-                </button>
-                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="tools">
-                    <i class="fas fa-tools mr-2"></i>工具管理
-                </button>
-                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="websites">
-                    <i class="fas fa-globe mr-2"></i>网站管理
-                </button>
-                <button class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-[#00F0FF]/10" data-tab="stats">
-                    <i class="fas fa-chart-bar mr-2"></i>统计数据
-                </button>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="tab-content">
-                <!-- Personal Info Tab -->
-                <div id="personal-tab" class="tab-pane active">
-                    <div class="max-w-4xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">编辑个人信息</h2>
-                            <div class="flex items-center gap-2 text-[#B8B8C8]">
-                                <i class="fas fa-info-circle"></i>
-                                <span class="text-sm">修改后点击保存即可更新</span>
-                            </div>
-                        </div>
-                        <form id="personal-form" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">姓名</label>
-                                    <input type="text" id="name" name="name" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">职位</label>
-                                    <input type="text" id="title" name="title" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">简介</label>
-                                <textarea id="description" name="description" rows="4" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none"></textarea>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">邮箱</label>
-                                    <input type="email" id="email" name="email" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">电话</label>
-                                    <input type="tel" id="phone" name="phone" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">位置</label>
-                                <input type="text" id="location" name="location" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">头像URL</label>
-                                <input type="url" id="avatar" name="avatar" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                            </div>
-                            <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                                <i class="fas fa-save"></i>
-                                <span>保存个人信息</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Projects Tab -->
-                <div id="projects-tab" class="tab-pane hidden">
-                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">项目管理</h2>
-                            <button id="add-project-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
-                                <i class="fas fa-plus"></i>
-                                <span>添加项目</span>
-                            </button>
-                        </div>
-                        <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Projects will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Skills Tab -->
-                <div id="skills-tab" class="tab-pane hidden">
-                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">技能管理</h2>
-                            <button id="add-skill-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
-                                <i class="fas fa-plus"></i>
-                                <span>添加技能</span>
-                            </button>
-                        </div>
-                        <div id="skills-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Skills will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tools Tab -->
-                <div id="tools-tab" class="tab-pane hidden">
-                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">工具管理</h2>
-                            <button id="add-tool-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
-                                <i class="fas fa-plus"></i>
-                                <span>添加工具</span>
-                            </button>
-                        </div>
-                        <div id="tools-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Tools will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Websites Tab -->
-                <div id="websites-tab" class="tab-pane hidden">
-                    <div class="max-w-6xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">网站管理</h2>
-                            <button id="add-website-btn" class="btn-primary inline-flex items-center gap-2 px-6 py-3 text-black font-semibold rounded-xl">
-                                <i class="fas fa-plus"></i>
-                                <span>添加网站</span>
-                            </button>
-                        </div>
-                        <div id="websites-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Websites will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Tab -->
-                <div id="stats-tab" class="tab-pane hidden">
-                    <div class="max-w-4xl mx-auto bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                        <div class="flex items-center justify-between mb-8">
-                            <h2 class="font-['Space_Grotesk'] text-2xl font-bold">统计数据</h2>
-                            <div class="flex items-center gap-2 text-[#B8B8C8]">
-                                <i class="fas fa-info-circle"></i>
-                                <span class="text-sm">修改后点击保存即可更新</span>
-                            </div>
-                        </div>
-                        <form id="stats-form" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">年经验</label>
-                                    <input type="number" id="experience" name="experience" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目完成</label>
-                                    <input type="number" id="projects-count" name="projects" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">满意客户</label>
-                                    <input type="number" id="clients" name="clients" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">代码提交</label>
-                                    <input type="number" id="commits" name="commits" min="0" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                                <i class="fas fa-save"></i>
-                                <span>保存统计数据</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <i id="notification-icon" class="fas fa-check-circle"></i>
+        <span id="notification-message"></span>
+    </div>
 
     <!-- Modal -->
-    <div id="modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="modal-overlay absolute inset-0" id="modal-backdrop"></div>
-        <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="bg-[#12121A] backdrop-blur-xl border border-white/10 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 id="modal-title" class="font-['Space_Grotesk'] text-2xl font-bold">添加项目</h3>
-                    <button id="modal-close" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B8B8C8] hover:bg-[#FF00E6] hover:text-white hover:border-[#FF00E6] transition-all duration-300" aria-label="关闭">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="modal-body">
-                    <!-- Modal content will be loaded here -->
-                </div>
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title">编辑项目</h2>
+                <button id="modal-close" class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+            <div id="modal-body">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <a href="index.html" class="flex items-center gap-3 mb-4">
+                <i class="fas fa-arrow-left text-[#00F0FF]"></i>
+                <span class="text-white">返回首页</span>
+            </a>
+            <h1 class="admin-title">后台管理</h1>
+            <p class="admin-subtitle">管理您的个人信息、项目、技能、工具和网站链接</p>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+            <!-- Personal Info Card -->
+            <div class="bento-card" onclick="showSection('personal')">
+                <div class="card-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="card-title">个人信息</div>
+                <div class="card-description">编辑您的姓名、职位、简介等个人信息</div>
+                <div class="card-count" id="personal-count">1</div>
+            </div>
+
+            <!-- Projects Card -->
+            <div class="bento-card" onclick="showSection('projects')">
+                <div class="card-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="card-title">项目管理</div>
+                <div class="card-description">添加、编辑、删除您的项目</div>
+                <div class="card-count" id="projects-count">0</div>
+            </div>
+
+            <!-- Skills Card -->
+            <div class="bento-card" onclick="showSection('skills')">
+                <div class="card-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="card-title">技能管理</div>
+                <div class="card-description">添加、编辑、删除您的技能</div>
+                <div class="card-count" id="skills-count">0</div>
+            </div>
+
+            <!-- Tools Card -->
+            <div class="bento-card" onclick="showSection('tools')">
+                <div class="card-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="card-title">工具管理</div>
+                <div class="card-description">添加、编辑、删除您的工具</div>
+                <div class="card-count" id="tools-count">0</div>
+            </div>
+
+            <!-- Websites Card -->
+            <div class="bento-card" onclick="showSection('websites')">
+                <div class="card-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="card-title">网站管理</div>
+                <div class="card-description">添加、编辑、删除您的网站链接</div>
+                <div class="card-count" id="websites-count">0</div>
+            </div>
+
+            <!-- Stats Card -->
+            <div class="bento-card" onclick="showSection('stats')">
+                <div class="card-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="card-title">统计数据</div>
+                <div class="card-description">编辑您的年经验、项目完成等统计数据</div>
+                <div class="card-count" id="stats-count">4</div>
+            </div>
+        </div>
+
+        <!-- Section Content -->
+        <div id="section-content" class="form-container">
+            <!-- Content will be loaded here -->
         </div>
     </div>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script>
+        // Admin Panel JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Admin panel loaded');
             
@@ -376,263 +571,507 @@
             setTimeout(() => {
                 if (!window.MyWorldAPI) {
                     console.error('MyWorldAPI not found');
+                    hideLoading();
                     return;
                 }
                 
                 console.log('MyWorldAPI loaded:', window.MyWorldAPI);
                 
-                // Initialize tabs
-                initTabs();
-                
-                // Load all data
-                loadAllData();
-                
-                // Initialize event listeners
-                initEventListeners();
+                // Initialize
+                initAdminPanel();
             }, 100);
         });
 
-        function initTabs() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tabId = btn.getAttribute('data-tab');
-                    
-                    // Update active states
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    tabPanes.forEach(pane => {
-                        pane.classList.add('hidden');
-                        pane.classList.remove('active');
-                    });
-                    
-                    const activePane = document.getElementById(`${tabId}-tab`);
-                    activePane.classList.remove('hidden');
-                    activePane.classList.add('active');
-                });
-            });
-        }
-
-        function loadAllData() {
-            console.log('Loading all data...');
-            loadPersonalInfo();
-            loadProjects();
-            loadSkills();
-            loadTools();
-            loadWebsites();
-            loadStats();
-        }
-
-        function initEventListeners() {
-            // Personal form
-            const personalForm = document.getElementById('personal-form');
-            if (personalForm) {
-                personalForm.addEventListener('submit', handlePersonalSubmit);
-            }
-
-            // Stats form
-            const statsForm = document.getElementById('stats-form');
-            if (statsForm) {
-                statsForm.addEventListener('submit', handleStatsSubmit);
-            }
-
-            // Add buttons
-            const addProjectBtn = document.getElementById('add-project-btn');
-            if (addProjectBtn) {
-                addProjectBtn.addEventListener('click', () => openModal('project'));
-            }
-
-            const addSkillBtn = document.getElementById('add-skill-btn');
-            if (addSkillBtn) {
-                addSkillBtn.addEventListener('click', () => openModal('skill'));
-            }
-
-            const addToolBtn = document.getElementById('add-tool-btn');
-            if (addToolBtn) {
-                addToolBtn.addEventListener('click', () => openModal('tool'));
-            }
-
-            const addWebsiteBtn = document.getElementById('add-website-btn');
-            if (addWebsiteBtn) {
-                addWebsiteBtn.addEventListener('click', () => openModal('website'));
-            }
-
-            // Modal close
-            const modalClose = document.getElementById('modal-close');
-            const modalBackdrop = document.getElementById('modal-backdrop');
+        function initAdminPanel() {
+            // Update counts
+            updateCounts();
             
-            if (modalClose) {
-                modalClose.addEventListener('click', closeModal);
-            }
-            if (modalBackdrop) {
-                modalBackdrop.addEventListener('click', closeModal);
-            }
-
-            // Form submissions
-            document.addEventListener('submit', handleFormSubmit);
+            // Show personal section by default
+            showSection('personal');
         }
 
-        function loadPersonalInfo() {
+        function updateCounts() {
+            if (!window.MyWorldAPI) return;
+            
+            const state = window.MyWorldAPI.state;
+            
+            document.getElementById('personal-count').textContent = '1';
+            document.getElementById('projects-count').textContent = state.projects ? state.projects.length : '0';
+            document.getElementById('skills-count').textContent = state.skills ? state.skills.length : '0';
+            document.getElementById('tools-count').textContent = state.tools ? state.tools.length : '0';
+            document.getElementById('websites-count').textContent = state.websites ? state.websites.length : '0';
+            document.getElementById('stats-count').textContent = '4';
+        }
+
+        function showSection(section) {
+            const sectionContent = document.getElementById('section-content');
+            const bentoCards = document.querySelectorAll('.bento-card');
+            
+            // Remove active class from all cards
+            bentoCards.forEach(card => card.classList.remove('active'));
+            
+            // Add active class to clicked card
+            const activeCard = document.querySelector(`.bento-card[onclick="showSection('${section}')"]`);
+            if (activeCard) {
+                activeCard.classList.add('active');
+            }
+            
+            // Load section content
+            loadSectionContent(section);
+        }
+
+        function loadSectionContent(section) {
+            const sectionContent = document.getElementById('section-content');
+            
+            switch(section) {
+                case 'personal':
+                    loadPersonalSection();
+                    break;
+                case 'projects':
+                    loadProjectsSection();
+                    break;
+                case 'skills':
+                    loadSkillsSection();
+                    break;
+                case 'tools':
+                    loadToolsSection();
+                    break;
+                case 'websites':
+                    loadWebsitesSection();
+                    break;
+                case 'stats':
+                    loadStatsSection();
+                    break;
+            }
+        }
+
+        function loadPersonalSection() {
+            const sectionContent = document.getElementById('section-content');
             const personal = window.MyWorldAPI.state.personal;
-            if (personal) {
-                document.getElementById('name').value = personal.name || '';
-                document.getElementById('title').value = personal.title || '';
-                document.getElementById('description').value = personal.description || '';
-                document.getElementById('email').value = personal.email || '';
-                document.getElementById('phone').value = personal.phone || '';
-                document.getElementById('location').value = personal.location || '';
-                document.getElementById('avatar').value = personal.avatar || '';
+            
+            if (!personal) {
+                sectionContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-user-circle"></i>
+                        <p>暂无个人信息</p>
+                        <button onclick="showSection('personal')" class="btn-primary">添加个人信息</button>
+                    </div>
+                `;
+                return;
             }
+            
+            sectionContent.innerHTML = `
+                <h2 class="card-title mb-6">编辑个人信息</h2>
+                <form id="personal-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">姓名</label>
+                        <input type="text" id="name" name="name" value="${personal.name || ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">职位</label>
+                        <input type="text" id="title" name="title" value="${personal.title || ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">简介</label>
+                        <textarea id="description" name="description" rows="4" class="form-textarea" required>${personal.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">邮箱</label>
+                        <input type="email" id="email" name="email" value="${personal.email || ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">电话</label>
+                        <input type="tel" id="phone" name="phone" value="${personal.phone || ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">位置</label>
+                        <input type="text" id="location" name="location" value="${personal.location || ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">头像URL</label>
+                        <input type="url" id="avatar" name="avatar" value="${personal.avatar || ''}" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">保存个人信息</button>
+                </form>
+            `;
+            
+            // Add form submit handler
+            const form = document.getElementById('personal-form');
+            form.addEventListener('submit', handlePersonalSubmit);
         }
 
-        function loadProjects() {
-            const projectsList = document.getElementById('projects-list');
+        function loadProjectsSection() {
+            const sectionContent = document.getElementById('section-content');
             const projects = window.MyWorldAPI.state.projects || [];
             
             if (projects.length === 0) {
-                projectsList.innerHTML = `
-                    <div class="col-span-full empty-state">
+                sectionContent.innerHTML = `
+                    <div class="empty-state">
                         <i class="fas fa-project-diagram"></i>
-                        <p>暂无项目，点击上方按钮添加第一个项目</p>
+                        <p>暂无项目</p>
+                        <button onclick="openModal('project')" class="btn-primary">添加项目</button>
                     </div>
                 `;
                 return;
             }
             
-            projectsList.innerHTML = projects.map(project => `
-                <div class="item-card rounded-2xl p-6">
-                    <div class="aspect-video rounded-xl overflow-hidden mb-4">
-                        <img src="${project.image}" alt="${project.name}" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${project.name}</h3>
-                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${project.description}</p>
-                    <div class="flex gap-2">
-                        <button onclick="editProject('${project.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
-                            <i class="fas fa-edit mr-2"></i>编辑
-                        </button>
-                        <button onclick="deleteProject('${project.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
-                            <i class="fas fa-trash mr-2"></i>删除
-                        </button>
-                    </div>
+            sectionContent.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="card-title">项目管理</h2>
+                    <button onclick="openModal('project')" class="btn-secondary">
+                        <i class="fas fa-plus mr-2"></i>添加项目
+                    </button>
                 </div>
-            `).join('');
+                <div class="item-list">
+                    ${projects.map(project => `
+                        <div class="item-card">
+                            <div class="item-header">
+                                <div class="item-icon">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-name">${project.name}</div>
+                                    <div class="item-description">${project.description}</div>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="openModal('project', '${project.id}')" class="btn-action edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteItem('project', '${project.id}')" class="btn-action delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
 
-        function loadSkills() {
-            const skillsList = document.getElementById('skills-list');
+        function loadSkillsSection() {
+            const sectionContent = document.getElementById('section-content');
             const skills = window.MyWorldAPI.state.skills || [];
             
             if (skills.length === 0) {
-                skillsList.innerHTML = `
-                    <div class="col-span-full empty-state">
+                sectionContent.innerHTML = `
+                    <div class="empty-state">
                         <i class="fas fa-code"></i>
-                        <p>暂无技能，点击上方按钮添加第一个技能</p>
+                        <p>暂无技能</p>
+                        <button onclick="openModal('skill')" class="btn-primary">添加技能</button>
                     </div>
                 `;
                 return;
             }
             
-            skillsList.innerHTML = skills.map(skill => `
-                <div class="item-card rounded-2xl p-6">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${skill.color}]/20 to-[${skill.color}]/5 flex items-center justify-center mb-4">
-                        <i class="fab ${skill.icon} text-[${skill.color}] text-3xl"></i>
-                    </div>
-                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${skill.name}</h3>
-                    <div class="skill-bar mb-4">
-                        <div class="skill-progress bg-[${skill.color}]" style="width: ${skill.proficiency}%"></div>
-                    </div>
-                    <p class="text-[${skill.color}] text-sm mb-4">${skill.proficiency}%</p>
-                    <div class="flex gap-2">
-                        <button onclick="editSkill('${skill.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
-                            <i class="fas fa-edit mr-2"></i>编辑
-                        </button>
-                        <button onclick="deleteSkill('${skill.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
-                            <i class="fas fa-trash mr-2"></i>删除
-                        </button>
-                    </div>
+            sectionContent.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="card-title">技能管理</h2>
+                    <button onclick="openModal('skill')" class="btn-secondary">
+                        <i class="fas fa-plus mr-2"></i>添加技能
+                    </button>
                 </div>
-            `).join('');
+                <div class="item-list">
+                    ${skills.map(skill => `
+                        <div class="item-card">
+                            <div class="item-header">
+                                <div class="item-icon">
+                                    <i class="fab ${skill.icon}"></i>
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-name">${skill.name}</div>
+                                    <div class="item-description">熟练度: ${skill.proficiency}%</div>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="openModal('skill', '${skill.id}')" class="btn-action edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteItem('skill', '${skill.id}')" class="btn-action delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
 
-        function loadTools() {
-            const toolsList = document.getElementById('tools-list');
+        function loadToolsSection() {
+            const sectionContent = document.getElementById('section-content');
             const tools = window.MyWorldAPI.state.tools || [];
             
             if (tools.length === 0) {
-                toolsList.innerHTML = `
-                    <div class="col-span-full empty-state">
+                sectionContent.innerHTML = `
+                    <div class="empty-state">
                         <i class="fas fa-tools"></i>
-                        <p>暂无工具，点击上方按钮添加第一个工具</p>
+                        <p>暂无工具</p>
+                        <button onclick="openModal('tool')" class="btn-primary">添加工具</button>
                     </div>
                 `;
                 return;
             }
             
-            toolsList.innerHTML = tools.map(tool => `
-                <div class="item-card rounded-2xl p-6">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${tool.color}]/20 to-[${tool.color}]/5 flex items-center justify-center mb-4">
-                        <i class="fas ${tool.icon} text-[${tool.color}] text-3xl"></i>
-                    </div>
-                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${tool.name}</h3>
-                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${tool.description}</p>
-                    <div class="flex gap-2">
-                        <button onclick="editTool('${tool.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
-                            <i class="fas fa-edit mr-2"></i>编辑
-                        </button>
-                        <button onclick="deleteTool('${tool.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
-                            <i class="fas fa-trash mr-2"></i>删除
-                        </button>
-                    </div>
+            sectionContent.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="card-title">工具管理</h2>
+                    <button onclick="openModal('tool')" class="btn-secondary">
+                        <i class="fas fa-plus mr-2"></i>添加工具
+                    </button>
                 </div>
-            `).join('');
+                <div class="item-list">
+                    ${tools.map(tool => `
+                        <div class="item-card">
+                            <div class="item-header">
+                                <div class="item-icon">
+                                    <i class="fas ${tool.icon}"></i>
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-name">${tool.name}</div>
+                                    <div class="item-description">${tool.description}</div>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="openModal('tool', '${tool.id}')" class="btn-action edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteItem('tool', '${tool.id}')" class="btn-action delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
 
-        function loadWebsites() {
-            const websitesList = document.getElementById('websites-list');
+        function loadWebsitesSection() {
+            const sectionContent = document.getElementById('section-content');
             const websites = window.MyWorldAPI.state.websites || [];
             
             if (websites.length === 0) {
-                websitesList.innerHTML = `
-                    <div class="col-span-full empty-state">
+                sectionContent.innerHTML = `
+                    <div class="empty-state">
                         <i class="fas fa-globe"></i>
-                        <p>暂无网站，点击上方按钮添加第一个网站</p>
+                        <p>暂无网站</p>
+                        <button onclick="openModal('website')" class="btn-primary">添加网站</button>
                     </div>
                 `;
                 return;
             }
             
-            websitesList.innerHTML = websites.map(website => `
-                <div class="item-card rounded-2xl p-6">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[${website.color}]/20 to-[${website.color}]/5 flex items-center justify-center mb-4">
-                        <i class="fab ${website.icon} text-[${website.color}] text-3xl"></i>
-                    </div>
-                    <h3 class="font-['Space_Grotesk'] text-lg font-bold mb-2">${website.name}</h3>
-                    <p class="text-[#B8B8C8] text-sm mb-4 line-clamp-2">${website.description}</p>
-                    <div class="flex gap-2">
-                        <button onclick="editWebsite('${website.id}')" class="action-btn flex-1 px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-lg text-[#00F0FF] hover:bg-[#00F0FF] hover:text-black">
-                            <i class="fas fa-edit mr-2"></i>编辑
-                        </button>
-                        <button onclick="deleteWebsite('${website.id}')" class="action-btn flex-1 px-4 py-2 bg-[#FF00E6]/10 border border-[#FF00E6]/30 rounded-lg text-[#FF00E6] hover:bg-[#FF00E6] hover:text-white">
-                            <i class="fas fa-trash mr-2"></i>删除
-                        </button>
-                    </div>
+            sectionContent.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="card-title">网站管理</h2>
+                    <button onclick="openModal('website')" class="btn-secondary">
+                        <i class="fas fa-plus mr-2"></i>添加网站
+                    </button>
                 </div>
-            `).join('');
+                <div class="item-list">
+                    ${websites.map(website => `
+                        <div class="item-card">
+                            <div class="item-header">
+                                <div class="item-icon">
+                                    <i class="fab ${website.icon}"></i>
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-name">${website.name}</div>
+                                    <div class="item-description">${website.description}</div>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="openModal('website', '${website.id}')" class="btn-action edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteItem('website', '${website.id}')" class="btn-action delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
 
-        function loadStats() {
+        function loadStatsSection() {
+            const sectionContent = document.getElementById('section-content');
             const stats = window.MyWorldAPI.state.stats || {};
-            document.getElementById('experience').value = stats.experience || 0;
-            document.getElementById('projects-count').value = stats.projects || 0;
-            document.getElementById('clients').value = stats.clients || 0;
-            document.getElementById('commits').value = stats.commits || 0;
+            
+            sectionContent.innerHTML = `
+                <h2 class="card-title mb-6">统计数据</h2>
+                <form id="stats-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">年经验</label>
+                        <input type="number" id="experience" name="experience" value="${stats.experience || 0}" min="0" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目完成</label>
+                        <input type="number" id="projects" name="projects" value="${stats.projects || 0}" min="0" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">满意客户</label>
+                        <input type="number" id="clients" name="clients" value="${stats.clients || 0}" min="0" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">代码提交</label>
+                        <input type="number" id="commits" name="commits" value="${stats.commits || 0}" min="0" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">保存统计数据</button>
+                </form>
+            `;
+            
+            // Add form submit handler
+            const form = document.getElementById('stats-form');
+            form.addEventListener('submit', handleStatsSubmit);
+        }
+
+        function openModal(type, id = null) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            
+            modal.classList.add('active');
+            
+            switch(type) {
+                case 'project':
+                    modalTitle.textContent = id ? '编辑项目' : '添加项目';
+                    modalBody.innerHTML = getProjectForm(id);
+                    break;
+                case 'skill':
+                    modalTitle.textContent = id ? '编辑技能' : '添加技能';
+                    modalBody.innerHTML = getSkillForm(id);
+                    break;
+                case 'tool':
+                    modalTitle.textContent = id ? '编辑工具' : '添加工具';
+                    modalBody.innerHTML = getToolForm(id);
+                    break;
+                case 'website':
+                    modalTitle.textContent = id ? '编辑网站' : '添加网站';
+                    modalBody.innerHTML = getWebsiteForm(id);
+                    break;
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+        }
+
+        function getProjectForm(id = null) {
+            const project = id ? window.MyWorldAPI.state.projects.find(p => p.id === id) : null;
+            return `
+                <form id="project-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">项目名称</label>
+                        <input type="text" id="project-name" name="name" value="${project ? project.name : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目描述</label>
+                        <textarea id="project-description" name="description" rows="3" class="form-textarea" required>${project ? project.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图片URL</label>
+                        <input type="url" id="project-image" name="image" value="${project ? project.image : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">标签（用逗号分隔）</label>
+                        <input type="text" id="project-tags" name="tags" value="${project ? project.tags.join(', ') : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目链接</label>
+                        <input type="url" id="project-link" name="link" value="${project ? project.link : '#'}" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">${id ? '更新项目' : '添加项目'}</button>
+                </form>
+            `;
+        }
+
+        function getSkillForm(id = null) {
+            const skill = id ? window.MyWorldAPI.state.skills.find(s => s.id === id) : null;
+            return `
+                <form id="skill-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">技能名称</label>
+                        <input type="text" id="skill-name" name="name" value="${skill ? skill.name : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">熟练度 (%)</label>
+                        <input type="number" id="skill-proficiency" name="proficiency" min="0" max="100" value="${skill ? skill.proficiency : 50}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图标（Font Awesome）</label>
+                        <input type="text" id="skill-icon" name="icon" value="${skill ? skill.icon : 'fa-code'}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">颜色</label>
+                        <input type="color" id="skill-color" name="color" value="${skill ? skill.color : '#00F0FF'}" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">${id ? '更新技能' : '添加技能'}</button>
+                </form>
+            `;
+        }
+
+        function getToolForm(id = null) {
+            const tool = id ? window.MyWorldAPI.state.tools.find(t => t.id === id) : null;
+            return `
+                <form id="tool-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">工具名称</label>
+                        <input type="text" id="tool-name" name="name" value="${tool ? tool.name : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">工具描述</label>
+                        <textarea id="tool-description" name="description" rows="3" class="form-textarea" required>${tool ? tool.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图标（Font Awesome）</label>
+                        <input type="text" id="tool-icon" name="icon" value="${tool ? tool.icon : 'fa-tools'}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">工具链接</label>
+                        <input type="url" id="tool-link" name="link" value="${tool ? tool.link : '#'}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">颜色</label>
+                        <input type="color" id="tool-color" name="color" value="${tool ? tool.color : '#00F0FF'}" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">${id ? '更新工具' : '添加工具'}</button>
+                </form>
+            `;
+        }
+
+        function getWebsiteForm(id = null) {
+            const website = id ? window.MyWorldAPI.state.websites.find(w => w.id === id) : null;
+            return `
+                <form id="website-form" class="space-y-4">
+                    <div class="form-group">
+                        <label class="form-label">网站名称</label>
+                        <input type="text" id="website-name" name="name" value="${website ? website.name : ''}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">网站描述</label>
+                        <textarea id="website-description" name="description" rows="3" class="form-textarea" required>${website ? website.description : ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图标（Font Awesome）</label>
+                        <input type="text" id="website-icon" name="icon" value="${website ? website.icon : 'fa-globe'}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">网站链接</label>
+                        <input type="url" id="website-link" name="link" value="${website ? website.link : '#'}" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">颜色</label>
+                        <input type="color" id="website-color" name="color" value="${website ? website.color : '#00F0FF'}" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn-primary">${id ? '更新网站' : '添加网站'}</button>
+                </form>
+            `;
         }
 
         function handlePersonalSubmit(e) {
             e.preventDefault();
+            showLoading();
+            
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
             
@@ -642,11 +1081,15 @@
             };
             
             saveData();
-            window.MyWorldAPI.showNotification('个人信息保存成功！', 'success');
+            hideLoading();
+            showNotification('个人信息保存成功！', 'success');
+            updateCounts();
         }
 
         function handleStatsSubmit(e) {
             e.preventDefault();
+            showLoading();
+            
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
             
@@ -658,49 +1101,92 @@
             };
             
             saveData();
-            window.MyWorldAPI.showNotification('统计数据保存成功！', 'success');
+            hideLoading();
+            showNotification('统计数据保存成功！', 'success');
+            updateCounts();
         }
 
         function handleFormSubmit(e) {
-            if (e.target.id === 'project-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                data.tags = data.tags ? data.tags.split(',').map(tag => tag.trim()) : [];
-                
-                window.MyWorldAPI.createProject(data);
-                loadProjects();
-                closeModal();
-                window.MyWorldAPI.showNotification('项目添加成功！', 'success');
-            } else if (e.target.id === 'skill-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                data.proficiency = parseInt(data.proficiency);
-                
-                window.MyWorldAPI.createSkill(data);
-                loadSkills();
-                closeModal();
-                window.MyWorldAPI.showNotification('技能添加成功！', 'success');
-            } else if (e.target.id === 'tool-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                
-                window.MyWorldAPI.createTool(data);
-                loadTools();
-                closeModal();
-                window.MyWorldAPI.showNotification('工具添加成功！', 'success');
-            } else if (e.target.id === 'website-form') {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData);
-                
-                window.MyWorldAPI.createWebsite(data);
-                loadWebsites();
-                closeModal();
-                window.MyWorldAPI.showNotification('网站添加成功！', 'success');
+            e.preventDefault();
+            showLoading();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            switch(e.target.id) {
+                case 'project-form':
+                    if (e.target.id === 'project-form') {
+                        data.tags = data.tags ? data.tags.split(',').map(tag => tag.trim()) : [];
+                        data.image = data.image || 'https://picsum.photos/seed/' + Date.now() + '/800/600';
+                        
+                        if (e.target.querySelector('#project-name').value.includes('更新')) {
+                            const id = e.target.querySelector('#project-name').getAttribute('data-id');
+                            window.MyWorldAPI.updateProject(id, data);
+                        } else {
+                            window.MyWorldAPI.createProject(data);
+                        }
+                    }
+                    break;
+                case 'skill-form':
+                    data.proficiency = parseInt(data.proficiency);
+                    
+                    if (e.target.querySelector('#skill-name').value.includes('更新')) {
+                        const id = e.target.querySelector('#skill-name').getAttribute('data-id');
+                        window.MyWorldAPI.updateSkill(id, data);
+                    } else {
+                        window.MyWorldAPI.createSkill(data);
+                    }
+                    break;
+                case 'tool-form':
+                    if (e.target.querySelector('#tool-name').value.includes('更新')) {
+                        const id = e.target.querySelector('#tool-name').getAttribute('data-id');
+                        window.MyWorldAPI.updateTool(id, data);
+                    } else {
+                        window.MyWorldAPI.createTool(data);
+                    }
+                    break;
+                case 'website-form':
+                    if (e.target.querySelector('#website-name').value.includes('更新')) {
+                        const id = e.target.querySelector('#website-name').getAttribute('data-id');
+                        window.MyWorldAPI.updateWebsite(id, data);
+                    } else {
+                        window.MyWorldAPI.createWebsite(data);
+                    }
+                    break;
             }
+            
+            saveData();
+            hideLoading();
+            showNotification('保存成功！', 'success');
+            updateCounts();
+            loadSectionContent(e.target.id.replace('-form', ''));
+        }
+
+        function deleteItem(type, id) {
+            if (!confirm('确定要删除这个项目吗？')) return;
+            
+            showLoading();
+            
+            switch(type) {
+                case 'project':
+                    window.MyWorldAPI.deleteProject(id);
+                    break;
+                case 'skill':
+                    window.MyWorldAPI.deleteSkill(id);
+                    break;
+                case 'tool':
+                    window.MyWorldAPI.deleteTool(id);
+                    break;
+                case 'website':
+                    window.MyWorldAPI.deleteWebsite(id);
+                    break;
+            }
+            
+            saveData();
+            hideLoading();
+            showNotification('删除成功！', 'success');
+            updateCounts();
+            loadSectionContent(type);
         }
 
         function saveData() {
@@ -714,207 +1200,53 @@
             }));
         }
 
-        function openModal(type, id = null) {
-            const modal = document.getElementById('modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalBody = document.getElementById('modal-body');
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notification-icon');
+            const messageEl = document.getElementById('notification-message');
             
-            modal.classList.remove('hidden');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            notification.className = `notification ${type}`;
+            messageEl.textContent = message;
             
-            if (type === 'project') {
-                modalTitle.textContent = id ? '编辑项目' : '添加项目';
-                modalBody.innerHTML = getProjectForm(id);
-            } else if (type === 'skill') {
-                modalTitle.textContent = id ? '编辑技能' : '添加技能';
-                modalBody.innerHTML = getSkillForm(id);
-            } else if (type === 'tool') {
-                modalTitle.textContent = id ? '编辑工具' : '添加工具';
-                modalBody.innerHTML = getToolForm(id);
-            } else if (type === 'website') {
-                modalTitle.textContent = id ? '编辑网站' : '添加网站';
-                modalBody.innerHTML = getWebsiteForm(id);
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const modalBody = document.getElementById('modal-body');
+            notification.classList.add('show');
             
-            modal.classList.add('hidden');
-            modalBody.innerHTML = '';
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        function getProjectForm(id = null) {
-            const project = id ? window.MyWorldAPI.state.projects.find(p => p.id === id) : null;
-            return `
-                <form id="project-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目名称</label>
-                        <input type="text" id="project-name" name="name" value="${project ? project.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目描述</label>
-                        <textarea id="project-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${project ? project.description : ''}</textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图片URL</label>
-                        <input type="url" id="project-image" name="image" value="${project ? project.image : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">标签（用逗号分隔）</label>
-                        <input type="text" id="project-tags" name="tags" value="${project ? project.tags.join(', ') : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">项目链接</label>
-                        <input type="url" id="project-link" name="link" value="${project ? project.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                        <i class="fas fa-save"></i>
-                        <span>${id ? '更新项目' : '添加项目'}</span>
-                    </button>
-                </form>
-            `;
-        }
-
-        function getSkillForm(id = null) {
-            const skill = id ? window.MyWorldAPI.state.skills.find(s => s.id === id) : null;
-            return `
-                <form id="skill-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">技能名称</label>
-                        <input type="text" id="skill-name" name="name" value="${skill ? skill.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">熟练度 (%)</label>
-                        <input type="number" id="skill-proficiency" name="proficiency" min="0" max="100" value="${skill ? skill.proficiency : 50}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
-                        <input type="text" id="skill-icon" name="icon" value="${skill ? skill.icon : 'fa-code'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
-                        <input type="color" id="skill-color" name="color" value="${skill ? skill.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
-                    </div>
-                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                        <i class="fas fa-save"></i>
-                        <span>${id ? '更新技能' : '添加技能'}</span>
-                    </button>
-                </form>
-            `;
-        }
-
-        function getToolForm(id = null) {
-            const tool = id ? window.MyWorldAPI.state.tools.find(t => t.id === id) : null;
-            return `
-                <form id="tool-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具名称</label>
-                        <input type="text" id="tool-name" name="name" value="${tool ? tool.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具描述</label>
-                        <textarea id="tool-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${tool ? tool.description : ''}</textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
-                        <input type="text" id="tool-icon" name="icon" value="${tool ? tool.icon : 'fa-tools'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">工具链接</label>
-                        <input type="url" id="tool-link" name="link" value="${tool ? tool.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
-                        <input type="color" id="tool-color" name="color" value="${tool ? tool.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
-                    </div>
-                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                        <i class="fas fa-save"></i>
-                        <span>${id ? '更新工具' : '添加工具'}</span>
-                    </button>
-                </form>
-            `;
-        }
-
-        function getWebsiteForm(id = null) {
-            const website = id ? window.MyWorldAPI.state.websites.find(w => w.id === id) : null;
-            return `
-                <form id="website-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站名称</label>
-                        <input type="text" id="website-name" name="name" value="${website ? website.name : ''}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站描述</label>
-                        <textarea id="website-description" name="description" rows="3" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300 resize-none">${website ? website.description : ''}</textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">图标（Font Awesome）</label>
-                        <input type="text" id="website-icon" name="icon" value="${website ? website.icon : 'fa-globe'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">网站链接</label>
-                        <input type="url" id="website-link" name="link" value="${website ? website.link : '#'}" required class="input-field w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white placeholder-[#B8B8C8] focus:outline-none transition-all duration-300">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-[#B8B8C8]">颜色</label>
-                        <input type="color" id="website-color" name="color" value="${website ? website.color : '#00F0FF'}" required class="w-full h-14 px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white focus:outline-none transition-all duration-300">
-                    </div>
-                    <button type="submit" class="btn-primary w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-black font-semibold rounded-xl">
-                        <i class="fas fa-save"></i>
-                        <span>${id ? '更新网站' : '添加网站'}</span>
-                    </button>
-                </form>
-            `;
-        }
-
-        function editProject(id) {
-            openModal('project', id);
-        }
-
-        function editSkill(id) {
-            openModal('skill', id);
-        }
-
-        function editTool(id) {
-            openModal('tool', id);
-        }
-
-        function editWebsite(id) {
-            openModal('website', id);
-        }
-
-        function deleteProject(id) {
-            if (confirm('确定要删除这个项目吗？')) {
-                window.MyWorldAPI.deleteProject(id);
-                loadProjects();
-                window.MyWorldAPI.showNotification('项目删除成功！', 'success');
+        // Listen for localStorage changes to update counts
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'myWorldData' && e.newValue) {
+                console.log('检测到数据变化，重新加载...');
+                const newData = JSON.parse(e.newValue);
+                window.MyWorldAPI.state.personal = newData.personal;
+                window.MyWorldAPI.state.projects = newData.projects || [];
+                window.MyWorldAPI.state.skills = newData.skills || [];
+                window.MyWorldAPI.state.tools = newData.tools || [];
+                window.MyWorldAPI.state.websites = newData.websites || [];
+                window.MyWorldAPI.state.stats = newData.stats || {};
+                
+                updateCounts();
             }
-        }
+        });
 
-        function deleteSkill(id) {
-            if (confirm('确定要删除这个技能吗？')) {
-                window.MyWorldAPI.deleteSkill(id);
-                loadSkills();
-                window.MyWorldAPI.showNotification('技能删除成功！', 'success');
+        // Modal close handler
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
             }
-        }
-
-        function deleteTool(id) {
-            if (confirm('确定要删除这个工具吗？')) {
-                window.MyWorldAPI.deleteTool(id);
-                loadTools();
-                window.MyWorldAPI.showNotification('工具删除成功！', 'success');
-            }
-        }
-
-        function deleteWebsite(id) {
-            if (confirm('确定要删除这个网站吗？')) {
-                window.MyWorldAPI.deleteWebsite(id);
-                loadWebsites();
-                window.MyWorldAPI.showNotification('网站删除成功！', 'success');
-            }
-        }
+        });
     </script>
 </body>
 </html>
