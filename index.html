@@ -706,8 +706,25 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="js/meteor-shower.js"></script>
     <script src="js/main.js"></script>
     <script>
+        // Initialize Meteor Shower
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.MeteorShower && document.body) {
+                window.indexMeteorShower = new MeteorShower(document.body, {
+                    maxMeteors: 25,
+                    minSpeed: 4,
+                    maxSpeed: 10,
+                    minSize: 2,
+                    maxSize: 6,
+                    colors: ['#00F0FF', '#7B61FF', '#FF00E6', '#00FF94', '#FFD700'],
+                    spawnInterval: 400
+                });
+                console.log('Meteor shower initialized');
+            }
+        });
+
         // 监听localStorage变化，当后台修改数据时自动更新首页
         window.addEventListener('storage', function(e) {
             if (e.key === 'myWorldData' && e.newValue) {
