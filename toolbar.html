@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多功能工具栏</title>
+    <style>
+        /* ==================== 全局样式 ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: #F5F7FA;
+            padding-top: 60px; /* 为顶部工具栏留出空间 */
+            transition: padding-top 0.3s ease;
+        }
+
+        /* ==================== 工具栏容器 ==================== */
+        .toolbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(135deg, #165DFF 0%, #0D47CC 100%);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* 侧边悬浮模式 */
+        .toolbar-container.sidebar-mode {
+            top: 50%;
+            left: 0;
+            width: 60px;
+            height: auto;
+            transform: translateY(-50%);
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* ==================== 工具栏内容 ==================== */
+        .toolbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 侧边模式下的内容布局 */
+        .toolbar-container.sidebar-mode .toolbar-content {
+            flex-direction: column;
+            padding: 20px 0;
+            gap: 15px;
+        }
+
+        /* ==================== Logo区域 ==================== */
+        .toolbar-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .toolbar-container.sidebar-mode .toolbar-logo {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 16px;
+        }
+
+        /* ==================== 导航菜单 ==================== */
+        .toolbar-nav {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-container.sidebar-mode .toolbar-nav {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* ==================== 菜单项 ==================== */
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .menu-trigger:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .menu-trigger .icon {
+            font-size: 16px;
+        }
+
+        /* 下拉箭头 */
+        .menu-trigger .arrow {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item.active .menu-trigger .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* ==================== 下拉菜单 ==================== */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .menu-item.active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+
+        /* 侧边模式下的下拉菜单 */
+        .toolbar-container.sidebar-mode .dropdown-menu {
+            left: 100%;
+            top: 0;
+            margin-left: 10px;
+        }
+
+        /* ==================== 下拉菜单项 ==================== */
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #F5F7FA;
+            color: #165DFF;
+            padding-left: 20px;
+        }
+
+        .dropdown-item .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .dropdown-item .item-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .dropdown-item .item-meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ==================== 实用工具（PC端） ==================== */
+        .tools-grid {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-container.sidebar-mode .tools-grid {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tool-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .tool-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .tool-link .icon {
+            font-size: 16px;
+        }
+
+        /* ==================== 设置按钮 ==================== */
+        .settings-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        /* ==================== 设置面板 ==================== */
+        .settings-panel {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 250px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .settings-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+
+        /* 侧边模式下的设置面板 */
+        .toolbar-container.sidebar-mode .settings-panel {
+            left: 100%;
+            top: 0;
+            right: auto;
+            margin-left: 10px;
+        }
+
+        .settings-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .settings-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 开关按钮 */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #ddd;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #165DFF;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 27px;
+        }
+
+        /* 语言选择 */
+        .lang-select {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .lang-select:focus {
+            border-color: #165DFF;
+        }
+
+        /* ==================== 移动端适配 ==================== */
+        .mobile-more-btn {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-more-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-more-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-more-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-more-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* 移动端菜单 */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-menu-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #165DFF;
+            margin-bottom: 10px;
+        }
+
+        .mobile-menu-link {
+            display: block;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-link:hover {
+            color: #165DFF;
+            padding-left: 10px;
+        }
+
+        /* ==================== 暗黑模式 ==================== */
+        body.dark-mode {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .dropdown-menu,
+        body.dark-mode .settings-panel,
+        body.dark-mode .mobile-menu {
+            background: #2a2a2a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .dropdown-item,
+        body.dark-mode .settings-label,
+        body.dark-mode .mobile-menu-link {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .dropdown-item:hover,
+        body.dark-mode .mobile-menu-link:hover {
+            background: #3a3a3a;
+        }
+
+        body.dark-mode .dropdown-item,
+        body.dark-mode .mobile-menu-item {
+            border-bottom-color: #3a3a3a;
+        }
+
+        body.dark-mode .settings-title {
+            color: #e0e0e0;
+            border-bottom-color: #3a3a3a;
+        }
+
+        body.dark-mode .lang-select {
+            background: #3a3a3a;
+            border-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        /* ==================== 响应式设计 ==================== */
+        @media (max-width: 768px) {
+            /* 隐藏PC端菜单 */
+            .toolbar-nav > .menu-item:not(.mobile-visible),
+            .tools-grid,
+            .toolbar-logo {
+                display: none;
+            }
+
+            /* 显示移动端按钮 */
+            .mobile-more-btn {
+                display: flex;
+            }
+
+            /* 显示移动端菜单 */
+            .mobile-menu {
+                display: block;
+            }
+
+            /* 侧边模式下的移动端适配 */
+            .toolbar-container.sidebar-mode {
+                width: 50px;
+            }
+
+            .toolbar-container.sidebar-mode .mobile-menu {
+                top: 0;
+                left: 50px;
+                width: 200px;
+                height: auto;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toolbar-content {
+                padding: 0 10px;
+            }
+
+            .menu-trigger {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+        }
+
+        /* ==================== 确认对话框 ==================== */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-dialog.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirm-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .confirm-dialog.active .confirm-box {
+            transform: scale(1);
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .confirm-message {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .confirm-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn.cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .confirm-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .confirm-btn.confirm {
+            background: #165DFF;
+            color: white;
+        }
+
+        .confirm-btn.confirm:hover {
+            background: #0D47CC;
+        }
+
+        /* ==================== 演示内容区域 ==================== */
+        .demo-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-content h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .demo-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .demo-content {
+            background: #2a2a2a;
+        }
+
+        body.dark-mode .demo-content h1 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .demo-content p {
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== 工具栏容器 ==================== -->
+    <div class="toolbar-container" id="toolbar">
+        <div class="toolbar-content">
+            <!-- Logo -->
+            <div class="toolbar-logo">MyToolbar</div>
+
+            <!-- 导航菜单 -->
+            <nav class="toolbar-nav">
+                <!-- 模块1：常用导航 -->
+                <div class="menu-item">
+                    <a class="menu-trigger" href="javascript:;">
+                        <span class="icon">🧭</span>
+                        <span class="text">常用导航</span>
+                        <span class="arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+                        <a href="https://你的域名.com" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">个人博客首页</span>
+                                <span class="item-meta">https://你的域名.com</span>
+                            </span>
+                        </a>
+                        <a href="https://github.com/你的用户名" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">我的GitHub</span>
+                                <span class="item-meta">https://github.com/你的用户名</span>
+                            </span>
+                        </a>
+                        <a href="https://你的文档地址.com" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">技术文档库</span>
+                                <span class="item-meta">https://你的文档地址.com</span>
+                            </span>
+                        </a>
+                        <a href="https://tool.oschina.net" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">常用工具站</span>
+                                <span class="item-meta">https://tool.oschina.net</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 模块2：资源下载 -->
+                <div class="menu-item">
+                    <a class="menu-trigger" href="javascript:;">
+                        <span class="icon">📦</span>
+                        <span class="text">资源下载</span>
+                        <span class="arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+                        <a href="https://你的域名.com/files/site-code.zip" class="dropdown-item download-link" data-filename="网站源码包.zip" data-size="20MB">
+                            <span class="item-info">
+                                <span class="item-name">网站源码包</span>
+                                <span class="item-meta">ZIP · 20MB</span>
+                            </span>
+                            <span>⬇️</span>
+                        </a>
+                        <a href="https://你的域名.com/files/resume.docx" class="dropdown-item download-link" data-filename="个人简历模板.docx" data-size="2MB">
+                            <span class="item-info">
+                                <span class="item-name">个人简历模板</span>
+                                <span class="item-meta">DOCX · 2MB</span>
+                            </span>
+                            <span>⬇️</span>
+                        </a>
+                        <a href="https://你的域名.com/files/setup.exe" class="dropdown-item download-link" data-filename="软件安装包.exe" data-size="80MB">
+                            <span class="item-info">
+                                <span class="item-name">软件安装包</span>
+                                <span class="item-meta">EXE · 80MB</span>
+                            </span>
+                            <span>⬇️</span>
+                        </a>
+                        <a href="https://你的域名.com/files/material.png" class="dropdown-item download-link" data-filename="设计素材.png" data-size="5MB">
+                            <span class="item-info">
+                                <span class="item-name">设计素材</span>
+                                <span class="item-meta">PNG · 5MB</span>
+                            </span>
+                            <span>⬇️</span>
+                        </a>
+                        <a href="https://你的域名.com/files/data.xlsx" class="dropdown-item download-link" data-filename="数据表格.xlsx" data-size="1MB">
+                            <span class="item-info">
+                                <span class="item-name">数据表格</span>
+                                <span class="item-meta">XLSX · 1MB</span>
+                            </span>
+                            <span>⬇️</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 模块3：实用工具（PC端显示） -->
+                <div class="tools-grid">
+                    <a href="https://codepen.io/pen" class="tool-link" target="_blank">
+                        <span class="icon">💻</span>
+                        <span class="text">在线编辑器</span>
+                    </a>
+                    <a href="https://tinypng.com" class="tool-link" target="_blank">
+                        <span class="icon">🖼️</span>
+                        <span class="text">图片压缩</span>
+                    </a>
+                    <a href="https://cli.im/text" class="tool-link" target="_blank">
+                        <span class="icon">📱</span>
+                        <span class="text">二维码生成</span>
+                    </a>
+                </div>
+
+                <!-- 模块4：关于我 -->
+                <div class="menu-item">
+                    <a class="menu-trigger" href="javascript:;">
+                        <span class="icon">👤</span>
+                        <span class="text">关于我</span>
+                        <span class="arrow">▼</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+                        <a href="https://你的域名.com/about" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">个人简介</span>
+                                <span class="item-meta">了解更多</span>
+                            </span>
+                        </a>
+                        <a href="https://你的域名.com/contact" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">联系方式</span>
+                                <span class="item-meta">与我联系</span>
+                            </span>
+                        </a>
+                        <a href="https://你的域名.com/message" class="dropdown-item" target="_blank">
+                            <span class="item-info">
+                                <span class="item-name">留言板</span>
+                                <span class="item-meta">留下您的想法</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- 模块5：设置 -->
+            <div class="menu-item">
+                <button class="settings-btn" id="settingsBtn">
+                    ⚙️
+                </button>
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-title">设置</div>
+                    
+                    <div class="settings-item">
+                        <span class="settings-label">工具栏位置</span>
+                        <div class="toggle-switch" id="positionToggle"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <span class="settings-label">暗黑模式</span>
+                        <div class="toggle-switch" id="darkModeToggle"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <span class="settings-label">语言</span>
+                        <select class="lang-select" id="langSelect">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 移动端更多按钮 -->
+            <button class="mobile-more-btn" id="mobileMoreBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== 移动端菜单 ==================== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-title">🧭 常用导航</div>
+            <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+            <a href="https://你的域名.com" class="mobile-menu-link" target="_blank">个人博客首页</a>
+            <a href="https://github.com/你的用户名" class="mobile-menu-link" target="_blank">我的GitHub</a>
+            <a href="https://你的文档地址.com" class="mobile-menu-link" target="_blank">技术文档库</a>
+            <a href="https://tool.oschina.net" class="mobile-menu-link" target="_blank">常用工具站</a>
+        </div>
+
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-title">📦 资源下载</div>
+            <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+            <a href="https://你的域名.com/files/site-code.zip" class="mobile-menu-link download-link" data-filename="网站源码包.zip" data-size="20MB">网站源码包 (ZIP · 20MB)</a>
+            <a href="https://你的域名.com/files/resume.docx" class="mobile-menu-link download-link" data-filename="个人简历模板.docx" data-size="2MB">个人简历模板 (DOCX · 2MB)</a>
+            <a href="https://你的域名.com/files/setup.exe" class="mobile-menu-link download-link" data-filename="软件安装包.exe" data-size="80MB">软件安装包 (EXE · 80MB)</a>
+            <a href="https://你的域名.com/files/material.png" class="mobile-menu-link download-link" data-filename="设计素材.png" data-size="5MB">设计素材 (PNG · 5MB)</a>
+            <a href="https://你的域名.com/files/data.xlsx" class="mobile-menu-link download-link" data-filename="数据表格.xlsx" data-size="1MB">数据表格 (XLSX · 1MB)</a>
+        </div>
+
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-title">🛠️ 实用工具</div>
+            <a href="https://codepen.io/pen" class="mobile-menu-link" target="_blank">💻 在线编辑器</a>
+            <a href="https://tinypng.com" class="mobile-menu-link" target="_blank">🖼️ 图片压缩</a>
+            <a href="https://cli.im/text" class="mobile-menu-link" target="_blank">📱 二维码生成</a>
+        </div>
+
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-title">👤 关于我</div>
+            <!-- ⚠️ 请替换以下链接为您的实际链接 -->
+            <a href="https://你的域名.com/about" class="mobile-menu-link" target="_blank">个人简介</a>
+            <a href="https://你的域名.com/contact" class="mobile-menu-link" target="_blank">联系方式</a>
+            <a href="https://你的域名.com/message" class="mobile-menu-link" target="_blank">留言板</a>
+        </div>
+    </div>
+
+    <!-- ==================== 确认对话框 ==================== -->
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-box">
+            <div class="confirm-title">确认下载</div>
+            <div class="confirm-message" id="confirmMessage">您确定要下载这个文件吗？</div>
+            <div class="confirm-buttons">
+                <button class="confirm-btn cancel" id="cancelBtn">取消</button>
+                <button class="confirm-btn confirm" id="confirmBtn">确认下载</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 演示内容区域 ==================== -->
+    <div class="demo-content">
+        <h1>欢迎使用多功能工具栏</h1>
+        <p>这是一个功能丰富的工具栏组件，支持顶部固定和侧边悬浮两种模式。</p>
+        <p>您可以点击工具栏上的各个菜单项来体验不同的功能，包括常用导航、资源下载、实用工具等。</p>
+        <p>点击右侧的设置按钮（⚙️）可以切换工具栏位置、开启暗黑模式或切换语言。</p>
+        <p>在移动端设备上，工具栏会自动适配，点击"更多"按钮可以展开完整的菜单。</p>
+        <p>向下滚动页面查看工具栏的固定效果...</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+        <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+
+    <!-- ==================== JavaScript代码 ==================== -->
+    <script>
+        // ==================== 全局变量 ====================
+        const toolbar = document.getElementById('toolbar');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const positionToggle = document.getElementById('positionToggle');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const langSelect = document.getElementById('langSelect');
+        const mobileMoreBtn = document.getElementById('mobileMoreBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const confirmDialog = document.getElementById('confirmDialog');
+        const confirmMessage = document.getElementById('confirmMessage');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const downloadLinks = document.querySelectorAll('.download-link');
+
+        let currentDownloadUrl = '';
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从本地存储加载设置
+            loadSettings();
+            
+            // 初始化菜单交互
+            initMenuInteractions();
+            
+            // 初始化下载确认
+            initDownloadConfirmation();
+        });
+
+        // ==================== 菜单交互 ====================
+        function initMenuInteractions() {
+            // 下拉菜单点击事件
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                const trigger = item.querySelector('.menu-trigger');
+                if (trigger) {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // 关闭其他打开的菜单
+                        menuItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // 切换当前菜单状态
+                        item.classList.toggle('active');
+                    });
+                }
+            });
+
+            // 点击页面其他地方关闭菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.menu-item')) {
+                    menuItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            });
+
+            // 设置按钮点击事件
+            settingsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                settingsPanel.classList.toggle('active');
+            });
+
+            // 点击页面其他地方关闭设置面板
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.menu-item:last-child')) {
+                    settingsPanel.classList.remove('active');
+                }
+            });
+
+            // 移动端更多按钮点击事件
+            mobileMoreBtn.addEventListener('click', function() {
+                mobileMoreBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        }
+
+        // ==================== 下载确认 ====================
+        function initDownloadConfirmation() {
+            downloadLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const filename = this.getAttribute('data-filename');
+                    const filesize = this.getAttribute('data-size');
+                    const url = this.getAttribute('href');
+                    
+                    currentDownloadUrl = url;
+                    confirmMessage.textContent = `您确定要下载 "${filename}" (${filesize}) 吗？`;
+                    confirmDialog.classList.add('active');
+                });
+            });
+
+            // 取消按钮
+            cancelBtn.addEventListener('click', function() {
+                confirmDialog.classList.remove('active');
+                currentDownloadUrl = '';
+            });
+
+            // 确认按钮
+            confirmBtn.addEventListener('click', function() {
+                if (currentDownloadUrl) {
+                    // 创建隐藏的下载链接
+                    const link = document.createElement('a');
+                    link.href = currentDownloadUrl;
+                    link.download = '';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+                confirmDialog.classList.remove('active');
+                currentDownloadUrl = '';
+            });
+
+            // 点击对话框外部关闭
+            confirmDialog.addEventListener('click', function(e) {
+                if (e.target === confirmDialog) {
+                    confirmDialog.classList.remove('active');
+                    currentDownloadUrl = '';
+                }
+            });
+        }
+
+        // ==================== 设置功能 ====================
+        
+        // 工具栏位置切换
+        positionToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            toolbar.classList.toggle('sidebar-mode');
+            
+            // 调整body的padding
+            if (toolbar.classList.contains('sidebar-mode')) {
+                document.body.style.paddingTop = '0';
+            } else {
+                document.body.style.paddingTop = '60px';
+            }
+            
+            // 保存设置
+            saveSettings();
+        });
+
+        // 暗黑模式切换
+        darkModeToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.body.classList.toggle('dark-mode');
+            
+            // 保存设置
+            saveSettings();
+        });
+
+        // 语言切换
+        langSelect.addEventListener('change', function() {
+            const lang = this.value;
+            // 这里可以添加语言切换逻辑
+            console.log('切换语言为:', lang);
+            
+            // 保存设置
+            saveSettings();
+        });
+
+        // ==================== 本地存储 ====================
+        function saveSettings() {
+            const settings = {
+                sidebarMode: toolbar.classList.contains('sidebar-mode'),
+                darkMode: document.body.classList.contains('dark-mode'),
+                language: langSelect.value
+            };
+            localStorage.setItem('toolbarSettings', JSON.stringify(settings));
+        }
+
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('toolbarSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                // 恢复工具栏位置
+                if (settings.sidebarMode) {
+                    toolbar.classList.add('sidebar-mode');
+                    positionToggle.classList.add('active');
+                    document.body.style.paddingTop = '0';
+                }
+                
+                // 恢复暗黑模式
+                if (settings.darkMode) {
+                    document.body.classList.add('dark-mode');
+                    darkModeToggle.classList.add('active');
+                }
+                
+                // 恢复语言设置
+                if (settings.language) {
+                    langSelect.value = settings.language;
+                }
+            }
+        }
+
+        // ==================== 键盘快捷键 ====================
+        document.addEventListener('keydown', function(e) {
+            // ESC键关闭所有弹窗
+            if (e.key === 'Escape') {
+                confirmDialog.classList.remove('active');
+                settingsPanel.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMoreBtn.classList.remove('active');
+                
+                // 关闭所有下拉菜单
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                currentDownloadUrl = '';
+            }
+        });
+
+        // ==================== 窗口大小变化处理 ====================
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // 在窗口大小变化时关闭移动端菜单
+                if (window.innerWidth > 768) {
+                    mobileMenu.classList.remove('active');
+                    mobileMoreBtn.classList.remove('active');
+                }
+            }, 250);
+        });
+    </script>
+</body>
+</html>
