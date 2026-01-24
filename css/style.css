@@ -550,7 +550,7 @@ section {
     background: var(--background-dark);
 }
 
-.skills-grid {
+.skills-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
@@ -641,7 +641,7 @@ section {
     background: linear-gradient(180deg, var(--background-dark) 0%, var(--background-light) 50%, var(--background-dark) 100%);
 }
 
-.projects-container {
+.projects-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2.5rem;
