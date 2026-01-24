@@ -539,44 +539,44 @@ class ScrollProgress {
 }
 
 // ===================================
-// 鼠标跟随效果
+// 流星划过鼠标效果
 // ===================================
 class CursorFollower {
     constructor() {
         this.cursor = document.createElement('div');
-        this.cursorInner = document.createElement('div');
+        this.trail = document.createElement('div');
+        this.trailParticles = [];
+        this.maxParticles = 10;
+        this.lastX = 0;
+        this.lastY = 0;
         this.init();
     }
 
     init() {
+        // 流星头部
         this.cursor.className = 'cursor-follower';
-        this.cursorInner.className = 'cursor-inner';
-        
         this.cursor.style.cssText = `
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 2px solid #00f5ff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-        `;
-        
-        this.cursorInner.style.cssText = `
             position: fixed;
             width: 8px;
             height: 8px;
-            background: #00f5ff;
+            background: radial-gradient(circle, #ff00ff 0%, #00f5ff 100%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.8);
+            box-shadow: 0 0 15px #ff00ff, 0 0 30px #00f5ff;
+            transition: opacity 0.1s ease;
         `;
         
+        // 流星拖尾容器
+        this.trail.className = 'cursor-trail';
+        this.trail.style.cssText = `
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+        `;
+        
+        document.body.appendChild(this.trail);
         document.body.appendChild(this.cursor);
-        document.body.appendChild(this.cursorInner);
         
         document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         
@@ -588,25 +588,63 @@ class CursorFollower {
         });
     }
 
+    createTrailParticle(x, y, opacity) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(135deg, rgba(0, 245, 255, ${opacity}) 0%, rgba(255, 0, 255, ${opacity * 0.8}) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 245, 255, ${opacity});
+            left: ${x}px;
+            top: ${y}px;
+            pointer-events: none;
+            animation: trail-fade 0.5s ease-out forwards;
+        `;
+        
+        this.trail.appendChild(particle);
+        this.trailParticles.push(particle);
+        
+        // 限制粒子数量
+        if (this.trailParticles.length > this.maxParticles) {
+            const oldParticle = this.trailParticles.shift();
+            oldParticle.remove();
+        }
+    }
+
     handleMouseMove(e) {
-        this.cursor.style.left = e.clientX - 20 + 'px';
-        this.cursor.style.top = e.clientY - 20 + 'px';
-        this.cursorInner.style.left = e.clientX - 4 + 'px';
-        this.cursorInner.style.top = e.clientY - 4 + 'px';
+        const x = e.clientX;
+        const y = e.clientY;
+        
+        // 更新流星头部位置
+        this.cursor.style.left = x - 4 + 'px';
+        this.cursor.style.top = y - 4 + 'px';
+        
+        // 创建拖尾粒子
+        const distance = Math.sqrt(Math.pow(x - this.lastX, 2) + Math.pow(y - this.lastY, 2));
+        const steps = Math.ceil(distance / 10);
+        
+        for (let i = 1; i <= steps; i++) {
+            const t = i / steps;
+            const px = this.lastX + (x - this.lastX) * t;
+            const py = this.lastY + (y - this.lastY) * t;
+            const opacity = 1 - t;
+            this.createTrailParticle(px - 2, py - 2, opacity);
+        }
+        
+        this.lastX = x;
+        this.lastY = y;
     }
 
     handleMouseEnter() {
         this.cursor.style.transform = 'scale(1.5)';
-        this.cursor.style.borderColor = '#ff00ff';
-        this.cursorInner.style.transform = 'scale(2)';
-        this.cursorInner.style.background = '#ff00ff';
+        this.cursor.style.boxShadow = '0 0 20px #ff00ff, 0 0 40px #00f5ff';
     }
 
     handleMouseLeave() {
         this.cursor.style.transform = 'scale(1)';
-        this.cursor.style.borderColor = '#00f5ff';
-        this.cursorInner.style.transform = 'scale(1)';
-        this.cursorInner.style.background = '#00f5ff';
+        this.cursor.style.boxShadow = '0 0 15px #ff00ff, 0 0 30px #00f5ff';
     }
 }
 
@@ -665,6 +703,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
+        /* 流星拖尾动画 */
+        @keyframes trail-fade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+        
         /* 隐藏默认鼠标 */
         body {
             cursor: none;
@@ -675,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursor: auto;
             }
             .cursor-follower,
-            .cursor-inner {
+            .cursor-trail {
                 display: none;
             }
         }
