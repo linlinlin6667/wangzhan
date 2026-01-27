@@ -381,38 +381,68 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background: var(--background-dark);
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(10, 10, 15, 0.8) 0%, rgba(10, 10, 15, 0.95) 100%);
     border: 2px solid var(--neon-pink);
     border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 20px var(--neon-pink);
+    box-shadow: 0 0 30px var(--neon-pink), 0 0 40px var(--neon-blue);
     z-index: 4;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .wheel-center:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 30px var(--neon-pink), 0 0 40px var(--neon-blue);
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 40px var(--neon-pink), 0 0 60px var(--neon-blue);
+}
+
+.song-title-container {
+    position: absolute;
+    top: 30%;
+    text-align: center;
+    z-index: 5;
+}
+
+.song-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px var(--neon-blue);
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .play-button, .pause-button {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--neon-pink);
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.2) 0%, transparent 70%);
+    border: 2px solid var(--neon-pink);
+    border-radius: 50%;
     transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 6;
 }
 
 .play-button:hover, .pause-button:hover {
     color: var(--neon-blue);
-    transform: scale(1.1);
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.2) 0%, transparent 70%);
+    border-color: var(--neon-blue);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px var(--neon-blue);
 }
 
 .play-button svg, .pause-button svg {
@@ -423,11 +453,50 @@ body {
     fill: none;
 }
 
-.music-controls {
+.time-display {
+    position: absolute;
+    top: 60%;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
     display: flex;
-    gap: 1rem;
+    align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    gap: 0.25rem;
+    z-index: 5;
+}
+
+.time-display span {
+    font-family: var(--font-mono);
+}
+
+.song-progress-container {
+    position: absolute;
+    top: 70%;
+    width: 180px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.song-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--neon-blue);
+    width: 0;
+    transition: width 0.1s ease;
+}
+
+.music-controls {
+    position: absolute;
+    top: 80%;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
     z-index: 6;
 }
 
@@ -461,62 +530,11 @@ body {
     fill: none;
 }
 
-.music-info {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    color: var(--text-primary);
-    z-index: 5;
-}
 
-.song-title {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--neon-blue);
-    text-shadow: 0 0 10px var(--neon-blue);
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
-.song-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--neon-blue);
-    width: 0;
-    transition: width 0.1s ease;
-}
 
-.song-progress-container {
-    width: 150px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    overflow: hidden;
-    margin: 0 auto;
-    cursor: pointer;
-    position: relative;
-}
 
-.time-display {
-    text-align: center;
-    margin: 0.5rem 0;
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.25rem;
-}
 
-.time-display span {
-    font-family: var(--font-mono);
-}
 
 /* 歌曲目录样式 */
 .song-menu {
