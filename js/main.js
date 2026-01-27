@@ -547,44 +547,102 @@ class MusicPlayer {
         this.pauseButton = document.getElementById('pauseButton');
         this.songProgress = document.getElementById('songProgress');
         this.audioWave = document.getElementById('audioWave');
+        this.songTitle = document.getElementById('songTitle');
         this.isPlaying = false;
         this.audioContext = null;
         this.analyser = null;
         this.source = null;
         this.animationId = null;
+        this.audio = null;
+        this.currentSongIndex = 0;
+        this.songs = [
+            {
+                title: 'Electronic Dreams',
+                file: 'audio/song1.mp3'
+            },
+            {
+                title: 'Neon Lights',
+                file: 'audio/song2.mp3'
+            },
+            {
+                title: 'Digital Pulse',
+                file: 'audio/song3.mp3'
+            },
+            {
+                title: 'Synth Wave',
+                file: 'audio/song4.mp3'
+            },
+            {
+                title: 'Cyberpunk',
+                file: 'audio/song5.mp3'
+            }
+        ];
         this.init();
     }
 
     init() {
         if (!this.playButton || !this.pauseButton) return;
         
+        // 创建Audio对象
+        this.audio = new Audio();
+        this.audio.src = this.songs[this.currentSongIndex].file;
+        this.audio.loop = false;
+        
         // 绑定事件
         this.playButton.addEventListener('click', () => this.play());
         this.pauseButton.addEventListener('click', () => this.pause());
+        this.audio.addEventListener('ended', () => this.nextSong());
+        this.audio.addEventListener('timeupdate', () => this.updateProgress());
         
         // 创建音频上下文
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            this.analyser = this.audioContext.createAnalyser();
+            this.analyser.fftSize = 256;
         } catch (error) {
             console.log('音频上下文创建失败:', error);
         }
+        
+        // 更新歌曲标题
+        this.updateSongTitle();
     }
 
     play() {
+        if (!this.audio) return;
+        
         this.isPlaying = true;
         this.playButton.style.display = 'none';
         this.pauseButton.style.display = 'flex';
         
+        // 恢复音频上下文
+        if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+        
+        // 连接音频源到分析器
+        if (this.audioContext && this.analyser) {
+            this.source = this.audioContext.createMediaElementSource(this.audio);
+            this.source.connect(this.analyser);
+            this.source.connect(this.audioContext.destination);
+        }
+        
         // 启动音频波形动画
         this.startWaveAnimation();
         
-        // 模拟音乐播放进度
-        this.updateProgress();
+        // 播放音乐
+        this.audio.play().catch(error => {
+            console.log('播放失败:', error);
+            this.isPlaying = false;
+            this.playButton.style.display = 'flex';
+            this.pauseButton.style.display = 'none';
+        });
         
         console.log('音乐播放中...');
     }
 
     pause() {
+        if (!this.audio) return;
+        
         this.isPlaying = false;
         this.playButton.style.display = 'flex';
         this.pauseButton.style.display = 'none';
@@ -592,31 +650,32 @@ class MusicPlayer {
         // 停止音频波形动画
         this.stopWaveAnimation();
         
+        // 暂停音乐
+        this.audio.pause();
+        
         console.log('音乐已暂停...');
     }
 
+    nextSong() {
+        this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+        this.audio.src = this.songs[this.currentSongIndex].file;
+        this.updateSongTitle();
+        this.audio.play();
+    }
+
+    updateSongTitle() {
+        if (this.songTitle) {
+            this.songTitle.textContent = this.songs[this.currentSongIndex].title;
+        }
+    }
+
     updateProgress() {
-        if (!this.isPlaying) return;
+        if (!this.audio || !this.songProgress) return;
         
-        let progress = 0;
-        const duration = 30; // 模拟30秒歌曲
-        const startTime = Date.now();
-        
-        const update = () => {
-            if (!this.isPlaying) return;
-            
-            const elapsed = (Date.now() - startTime) / 1000;
-            progress = (elapsed / duration) * 100;
-            
-            if (progress >= 100) {
-                progress = 0;
-                this.updateProgress(); // 循环播放
-            } else {
-                requestAnimationFrame(update);
-            }
-        };
-        
-        update();
+        const progress = (this.audio.currentTime / this.audio.duration) * 100;
+        if (this.songProgress) {
+            this.songProgress.style.width = progress + '%';
+        }
     }
 
     startWaveAnimation() {
@@ -653,8 +712,10 @@ class MusicPlayer {
         
         for (let i = 0; i < points; i++) {
             const angle = (i / points) * Math.PI * 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
+            // 使用音频数据或随机值生成波形高度
+            const waveHeight = this.isPlaying ? Math.random() * 20 + 140 : 160;
+            const x = Math.cos(angle) * waveHeight;
+            const y = Math.sin(angle) * waveHeight;
             
             const point = document.createElement('div');
             const size = Math.random() * 4 + 2;

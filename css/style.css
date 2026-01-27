@@ -444,21 +444,22 @@ body {
 .song-progress {
     width: 150px;
     height: 4px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: 0 0 10px var(--neon-blue);
+    width: 0;
+    transition: width 0.1s ease;
+}
+
+.song-progress-container {
+    width: 150px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
     overflow: hidden;
     margin: 0 auto;
-}
-
-.song-progress::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-    border-radius: 2px;
-    animation: progress 3s ease-in-out infinite;
-    box-shadow: 0 0 10px var(--neon-blue);
 }
 
 .audio-wave {
@@ -1195,6 +1196,10 @@ section {
 
     .song-title {
         font-size: 0.85rem;
+    }
+
+    .song-progress-container {
+        width: 120px;
     }
 
     .song-progress {
