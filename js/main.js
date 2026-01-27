@@ -552,9 +552,12 @@ class MusicPlayer {
         this.prevButton = document.getElementById('prevButton');
         this.nextButton = document.getElementById('nextButton');
         this.menuButton = document.getElementById('menuButton');
+        this.modeButton = document.getElementById('modeButton');
         this.closeMenuButton = document.getElementById('closeMenuButton');
         this.songMenu = document.getElementById('songMenu');
         this.songList = document.getElementById('songList');
+        this.currentTimeElement = document.getElementById('currentTime');
+        this.totalTimeElement = document.getElementById('totalTime');
         this.isPlaying = false;
         this.audioContext = null;
         this.analyser = null;
@@ -562,6 +565,7 @@ class MusicPlayer {
         this.animationId = null;
         this.audio = null;
         this.currentSongIndex = 0;
+        this.playMode = 'order'; // order, random, repeat
         this.songs = [
             {
                 title: '花海 - 周杰伦',
@@ -604,6 +608,7 @@ class MusicPlayer {
         this.pauseButton.addEventListener('click', () => this.pause());
         this.audio.addEventListener('ended', () => this.nextSong());
         this.audio.addEventListener('timeupdate', () => this.updateProgress());
+        this.audio.addEventListener('loadedmetadata', () => this.updateTimeDisplay());
         
         // 绑定控制按钮事件
         if (this.prevButton) {
@@ -614,6 +619,9 @@ class MusicPlayer {
         }
         if (this.menuButton) {
             this.menuButton.addEventListener('click', () => this.toggleSongMenu());
+        }
+        if (this.modeButton) {
+            this.modeButton.addEventListener('click', () => this.togglePlayMode());
         }
         if (this.closeMenuButton) {
             this.closeMenuButton.addEventListener('click', () => this.hideSongMenu());
@@ -638,6 +646,9 @@ class MusicPlayer {
         
         // 生成歌曲列表
         this.generateSongList();
+        
+        // 更新播放模式按钮
+        this.updateModeButton();
     }
 
     play() {
@@ -700,13 +711,81 @@ class MusicPlayer {
     }
 
     nextSong() {
-        this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+        if (this.playMode === 'random') {
+            // 随机播放
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * this.songs.length);
+            } while (newIndex === this.currentSongIndex && this.songs.length > 1);
+            this.currentSongIndex = newIndex;
+        } else if (this.playMode === 'repeat') {
+            // 单曲循环，保持当前索引不变
+            this.audio.currentTime = 0;
+            if (this.isPlaying) {
+                this.audio.play();
+            }
+            return;
+        } else {
+            // 顺序播放
+            this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+        }
+        
         this.audio.src = this.songs[this.currentSongIndex].file;
         this.updateSongTitle();
         this.updateSongList();
         if (this.isPlaying) {
             this.audio.play();
         }
+    }
+    
+    togglePlayMode() {
+        // 切换播放模式：顺序 -> 随机 -> 单曲循环
+        const modes = ['order', 'random', 'repeat'];
+        const currentIndex = modes.indexOf(this.playMode);
+        this.playMode = modes[(currentIndex + 1) % modes.length];
+        
+        // 更新播放模式按钮的样式或图标
+        this.updateModeButton();
+        
+        console.log('播放模式已切换为:', this.playMode);
+    }
+    
+    updateModeButton() {
+        if (!this.modeButton) return;
+        
+        // 根据当前播放模式更新按钮图标
+        let svgContent = '';
+        switch (this.playMode) {
+            case 'order':
+                svgContent = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="19 20 9 12 19 4 19 20"/>
+                        <line x1="5" y1="19" x2="5" y2="5"/>
+                    </svg>
+                `;
+                break;
+            case 'random':
+                svgContent = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="19 20 9 12 19 4 19 20"/>
+                        <line x1="5" y1="19" x2="5" y2="5"/>
+                        <line x1="12" y1="12" x2="19" y2="12"/>
+                        <line x1="12" y1="12" x2="12" y2="19"/>
+                    </svg>
+                `;
+                break;
+            case 'repeat':
+                svgContent = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="19 20 9 12 19 4 19 20"/>
+                        <line x1="5" y1="19" x2="5" y2="5"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                `;
+                break;
+        }
+        
+        this.modeButton.innerHTML = svgContent;
     }
 
     seek(e) {
@@ -823,6 +902,27 @@ class MusicPlayer {
         const progress = (this.audio.currentTime / this.audio.duration) * 100;
         if (this.songProgress) {
             this.songProgress.style.width = progress + '%';
+        }
+        
+        // 更新时间显示
+        this.updateTimeDisplay();
+    }
+    
+    updateTimeDisplay() {
+        if (!this.audio) return;
+        
+        // 更新当前时间
+        if (this.currentTimeElement) {
+            const currentMinutes = Math.floor(this.audio.currentTime / 60);
+            const currentSeconds = Math.floor(this.audio.currentTime % 60);
+            this.currentTimeElement.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        // 更新总时间
+        if (this.totalTimeElement && !isNaN(this.audio.duration)) {
+            const totalMinutes = Math.floor(this.audio.duration / 60);
+            const totalSeconds = Math.floor(this.audio.duration % 60);
+            this.totalTimeElement.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
         }
     }
 
