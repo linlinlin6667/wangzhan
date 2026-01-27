@@ -493,7 +493,7 @@ body {
 
 .music-controls {
     position: absolute;
-    top: 115%;
+    top: 130%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
