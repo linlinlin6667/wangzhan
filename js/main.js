@@ -721,6 +721,13 @@ class MusicPlayer {
             const seekTime = (clickX / width) * duration;
             this.audio.currentTime = seekTime;
             console.log('跳转至:', seekTime, '秒');
+            
+            // 确保如果音乐之前是播放状态，在跳转后继续播放
+            if (this.isPlaying && this.audio.paused) {
+                this.audio.play().catch(error => {
+                    console.log('播放失败:', error);
+                });
+            }
         }
     }
 
