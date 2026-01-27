@@ -493,7 +493,9 @@ body {
 
 .music-controls {
     position: absolute;
-    top: 80%;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 1.5rem;
     justify-content: center;
