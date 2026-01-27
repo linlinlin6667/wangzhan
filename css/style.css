@@ -381,13 +381,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 280px;
-    height: 280px;
+    width: 200px;
+    height: 200px;
     background: radial-gradient(circle, rgba(10, 10, 15, 0.8) 0%, rgba(10, 10, 15, 0.95) 100%);
     border: 2px solid var(--neon-pink);
     border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 30px var(--neon-pink), 0 0 40px var(--neon-blue);
@@ -400,29 +399,7 @@ body {
     box-shadow: 0 0 40px var(--neon-pink), 0 0 60px var(--neon-blue);
 }
 
-.song-title-container {
-    position: absolute;
-    top: 30%;
-    text-align: center;
-    z-index: 5;
-}
-
-.song-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--neon-blue);
-    text-shadow: 0 0 15px var(--neon-blue);
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .play-button, .pause-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
     display: flex;
@@ -441,7 +418,7 @@ body {
     color: var(--neon-blue);
     background: radial-gradient(circle, rgba(0, 245, 255, 0.2) 0%, transparent 70%);
     border-color: var(--neon-blue);
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: scale(1.1);
     box-shadow: 0 0 20px var(--neon-blue);
 }
 
@@ -453,9 +430,34 @@ body {
     fill: none;
 }
 
-.time-display {
+.music-info {
     position: absolute;
-    top: 60%;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    z-index: 5;
+}
+
+.song-title-container {
+    margin-bottom: 0.5rem;
+}
+
+.song-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px var(--neon-blue);
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+}
+
+.time-display {
     text-align: center;
     color: var(--text-secondary);
     font-size: 0.8rem;
@@ -463,7 +465,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
-    z-index: 5;
+    margin-bottom: 0.5rem;
 }
 
 .time-display span {
@@ -471,15 +473,13 @@ body {
 }
 
 .song-progress-container {
-    position: absolute;
-    top: 70%;
-    width: 180px;
+    width: 200px;
     height: 4px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
     overflow: hidden;
     cursor: pointer;
-    z-index: 5;
+    margin: 0 auto;
 }
 
 .song-progress {
@@ -493,7 +493,7 @@ body {
 
 .music-controls {
     position: absolute;
-    top: 110%;
+    top: 115%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
