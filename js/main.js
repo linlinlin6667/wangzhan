@@ -539,6 +539,150 @@ class ScrollProgress {
 }
 
 // ===================================
+// 音乐播放器
+// ===================================
+class MusicPlayer {
+    constructor() {
+        this.playButton = document.getElementById('playButton');
+        this.pauseButton = document.getElementById('pauseButton');
+        this.songProgress = document.getElementById('songProgress');
+        this.audioWave = document.getElementById('audioWave');
+        this.isPlaying = false;
+        this.audioContext = null;
+        this.analyser = null;
+        this.source = null;
+        this.animationId = null;
+        this.init();
+    }
+
+    init() {
+        if (!this.playButton || !this.pauseButton) return;
+        
+        // 绑定事件
+        this.playButton.addEventListener('click', () => this.play());
+        this.pauseButton.addEventListener('click', () => this.pause());
+        
+        // 创建音频上下文
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (error) {
+            console.log('音频上下文创建失败:', error);
+        }
+    }
+
+    play() {
+        this.isPlaying = true;
+        this.playButton.style.display = 'none';
+        this.pauseButton.style.display = 'flex';
+        
+        // 启动音频波形动画
+        this.startWaveAnimation();
+        
+        // 模拟音乐播放进度
+        this.updateProgress();
+        
+        console.log('音乐播放中...');
+    }
+
+    pause() {
+        this.isPlaying = false;
+        this.playButton.style.display = 'flex';
+        this.pauseButton.style.display = 'none';
+        
+        // 停止音频波形动画
+        this.stopWaveAnimation();
+        
+        console.log('音乐已暂停...');
+    }
+
+    updateProgress() {
+        if (!this.isPlaying) return;
+        
+        let progress = 0;
+        const duration = 30; // 模拟30秒歌曲
+        const startTime = Date.now();
+        
+        const update = () => {
+            if (!this.isPlaying) return;
+            
+            const elapsed = (Date.now() - startTime) / 1000;
+            progress = (elapsed / duration) * 100;
+            
+            if (progress >= 100) {
+                progress = 0;
+                this.updateProgress(); // 循环播放
+            } else {
+                requestAnimationFrame(update);
+            }
+        };
+        
+        update();
+    }
+
+    startWaveAnimation() {
+        if (!this.audioWave) return;
+        
+        const animate = () => {
+            if (!this.isPlaying) return;
+            
+            // 创建音频波形点
+            this.createWavePoints();
+            
+            this.animationId = requestAnimationFrame(animate);
+        };
+        
+        animate();
+    }
+
+    stopWaveAnimation() {
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+        }
+    }
+
+    createWavePoints() {
+        if (!this.audioWave) return;
+        
+        // 清除之前的波形点
+        this.audioWave.innerHTML = '';
+        
+        // 创建新的波形点
+        const points = 12;
+        const radius = 160;
+        
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            
+            const point = document.createElement('div');
+            const size = Math.random() * 4 + 2;
+            const opacity = Math.random() * 0.8 + 0.2;
+            
+            point.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: var(--neon-green);
+                border-radius: 50%;
+                left: 50%;
+                top: 50%;
+                --x: ${x}px;
+                --y: ${y}px;
+                transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px));
+                opacity: ${opacity};
+                box-shadow: 0 0 10px var(--neon-green);
+                animation: wave-point 1s ease-in-out infinite;
+                animation-delay: ${i * 0.1}s;
+            `;
+            
+            this.audioWave.appendChild(point);
+        }
+    }
+}
+
+// ===================================
 // 流星划过鼠标效果
 // ===================================
 class CursorFollower {
@@ -677,6 +821,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth > 768) {
         new CursorFollower();
     }
+    
+    // 初始化音乐播放器
+    new MusicPlayer();
     
     // 添加全局样式
     const style = document.createElement('style');

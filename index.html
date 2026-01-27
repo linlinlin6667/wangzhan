@@ -61,10 +61,28 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="tech-circle">
-                    <div class="circle-inner"></div>
-                    <div class="circle-outer"></div>
+                <div class="music-wheel">
                     <div class="circle-dots"></div>
+                    <div class="circle-outer"></div>
+                    <div class="circle-inner"></div>
+                    <div class="wheel-center">
+                        <div class="play-button" id="playButton">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                        <div class="pause-button" id="pauseButton" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="6" y="4" width="4" height="16"/>
+                                <rect x="14" y="4" width="4" height="16"/>
+                            </svg>
+                        </div>
+                        <div class="music-info">
+                            <div class="song-title" id="songTitle">Electronic Dreams</div>
+                            <div class="song-progress" id="songProgress"></div>
+                        </div>
+                    </div>
+                    <div class="audio-wave" id="audioWave"></div>
                 </div>
             </div>
         </div>
