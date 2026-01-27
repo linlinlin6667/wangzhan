@@ -546,8 +546,15 @@ class MusicPlayer {
         this.playButton = document.getElementById('playButton');
         this.pauseButton = document.getElementById('pauseButton');
         this.songProgress = document.getElementById('songProgress');
+        this.progressContainer = document.getElementById('progressContainer');
         this.audioWave = document.getElementById('audioWave');
         this.songTitle = document.getElementById('songTitle');
+        this.prevButton = document.getElementById('prevButton');
+        this.nextButton = document.getElementById('nextButton');
+        this.menuButton = document.getElementById('menuButton');
+        this.closeMenuButton = document.getElementById('closeMenuButton');
+        this.songMenu = document.getElementById('songMenu');
+        this.songList = document.getElementById('songList');
         this.isPlaying = false;
         this.audioContext = null;
         this.analyser = null;
@@ -598,6 +605,25 @@ class MusicPlayer {
         this.audio.addEventListener('ended', () => this.nextSong());
         this.audio.addEventListener('timeupdate', () => this.updateProgress());
         
+        // 绑定控制按钮事件
+        if (this.prevButton) {
+            this.prevButton.addEventListener('click', () => this.prevSong());
+        }
+        if (this.nextButton) {
+            this.nextButton.addEventListener('click', () => this.nextSong());
+        }
+        if (this.menuButton) {
+            this.menuButton.addEventListener('click', () => this.toggleSongMenu());
+        }
+        if (this.closeMenuButton) {
+            this.closeMenuButton.addEventListener('click', () => this.hideSongMenu());
+        }
+        
+        // 绑定进度条点击事件
+        if (this.progressContainer) {
+            this.progressContainer.addEventListener('click', (e) => this.seek(e));
+        }
+        
         // 创建音频上下文
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -609,6 +635,9 @@ class MusicPlayer {
         
         // 更新歌曲标题
         this.updateSongTitle();
+        
+        // 生成歌曲列表
+        this.generateSongList();
     }
 
     play() {
@@ -619,7 +648,7 @@ class MusicPlayer {
         this.pauseButton.style.display = 'flex';
         
         // 恢复音频上下文
-        if (this.audioContext.state === 'suspended') {
+        if (this.audioContext && this.audioContext.state === 'suspended') {
             this.audioContext.resume();
         }
         
@@ -660,11 +689,119 @@ class MusicPlayer {
         console.log('音乐已暂停...');
     }
 
+    prevSong() {
+        this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+        this.audio.src = this.songs[this.currentSongIndex].file;
+        this.updateSongTitle();
+        this.updateSongList();
+        if (this.isPlaying) {
+            this.audio.play();
+        }
+    }
+
     nextSong() {
         this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
         this.audio.src = this.songs[this.currentSongIndex].file;
         this.updateSongTitle();
-        this.audio.play();
+        this.updateSongList();
+        if (this.isPlaying) {
+            this.audio.play();
+        }
+    }
+
+    seek(e) {
+        if (!this.audio || !this.progressContainer) return;
+        
+        const rect = this.progressContainer.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const width = rect.width;
+        const duration = this.audio.duration;
+        
+        if (!isNaN(duration)) {
+            const seekTime = (clickX / width) * duration;
+            this.audio.currentTime = seekTime;
+            console.log('跳转至:', seekTime, '秒');
+        }
+    }
+
+    toggleSongMenu() {
+        if (this.songMenu) {
+            if (this.songMenu.style.display === 'none' || this.songMenu.style.display === '') {
+                this.showSongMenu();
+            } else {
+                this.hideSongMenu();
+            }
+        }
+    }
+
+    showSongMenu() {
+        if (this.songMenu) {
+            this.songMenu.style.display = 'block';
+            this.generateSongList();
+        }
+    }
+
+    hideSongMenu() {
+        if (this.songMenu) {
+            this.songMenu.style.display = 'none';
+        }
+    }
+
+    generateSongList() {
+        if (!this.songList) return;
+        
+        // 清空歌曲列表
+        this.songList.innerHTML = '';
+        
+        // 生成歌曲列表
+        this.songs.forEach((song, index) => {
+            const songItem = document.createElement('div');
+            songItem.className = `song-item ${index === this.currentSongIndex ? 'active' : ''}`;
+            songItem.addEventListener('click', () => this.selectSong(index));
+            
+            const songItemTitle = document.createElement('h4');
+            songItemTitle.className = 'song-item-title';
+            songItemTitle.textContent = song.title;
+            
+            const songItemDuration = document.createElement('p');
+            songItemDuration.className = 'song-item-duration';
+            songItemDuration.textContent = '未知时长';
+            
+            songItem.appendChild(songItemTitle);
+            songItem.appendChild(songItemDuration);
+            this.songList.appendChild(songItem);
+        });
+    }
+
+    updateSongList() {
+        if (!this.songList) return;
+        
+        const songItems = this.songList.querySelectorAll('.song-item');
+        songItems.forEach((item, index) => {
+            if (index === this.currentSongIndex) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    selectSong(index) {
+        if (index === this.currentSongIndex) {
+            this.hideSongMenu();
+            return;
+        }
+        
+        this.currentSongIndex = index;
+        this.audio.src = this.songs[this.currentSongIndex].file;
+        this.updateSongTitle();
+        this.updateSongList();
+        
+        if (this.isPlaying) {
+            this.audio.play();
+        }
+        
+        this.hideSongMenu();
     }
 
     updateSongTitle() {

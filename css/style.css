@@ -423,6 +423,46 @@ body {
     fill: none;
 }
 
+.music-controls {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 6;
+}
+
+.control-button {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 245, 255, 0.1);
+    border: 1px solid var(--neon-blue);
+    border-radius: 50%;
+    color: var(--neon-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+.control-button:hover {
+    background: var(--neon-blue);
+    color: var(--background-dark);
+    box-shadow: 0 0 20px var(--neon-blue);
+    transform: scale(1.1);
+}
+
+.control-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
 .music-info {
     position: absolute;
     bottom: -60px;
@@ -439,15 +479,16 @@ body {
     margin-bottom: 0.5rem;
     color: var(--neon-blue);
     text-shadow: 0 0 10px var(--neon-blue);
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .song-progress {
-    width: 150px;
-    height: 4px;
+    height: 100%;
     background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
     border-radius: 2px;
-    overflow: hidden;
-    margin: 0 auto;
     box-shadow: 0 0 10px var(--neon-blue);
     width: 0;
     transition: width 0.1s ease;
@@ -460,6 +501,117 @@ body {
     border-radius: 2px;
     overflow: hidden;
     margin: 0 auto;
+    cursor: pointer;
+    position: relative;
+}
+
+/* 歌曲目录样式 */
+.song-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    max-height: 400px;
+    background: rgba(10, 10, 15, 0.95);
+    border: 2px solid var(--neon-blue);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.menu-header h3 {
+    color: var(--neon-blue);
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.close-button {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid var(--neon-pink);
+    border-radius: 50%;
+    color: var(--neon-pink);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-button:hover {
+    background: var(--neon-pink);
+    color: var(--background-dark);
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.menu-content {
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.song-item {
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+}
+
+.song-item:hover {
+    background: rgba(0, 245, 255, 0.1);
+    border-color: var(--neon-blue);
+    transform: translateX(5px);
+}
+
+.song-item.active {
+    background: rgba(0, 245, 255, 0.2);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+.song-item-title {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.song-item-duration {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    margin: 0.25rem 0 0;
+}
+
+/* 自定义滚动条 */
+.menu-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.menu-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.menu-content::-webkit-scrollbar-thumb {
+    background: var(--neon-blue);
+    border-radius: 3px;
+}
+
+.menu-content::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-pink);
 }
 
 .audio-wave {
