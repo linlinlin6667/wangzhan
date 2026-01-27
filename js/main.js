@@ -557,6 +557,10 @@ class MusicPlayer {
         this.currentSongIndex = 0;
         this.songs = [
             {
+                title: '花海 - 周杰伦',
+                file: 'audio/花海-周杰伦.mp3'
+            },
+            {
                 title: 'Electronic Dreams',
                 file: 'audio/song1.mp3'
             },
