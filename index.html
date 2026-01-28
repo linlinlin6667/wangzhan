@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="创意开发者个人作品集，专注于构建现代化、响应式的 Web 应用">
     <meta name="keywords" content="前端开发, Web应用, 创意设计, 个人作品集">
     <meta name="author" content="创意开发者">
@@ -10,13 +10,10 @@
     <meta name="theme-color" content="#0a0a0f">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://example.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <title>个人作品集</title>
     <link rel="stylesheet" href="css/style.css" media="all">
     <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/style.css"></noscript>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous">
 </head>
 <body>
     <!-- 导航栏 -->
@@ -70,59 +67,68 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="music-wheel">
-                    <div class="circle-dots"></div>
-                    <div class="circle-outer"></div>
-                    <div class="circle-inner"></div>
-                    <div class="wheel-center">
-                        <div class="play-button" id="playButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"/>
-                            </svg>
+                <div class="music-player">
+                    <div class="player-container">
+                        <div class="player-visual">
+                            <div class="vinyl">
+                                <div class="vinyl-spinner"></div>
+                                <div class="vinyl-center"></div>
+                            </div>
+                            <div class="audio-wave">
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                            </div>
                         </div>
-                        <div class="pause-button" id="pauseButton" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="6" y="4" width="4" height="16"/>
-                                <rect x="14" y="4" width="4" height="16"/>
-                            </svg>
+                        <div class="player-info">
+                            <div class="song-title" id="songTitle">花海 - 周杰伦</div>
+                            <div class="song-progress-container" id="progressContainer">
+                                <div class="time-display">
+                                    <span id="currentTime">0:00</span>
+                                    <span>/</span>
+                                    <span id="totalTime">0:00</span>
+                                </div>
+                                <div class="song-progress" id="songProgress"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="music-info">
-                        <div class="song-title" id="songTitle">花海 - 周杰伦</div>
-                        <div class="time-display">
-                            <span id="currentTime">0:00</span>
-                            <span>/</span>
-                            <span id="totalTime">0:00</span>
+                        <div class="player-controls">
+                            <button class="control-button" id="prevButton">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="19 20 9 12 19 4 19 20"/>
+                                    <line x1="5" y1="19" x2="5" y2="5"/>
+                                </svg>
+                            </button>
+                            <button class="control-button play-button" id="playButton">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5 3 19 12 5 21 5 3"/>
+                                </svg>
+                            </button>
+                            <button class="control-button pause-button" id="pauseButton" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="6" y="4" width="4" height="16"/>
+                                    <rect x="14" y="4" width="4" height="16"/>
+                                </svg>
+                            </button>
+                            <button class="control-button" id="nextButton">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5 4 15 12 5 20 5 4"/>
+                                    <line x1="19" y1="5" x2="19" y2="19"/>
+                                </svg>
+                            </button>
+                            <button class="control-button" id="menuButton">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="4" y1="8" x2="20" y2="8"/>
+                                    <line x1="4" y1="16" x2="20" y2="16"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="song-progress-container" id="progressContainer">
-                            <div class="song-progress" id="songProgress"></div>
-                        </div>
-                    </div>
-                    <div class="music-controls">
-                        <button class="control-button" id="modeButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="19 20 9 12 19 4 19 20"/>
-                                <line x1="5" y1="19" x2="5" y2="5"/>
-                            </svg>
-                        </button>
-                        <button class="control-button" id="prevButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="19 20 9 12 19 4 19 20"/>
-                                <line x1="5" y1="19" x2="5" y2="5"/>
-                            </svg>
-                        </button>
-                        <button class="control-button" id="nextButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="5 4 15 12 5 20 5 4"/>
-                                <line x1="19" y1="5" x2="19" y2="19"/>
-                            </svg>
-                        </button>
-                        <button class="control-button" id="menuButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="4" y1="8" x2="20" y2="8"/>
-                                <line x1="4" y1="16" x2="20" y2="16"/>
-                            </svg>
-                        </button>
                     </div>
                     <div class="song-menu" id="songMenu" style="display: none;">
                         <div class="menu-header">
@@ -131,7 +137,6 @@
                         </div>
                         <div class="menu-content" id="songList"></div>
                     </div>
-                    <div class="audio-wave" id="audioWave"></div>
                 </div>
             </div>
         </div>
@@ -145,7 +150,7 @@
                 <div class="title-underline"></div>
             </div>
             <div class="about-content">
-                <div>
+                <div class="about-text">
                     <p class="about-intro">
                         我是一名充满激情的前端开发者，专注于构建现代化、响应式的 Web 应用。拥有丰富的前端开发经验，熟练掌握 HTML5、CSS3、JavaScript 以及各种前端框架和库。
                     </p>

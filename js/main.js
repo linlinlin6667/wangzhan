@@ -1218,10 +1218,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================================
 // 窗口大小改变时重新初始化
 // ===================================
-let resizeTimeout;
+let resizeTimeoutId;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
+    clearTimeout(resizeTimeoutId);
+    resizeTimeoutId = setTimeout(() => {
         location.reload();
     }, 500);
 });
