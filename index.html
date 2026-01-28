@@ -448,6 +448,7 @@
         });
         
         // 减少布局抖动
+        let resizeTimeout;
         window.addEventListener('resize', function() {
             // 节流处理
             if (!resizeTimeout) {
