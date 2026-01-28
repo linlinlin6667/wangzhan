@@ -663,11 +663,15 @@ class MusicPlayer {
             this.audioContext.resume();
         }
         
-        // 连接音频源到分析器
-        if (this.audioContext && this.analyser) {
-            this.source = this.audioContext.createMediaElementSource(this.audio);
-            this.source.connect(this.analyser);
-            this.source.connect(this.audioContext.destination);
+        // 只在第一次播放或音频源未连接时创建连接
+        if (this.audioContext && this.analyser && !this.source) {
+            try {
+                this.source = this.audioContext.createMediaElementSource(this.audio);
+                this.source.connect(this.analyser);
+                this.source.connect(this.audioContext.destination);
+            } catch (error) {
+                console.log('音频源连接失败:', error);
+            }
         }
         
         // 启动音频波形动画
