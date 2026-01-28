@@ -1186,10 +1186,6 @@ section {
         justify-content: center;
     }
 
-    .hero-visual {
-        display: none;
-    }
-
     .about-content {
         grid-template-columns: 1fr;
     }
