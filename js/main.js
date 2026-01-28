@@ -6,9 +6,10 @@ class ParticleBackground {
         this.canvas = document.getElementById('particles');
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
-        this.particleCount = 100;
-        this.connectionDistance = 150;
-        this.mouseDistance = 200;
+        // 根据屏幕宽度调整粒子数量，手机端减少粒子以提高性能
+        this.particleCount = window.innerWidth > 768 ? 50 : 20;
+        this.connectionDistance = window.innerWidth > 768 ? 150 : 100;
+        this.mouseDistance = window.innerWidth > 768 ? 200 : 150;
         
         this.mouse = {
             x: null,
@@ -1151,8 +1152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化滚动进度条
     new ScrollProgress();
     
-    // 初始化鼠标跟随效果（仅在桌面端）
-    if (window.innerWidth > 768) {
+    // 初始化鼠标跟随效果（仅在桌面端，非触摸设备）
+    if (window.innerWidth > 768 && !('ontouchstart' in window)) {
         new CursorFollower();
     }
     
