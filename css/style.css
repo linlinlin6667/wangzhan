@@ -16,9 +16,9 @@
     --gradient-1: linear-gradient(135deg, #00f5ff 0%, #7b2cbf 100%);
     --gradient-2: linear-gradient(135deg, #7b2cbf 0%, #ff00ff 100%);
     --gradient-3: linear-gradient(135deg, #00ff88 0%, #00f5ff 100%);
-    --shadow-glow: 0 0 20px rgba(0, 245, 255, 0.5);
-    --shadow-glow-purple: 0 0 20px rgba(123, 44, 191, 0.5);
-    --shadow-glow-green: 0 0 20px rgba(0, 255, 136, 0.5);
+    --shadow-glow: 0 0 15px rgba(0, 245, 255, 0.5);
+    --shadow-glow-purple: 0 0 15px rgba(123, 44, 191, 0.5);
+    --shadow-glow-green: 0 0 15px rgba(0, 255, 136, 0.5);
     --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: 'Courier New', Courier, monospace;
 }
@@ -31,6 +31,7 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
 }
 
 body {
@@ -39,6 +40,9 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1rem;
 }
 
 /* 粒子背景 */
@@ -65,7 +69,7 @@ body {
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(0, 245, 255, 0.1);
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar.scrolled {
@@ -101,11 +105,6 @@ body {
     animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
 .nav-menu {
     display: flex;
     list-style: none;
@@ -117,7 +116,7 @@ body {
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
     position: relative;
     padding: 0.5rem 0;
 }
@@ -184,11 +183,6 @@ body {
     animation: glow 4s ease-in-out infinite;
 }
 
-@keyframes glow {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-}
-
 .hero-content {
     max-width: 1200px;
     width: 100%;
@@ -202,17 +196,6 @@ body {
 
 .hero-text {
     animation: fadeInUp 1s ease;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .hero-title {
@@ -240,11 +223,6 @@ body {
     animation: textGlow 2s ease-in-out infinite;
 }
 
-@keyframes textGlow {
-    0%, 100% { filter: drop-shadow(0 0 5px var(--neon-blue)); }
-    50% { filter: drop-shadow(0 0 20px var(--neon-blue)); }
-}
-
 .hero-description {
     font-size: 1.2rem;
     color: var(--text-secondary);
@@ -269,7 +247,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     position: relative;
     overflow: hidden;
 }
@@ -312,17 +290,6 @@ body {
     justify-content: center;
     align-items: center;
     animation: fadeInRight 1s ease;
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 .music-wheel {
@@ -391,7 +358,7 @@ body {
     justify-content: center;
     box-shadow: 0 0 30px var(--neon-pink), 0 0 40px var(--neon-blue);
     z-index: 4;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .wheel-center:hover {
@@ -409,7 +376,7 @@ body {
     background: radial-gradient(circle, rgba(255, 0, 255, 0.2) 0%, transparent 70%);
     border: 2px solid var(--neon-pink);
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     z-index: 6;
 }
@@ -513,7 +480,7 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
 }
 
@@ -531,12 +498,6 @@ body {
     stroke-width: 2;
     fill: none;
 }
-
-
-
-
-
-
 
 /* 歌曲目录样式 */
 .song-menu {
@@ -580,7 +541,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .close-button:hover {
@@ -599,7 +560,7 @@ body {
     padding: 1rem;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     margin-bottom: 0.5rem;
     border: 1px solid transparent;
 }
@@ -673,50 +634,12 @@ body {
     box-shadow: 0 0 20px var(--neon-green);
 }
 
-@keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes progress {
-    0%, 100% { width: 0; }
-    50% { width: 100%; }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.2);
-        opacity: 0;
-    }
-}
-
-@keyframes wave-point {
-    0%, 100% {
-        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1);
-        opacity: 0.5;
-    }
-    50% {
-        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5);
-        opacity: 1;
-        box-shadow: 0 0 15px var(--neon-green), 0 0 25px var(--neon-blue);
-    }
-}
-
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
     animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(10px); }
 }
 
 .scroll-arrow {

@@ -929,11 +929,14 @@ class MusicPlayer {
     startWaveAnimation() {
         if (!this.audioWave) return;
         
+        // 预创建波形点，避免频繁DOM操作
+        this.createWavePoints();
+        
         const animate = () => {
             if (!this.isPlaying) return;
             
-            // 创建音频波形点
-            this.createWavePoints();
+            // 更新现有波形点的位置，而不是重新创建
+            this.updateWavePoints();
             
             this.animationId = requestAnimationFrame(animate);
         };
@@ -953,21 +956,14 @@ class MusicPlayer {
         
         // 清除之前的波形点
         this.audioWave.innerHTML = '';
+        this.wavePoints = [];
         
-        // 创建新的波形点
-        const points = 12;
-        const radius = 160;
+        // 创建固定数量的波形点
+        const points = 8; // 减少波形点数量
         
         for (let i = 0; i < points; i++) {
-            const angle = (i / points) * Math.PI * 2;
-            // 使用音频数据或随机值生成波形高度
-            const waveHeight = this.isPlaying ? Math.random() * 20 + 140 : 160;
-            const x = Math.cos(angle) * waveHeight;
-            const y = Math.sin(angle) * waveHeight;
-            
             const point = document.createElement('div');
-            const size = Math.random() * 4 + 2;
-            const opacity = Math.random() * 0.8 + 0.2;
+            const size = Math.random() * 3 + 1.5; // 减小点的大小
             
             point.style.cssText = `
                 position: absolute;
@@ -977,16 +973,33 @@ class MusicPlayer {
                 border-radius: 50%;
                 left: 50%;
                 top: 50%;
-                --x: ${x}px;
-                --y: ${y}px;
-                transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px));
-                opacity: ${opacity};
-                box-shadow: 0 0 10px var(--neon-green);
+                opacity: 0.6;
+                box-shadow: 0 0 5px var(--neon-green);
                 animation: wave-point 1s ease-in-out infinite;
-                animation-delay: ${i * 0.1}s;
+                animation-delay: ${i * 0.15}s;
             `;
             
             this.audioWave.appendChild(point);
+            this.wavePoints.push(point);
+        }
+    }
+
+    updateWavePoints() {
+        if (!this.audioWave || !this.wavePoints) return;
+        
+        const points = this.wavePoints.length;
+        const radius = 140; // 减小半径
+        
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * Math.PI * 2;
+            // 使用音频数据或随机值生成波形高度
+            const waveHeight = this.isPlaying ? Math.random() * 15 + 125 : 140;
+            const x = Math.cos(angle) * waveHeight;
+            const y = Math.sin(angle) * waveHeight;
+            
+            // 更新现有点的位置，避免重新创建DOM元素
+            const point = this.wavePoints[i];
+            point.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
         }
     }
 }
@@ -999,9 +1012,10 @@ class CursorFollower {
         this.cursor = document.createElement('div');
         this.trail = document.createElement('div');
         this.trailParticles = [];
-        this.maxParticles = 10;
+        this.maxParticles = 5; // 减少粒子数量提高性能
         this.lastX = 0;
         this.lastY = 0;
+        this.mouseMoveTimeout = null;
         this.init();
     }
 
@@ -1010,13 +1024,13 @@ class CursorFollower {
         this.cursor.className = 'cursor-follower';
         this.cursor.style.cssText = `
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: radial-gradient(circle, #ff00ff 0%, #00f5ff 100%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 15px #ff00ff, 0 0 30px #00f5ff;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #00f5ff;
             transition: opacity 0.1s ease;
         `;
         
@@ -1045,15 +1059,15 @@ class CursorFollower {
         const particle = document.createElement('div');
         particle.style.cssText = `
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: linear-gradient(135deg, rgba(0, 245, 255, ${opacity}) 0%, rgba(255, 0, 255, ${opacity * 0.8}) 100%);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 245, 255, ${opacity});
+            box-shadow: 0 0 5px rgba(0, 245, 255, ${opacity});
             left: ${x}px;
             top: ${y}px;
             pointer-events: none;
-            animation: trail-fade 0.5s ease-out forwards;
+            animation: trail-fade 0.3s ease-out forwards;
         `;
         
         this.trail.appendChild(particle);
@@ -1067,37 +1081,44 @@ class CursorFollower {
     }
 
     handleMouseMove(e) {
-        const x = e.clientX;
-        const y = e.clientY;
-        
-        // 更新流星头部位置
-        this.cursor.style.left = x - 4 + 'px';
-        this.cursor.style.top = y - 4 + 'px';
-        
-        // 创建拖尾粒子
-        const distance = Math.sqrt(Math.pow(x - this.lastX, 2) + Math.pow(y - this.lastY, 2));
-        const steps = Math.ceil(distance / 10);
-        
-        for (let i = 1; i <= steps; i++) {
-            const t = i / steps;
-            const px = this.lastX + (x - this.lastX) * t;
-            const py = this.lastY + (y - this.lastY) * t;
-            const opacity = 1 - t;
-            this.createTrailParticle(px - 2, py - 2, opacity);
+        // 节流处理鼠标移动事件
+        if (this.mouseMoveTimeout) {
+            clearTimeout(this.mouseMoveTimeout);
         }
         
-        this.lastX = x;
-        this.lastY = y;
+        this.mouseMoveTimeout = setTimeout(() => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // 更新流星头部位置
+            this.cursor.style.left = x - 3 + 'px';
+            this.cursor.style.top = y - 3 + 'px';
+            
+            // 创建拖尾粒子 - 减少粒子数量
+            const distance = Math.sqrt(Math.pow(x - this.lastX, 2) + Math.pow(y - this.lastY, 2));
+            const steps = Math.ceil(distance / 15); // 增加步长减少粒子
+            
+            for (let i = 1; i <= steps; i++) {
+                const t = i / steps;
+                const px = this.lastX + (x - this.lastX) * t;
+                const py = this.lastY + (y - this.lastY) * t;
+                const opacity = 1 - t;
+                this.createTrailParticle(px - 1.5, py - 1.5, opacity);
+            }
+            
+            this.lastX = x;
+            this.lastY = y;
+        }, 10); // 10ms节流
     }
 
     handleMouseEnter() {
-        this.cursor.style.transform = 'scale(1.5)';
-        this.cursor.style.boxShadow = '0 0 20px #ff00ff, 0 0 40px #00f5ff';
+        this.cursor.style.transform = 'scale(1.3)';
+        this.cursor.style.boxShadow = '0 0 15px #ff00ff, 0 0 30px #00f5ff';
     }
 
     handleMouseLeave() {
         this.cursor.style.transform = 'scale(1)';
-        this.cursor.style.boxShadow = '0 0 15px #ff00ff, 0 0 30px #00f5ff';
+        this.cursor.style.boxShadow = '0 0 10px #ff00ff, 0 0 20px #00f5ff';
     }
 }
 

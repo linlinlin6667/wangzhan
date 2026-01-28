@@ -3,41 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="创意开发者个人作品集，专注于构建现代化、响应式的 Web 应用">
+    <meta name="keywords" content="前端开发, Web应用, 创意设计, 个人作品集">
+    <meta name="author" content="创意开发者">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://example.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <title>个人作品集</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous">
 </head>
 <body>
     <!-- 导航栏 -->
     <nav id="navbar" class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <div class="logo">
-                    <span class="logo-text">DEV</span>
-                    <span class="logo-dot">.</span>
-                    <span class="logo-text">PORTFOLIO</span>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link">首页</a></li>
-                    <li><a href="#about" class="nav-link">关于</a></li>
-                    <li><a href="#skills" class="nav-link">技能</a></li>
-                    <li><a href="#projects" class="nav-link">项目</a></li>
-                    <li><a href="#contact" class="nav-link">联系</a></li>
-                </ul>
-                
-                <!-- 移动端汉堡菜单 -->
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">DEV</span>
+                <span class="logo-dot">.</span>
+                <span class="logo-text">PORTFOLIO</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">首页</a></li>
+                <li><a href="#about" class="nav-link">关于</a></li>
+                <li><a href="#skills" class="nav-link">技能</a></li>
+                <li><a href="#projects" class="nav-link">项目</a></li>
+                <li><a href="#contact" class="nav-link">联系</a></li>
+            </ul>
+            
+            <!-- 移动端汉堡菜单 -->
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
     <!-- 英雄区域 -->
     <section id="home" class="hero">
+        <canvas id="particles"></canvas>
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="hero-title">
@@ -79,9 +88,7 @@
                         </div>
                     </div>
                     <div class="music-info">
-                        <div class="song-title-container">
-                            <div class="song-title" id="songTitle">花海 - 周杰伦</div>
-                        </div>
+                        <div class="song-title" id="songTitle">花海 - 周杰伦</div>
                         <div class="time-display">
                             <span id="currentTime">0:00</span>
                             <span>/</span>
@@ -92,63 +99,57 @@
                         </div>
                     </div>
                     <div class="music-controls">
-                        <button class="control-button mode-button" id="modeButton">
+                        <button class="control-button" id="modeButton">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="19 20 9 12 19 4 19 20"/>
                                 <line x1="5" y1="19" x2="5" y2="5"/>
                             </svg>
                         </button>
-                        <button class="control-button prev-button" id="prevButton">
+                        <button class="control-button" id="prevButton">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="19 20 9 12 19 4 19 20"/>
                                 <line x1="5" y1="19" x2="5" y2="5"/>
                             </svg>
                         </button>
-                        <button class="control-button next-button" id="nextButton">
+                        <button class="control-button" id="nextButton">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="5 4 15 12 5 20 5 4"/>
                                 <line x1="19" y1="5" x2="19" y2="19"/>
                             </svg>
                         </button>
-                        <button class="control-button menu-button" id="menuButton">
+                        <button class="control-button" id="menuButton">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="4" y1="8" x2="20" y2="8"/>
                                 <line x1="4" y1="16" x2="20" y2="16"/>
                             </svg>
                         </button>
                     </div>
-                    <!-- 歌曲目录 -->
                     <div class="song-menu" id="songMenu" style="display: none;">
                         <div class="menu-header">
                             <h3>歌曲列表</h3>
                             <button class="close-button" id="closeMenuButton">×</button>
                         </div>
-                        <div class="menu-content" id="songList">
-                            <!-- 歌曲列表将通过JavaScript动态生成 -->
-                        </div>
+                        <div class="menu-content" id="songList"></div>
                     </div>
                     <div class="audio-wave" id="audioWave"></div>
                 </div>
             </div>
         </div>
-        <canvas id="particles"></canvas>
-        <div class="mouse-follower"></div>
-        <div class="scroll-progress"></div>
     </section>
 
     <!-- 关于 -->
     <section id="about" class="about">
         <div class="container">
-            <div class="section-title">
-                <h2>关于我</h2>
-                <div class="title-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">关于我</h2>
+                <div class="title-underline"></div>
             </div>
             <div class="about-content">
-                <div class="about-text">
-                    <p>
+                <div>
+                    <p class="about-intro">
                         我是一名充满激情的前端开发者，专注于构建现代化、响应式的 Web 应用。拥有丰富的前端开发经验，熟练掌握 HTML5、CSS3、JavaScript 以及各种前端框架和库。
                     </p>
-                    <p>
+                    <p class="about-intro">
                         我的设计理念是将美学与功能性完美结合，创造出既美观又实用的用户体验。我热爱学习新技术，不断提升自己的技能，以适应快速发展的前端领域。
                     </p>
                     <div class="about-stats">
@@ -164,27 +165,17 @@
                             <span class="stat-number" data-target="10">0</span>
                             <span class="stat-label">获奖荣誉</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="50">0</span>
-                            <span class="stat-label">满意客户</span>
-                        </div>
                     </div>
                 </div>
                 <div class="about-visual">
                     <div class="code-block">
                         <div class="code-header">
-                            <div class="code-tabs">
-                                <div class="code-tab active">index.html</div>
-                                <div class="code-tab">style.css</div>
-                                <div class="code-tab">script.js</div>
-                            </div>
-                            <div class="code-actions">
-                                <span class="code-action"></span>
-                                <span class="code-action"></span>
-                                <span class="code-action"></span>
-                            </div>
+                            <div class="code-dot red"></div>
+                            <div class="code-dot yellow"></div>
+                            <div class="code-dot green"></div>
                         </div>
-                        <pre class="code-content"><code>&lt;!DOCTYPE html&gt;
+                        <div class="code-content">
+                            <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="zh"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -196,6 +187,7 @@
     &lt;p&gt;构建未来的数字体验&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,9 +197,9 @@
     <!-- 技能 -->
     <section id="skills" class="skills">
         <div class="container">
-            <div class="section-title">
-                <h2>技能</h2>
-                <div class="title-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">技能</h2>
+                <div class="title-underline"></div>
             </div>
             <div class="skills-content">
                 <div class="skill-card">
@@ -218,8 +210,11 @@
                             <polyline points="21 15 16 10 5 21"/>
                         </svg>
                     </div>
-                    <h3>前端开发</h3>
-                    <p>精通 HTML5、CSS3、JavaScript，熟悉 Vue.js、React 等前端框架，能够构建现代化的单页应用。</p>
+                    <h3 class="skill-title">前端开发</h3>
+                    <p class="skill-description">精通 HTML5、CSS3、JavaScript，熟悉 Vue.js、React 等前端框架，能够构建现代化的单页应用。</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="90"></div>
+                    </div>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
@@ -231,8 +226,11 @@
                             <polyline points="10 9 9 9 8 9"/>
                         </svg>
                     </div>
-                    <h3>后端开发</h3>
-                    <p>掌握 Node.js、Express 等后端技术，能够构建 RESTful API，熟悉数据库设计和优化。</p>
+                    <h3 class="skill-title">后端开发</h3>
+                    <p class="skill-description">掌握 Node.js、Express 等后端技术，能够构建 RESTful API，熟悉数据库设计和优化。</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="75"></div>
+                    </div>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
@@ -242,8 +240,11 @@
                             <polyline points="21 15 16 10 5 21"/>
                         </svg>
                     </div>
-                    <h3>UI/UX 设计</h3>
-                    <p>熟悉设计原则，能够创建美观、直观的用户界面，注重用户体验和交互设计。</p>
+                    <h3 class="skill-title">UI/UX 设计</h3>
+                    <p class="skill-description">熟悉设计原则，能够创建美观、直观的用户界面，注重用户体验和交互设计。</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
@@ -252,8 +253,11 @@
                             <polyline points="8 6 2 12 8 18"/>
                         </svg>
                     </div>
-                    <h3>DevOps</h3>
-                    <p>了解 CI/CD 流程，熟悉 Git、Docker 等工具，能够部署和维护 Web 应用。</p>
+                    <h3 class="skill-title">DevOps</h3>
+                    <p class="skill-description">了解 CI/CD 流程，熟悉 Git、Docker 等工具，能够部署和维护 Web 应用。</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="65"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,108 +266,57 @@
     <!-- 项目 -->
     <section id="projects" class="projects">
         <div class="container">
-            <div class="section-title">
-                <h2>项目</h2>
-                <div class="title-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">项目</h2>
+                <div class="title-underline"></div>
             </div>
             <div class="projects-content">
                 <div class="project-card">
-                    <div class="project-visual">
-                        <div class="project-image">
-                            <img src="images/project1.jpg" alt="项目1">
-                        </div>
+                    <div class="project-image">
                         <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="15" y1="9" x2="9" y2="15"/>
-                                        <line x1="9" y1="9" x2="15" y2="15"/>
-                                    </svg>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
+                            <div class="project-tech">
+                                <span>Vue.js</span>
+                                <span>Node.js</span>
+                                <span>MongoDB</span>
+                                <span>Redis</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>电商平台</h3>
-                        <p>一个现代化的电商平台，支持商品展示、购物车、订单管理等功能，采用前后端分离架构。</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Vue.js</span>
-                            <span class="project-tag">Node.js</span>
-                            <span class="project-tag">MongoDB</span>
-                            <span class="project-tag">Redis</span>
-                        </div>
+                        <h3 class="project-title">电商平台</h3>
+                        <p class="project-description">一个现代化的电商平台，支持商品展示、购物车、订单管理等功能，采用前后端分离架构。</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-visual">
-                        <div class="project-image">
-                            <img src="images/project2.jpg" alt="项目2">
-                        </div>
+                    <div class="project-image">
                         <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="15" y1="9" x2="9" y2="15"/>
-                                        <line x1="9" y1="9" x2="15" y2="15"/>
-                                    </svg>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
+                            <div class="project-tech">
+                                <span>React</span>
+                                <span>Express</span>
+                                <span>PostgreSQL</span>
+                                <span>Socket.io</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>任务管理系统</h3>
-                        <p>一个高效的任务管理系统，支持任务创建、分配、跟踪和报告，提高团队协作效率。</p>
-                        <div class="project-tags">
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Express</span>
-                            <span class="project-tag">PostgreSQL</span>
-                            <span class="project-tag">Socket.io</span>
-                        </div>
+                        <h3 class="project-title">任务管理系统</h3>
+                        <p class="project-description">一个高效的任务管理系统，支持任务创建、分配、跟踪和报告，提高团队协作效率。</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-visual">
-                        <div class="project-image">
-                            <img src="images/project3.jpg" alt="项目3">
-                        </div>
+                    <div class="project-image">
                         <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="15" y1="9" x2="9" y2="15"/>
-                                        <line x1="9" y1="9" x2="15" y2="15"/>
-                                    </svg>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
+                            <div class="project-tech">
+                                <span>Vue.js</span>
+                                <span>Firebase</span>
+                                <span>Chart.js</span>
+                                <span>PWA</span>
                             </div>
                         </div>
                     </div>
                     <div class="project-info">
-                        <h3>健身追踪应用</h3>
-                        <p>一款健身追踪应用，帮助用户记录健身数据、制定健身计划、跟踪进度，支持多种健身类型。</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Vue.js</span>
-                            <span class="project-tag">Firebase</span>
-                            <span class="project-tag">Chart.js</span>
-                            <span class="project-tag">PWA</span>
-                        </div>
+                        <h3 class="project-title">健身追踪应用</h3>
+                        <p class="project-description">一款健身追踪应用，帮助用户记录健身数据、制定健身计划、跟踪进度，支持多种健身类型。</p>
                     </div>
                 </div>
             </div>
@@ -373,9 +326,9 @@
     <!-- 联系 -->
     <section id="contact" class="contact">
         <div class="container">
-            <div class="section-title">
-                <h2>联系我</h2>
-                <div class="title-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">联系我</h2>
+                <div class="title-underline"></div>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
@@ -386,8 +339,8 @@
                                 <polyline points="22,6 12,13 2,6"/>
                             </svg>
                         </div>
-                        <div class="contact-text">
-                            <h3>邮箱</h3>
+                        <div class="contact-details">
+                            <h4>邮箱</h4>
                             <p>example@example.com</p>
                         </div>
                     </div>
@@ -398,8 +351,8 @@
                                 <polyline points="13 11 9 7 4 18"/>
                             </svg>
                         </div>
-                        <div class="contact-text">
-                            <h3>位置</h3>
+                        <div class="contact-details">
+                            <h4>位置</h4>
                             <p>北京市朝阳区</p>
                         </div>
                     </div>
@@ -409,8 +362,8 @@
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                             </svg>
                         </div>
-                        <div class="contact-text">
-                            <h3>电话</h3>
+                        <div class="contact-details">
+                            <h4>电话</h4>
                             <p>138-0013-8000</p>
                         </div>
                     </div>
@@ -473,6 +426,37 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script defer src="js/main.js"></script>
+    <script>
+        // 页面加载完成后执行的性能优化代码
+        window.addEventListener('load', function() {
+            // 移除加载动画
+            const loader = document.querySelector('.loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+            
+            // 预加载关键资源
+            const criticalImages = [
+                // 预加载图片资源
+            ];
+            
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+        
+        // 减少布局抖动
+        window.addEventListener('resize', function() {
+            // 节流处理
+            if (!resizeTimeout) {
+                resizeTimeout = setTimeout(function() {
+                    // 处理 resize 事件
+                    resizeTimeout = null;
+                }, 250);
+            }
+        });
+    </script>
 </body>
 </html>
