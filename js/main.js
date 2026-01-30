@@ -1128,9 +1128,73 @@ class CursorFollower {
 }
 
 // ===================================
+// 设备检测功能
+// ===================================
+class DeviceDetector {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.detectDevice();
+        this.addResizeListener();
+    }
+
+    detectDevice() {
+        const isMobile = window.innerWidth <= 768;
+        const isDesktop = window.innerWidth > 768;
+        
+        // 移除旧的设备类
+        document.body.classList.remove('mobile', 'desktop');
+        
+        // 添加新的设备类
+        if (isMobile) {
+            document.body.classList.add('mobile');
+        } else if (isDesktop) {
+            document.body.classList.add('desktop');
+        }
+    }
+
+    addResizeListener() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.detectDevice();
+                // 重新初始化功能以适应新设备
+                this.reinitializeFeatures();
+            }, 300);
+        });
+    }
+
+    reinitializeFeatures() {
+        // 重新初始化功能
+        if (window.innerWidth > 768 && !('ontouchstart' in window)) {
+            // 初始化桌面端特有功能
+            if (!window.cursorFollower) {
+                window.cursorFollower = new CursorFollower();
+            }
+        } else {
+            // 清理桌面端特有功能
+            if (window.cursorFollower) {
+                // 清理鼠标跟随效果
+                const cursor = document.querySelector('.cursor-follower');
+                const trail = document.querySelector('.cursor-trail');
+                if (cursor) cursor.remove();
+                if (trail) trail.remove();
+                window.cursorFollower = null;
+            }
+        }
+    }
+}
+
+// ===================================
 // 初始化所有功能
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化设备检测
+    new DeviceDetector();
+    
     // 初始化粒子背景
     new ParticleBackground();
     
@@ -1154,7 +1218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 初始化鼠标跟随效果（仅在桌面端，非触摸设备）
     if (window.innerWidth > 768 && !('ontouchstart' in window)) {
-        new CursorFollower();
+        window.cursorFollower = new CursorFollower();
     }
     
     // 初始化音乐播放器
@@ -1197,19 +1261,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        /* 隐藏默认鼠标 */
-        body {
+        /* 设备特定样式 */
+        .desktop {
             cursor: none;
         }
         
-        @media (max-width: 768px) {
-            body {
-                cursor: auto;
-            }
-            .cursor-follower,
-            .cursor-trail {
-                display: none;
-            }
+        .mobile {
+            cursor: auto;
+        }
+        
+        .mobile .cursor-follower,
+        .mobile .cursor-trail {
+            display: none;
         }
     `;
     document.head.appendChild(style);
